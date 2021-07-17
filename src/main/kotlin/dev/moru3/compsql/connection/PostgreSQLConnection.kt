@@ -1,6 +1,7 @@
 package dev.moru3.compsql.connection
 
 import dev.moru3.compsql.Database
+import dev.moru3.compsql.table.Table
 import java.sql.Connection
 import java.sql.DriverManager
 import java.util.*
@@ -16,6 +17,14 @@ class PostgreSQLConnection(private val url: String, private val username: String
     override fun reconnect(force: Boolean) {
         if(this.isClosed) connection.close()
         connection = DriverManager.getConnection(url, username, password)
+    }
+
+    override fun table(table: Table, force: Boolean) {
+        TODO("Not yet implemented")
+    }
+
+    override fun table(name: String, force: Boolean, action: Table.() -> Unit) {
+        TODO("Not yet implemented")
     }
 
     init { this.apply(action) }

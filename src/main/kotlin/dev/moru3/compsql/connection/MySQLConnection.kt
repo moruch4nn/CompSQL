@@ -1,6 +1,8 @@
 package dev.moru3.compsql.connection
 
 import dev.moru3.compsql.Database
+import dev.moru3.compsql.mysql.table.MySQLTable
+import dev.moru3.compsql.table.Table
 import java.sql.Connection
 import java.sql.DriverManager
 import java.util.*
@@ -17,6 +19,14 @@ open class MySQLConnection(private val url: String, private val username: String
     override fun reconnect(force: Boolean) {
         if(this.isClosed) connection.close()
         connection = DriverManager.getConnection(url, username, password)
+    }
+
+    override fun table(table: Table, force: Boolean) {
+        table.send(this, force)
+    }
+
+    override fun table(name: String, force: Boolean, action: Table.() -> Unit) {
+        table(MySQLTable(name).apply(action), force)
     }
 
     init { this.apply(action) }
