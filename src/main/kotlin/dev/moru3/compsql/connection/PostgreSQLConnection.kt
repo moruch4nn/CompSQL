@@ -1,5 +1,6 @@
 package dev.moru3.compsql.connection
 
+import dev.moru3.compsql.DataHub
 import dev.moru3.compsql.Database
 import dev.moru3.compsql.table.Table
 import java.sql.Connection
@@ -14,9 +15,12 @@ class PostgreSQLConnection(private val url: String, private val username: String
     override var connection: Connection = DriverManager.getConnection(url, username, password)
         private set
 
-    override fun reconnect(force: Boolean) {
-        if(this.isClosed) connection.close()
+    override val safeConnection: Connection get() = reconnect(false)
+
+    override fun reconnect(force: Boolean): Connection {
+        if(!this.isClosed) if(force) connection.close() else return connection
         connection = DriverManager.getConnection(url, username, password)
+        return connection
     }
 
     override fun table(table: Table, force: Boolean) {
@@ -27,5 +31,5 @@ class PostgreSQLConnection(private val url: String, private val username: String
         TODO("Not yet implemented")
     }
 
-    init { this.apply(action) }
+    init { this.apply(action);DataHub.setConnection(this) }
 }

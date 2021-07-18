@@ -7,6 +7,4 @@ interface AfterTable {
     val name: String
 
     val column: AfterColumn
-
-    fun rename(old: String, new: String): AfterTable
 }

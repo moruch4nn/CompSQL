@@ -4,5 +4,7 @@ abstract class Database: CompSQL {
 
     override val isClosed: Boolean get() = connection.isClosed||!connection.isValid(timeout)
 
-    override fun close() = connection.close()
+    override fun close() {
+        connection.close()
+    }
 }

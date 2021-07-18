@@ -6,5 +6,5 @@ interface SendSyntax: Syntax {
     /**
      * SQLと同期します。
      */
-    fun send(connection: Connection, force: Boolean)
+    fun send(force: Boolean)
 }

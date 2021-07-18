@@ -1,7 +1,25 @@
 package dev.moru3.compsql
 
-interface Connection {
-    val connection: java.sql.Connection
+import java.sql.Connection
 
-    fun reconnect(force: Boolean)
+interface Connection {
+    /**
+     * コネクションを返します。
+     */
+    val connection: Connection
+
+    /**
+     * コネクションを返します。既に閉じている場合は再接続します。
+     */
+    val safeConnection: Connection
+
+    /**
+     * リコネクト。
+     */
+    fun reconnect(force: Boolean): Connection
+
+    /**
+     * クローズ
+     */
+    fun close()
 }

@@ -1,13 +1,12 @@
 package dev.moru3.compsql.table
 
-import dev.moru3.compsql.Connection
 import dev.moru3.compsql.DataType
 import dev.moru3.compsql.interfaces.SendSyntax
 import dev.moru3.compsql.table.column.Column
 
 interface Table: SendSyntax {
     /**
-     * テーブル名。
+     * テーブル名。setするとRENAMEされます。
      */
     val name: String
 
