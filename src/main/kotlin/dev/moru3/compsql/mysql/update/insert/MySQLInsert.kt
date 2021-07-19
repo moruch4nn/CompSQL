@@ -1,9 +1,7 @@
 package dev.moru3.compsql.mysql.update.insert
 
-import dev.moru3.compsql.Connection
 import dev.moru3.compsql.DataHub.Companion.connection
 import dev.moru3.compsql.DataType
-import dev.moru3.compsql.NativeDataType
 import dev.moru3.compsql.Insert
 import dev.moru3.compsql.table.Table
 import java.sql.PreparedStatement
@@ -35,7 +33,7 @@ class MySQLInsert(override val table: Table) : Insert {
                     .append(MutableList(values.size){"?"})
                     .append(")")
             }
-        ).also { values.values.forEachIndexed { index, pair -> pair.first.set(it, index, pair.second) } }
+        ).also { values.values.forEachIndexed { index, pair -> pair.first.set(it, index+1, pair.second) } }
 
     override fun send(force: Boolean) {
         connection.sendUpdate(build(force))

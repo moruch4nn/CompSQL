@@ -16,21 +16,21 @@ abstract class Database: SQL {
         safeConnection.prepareStatement(sql).also { ps ->
             params.forEachIndexed { index, any ->
                 when(any) {
-                    is Boolean -> ps.setBoolean(index, any)
-                    is Byte -> ps.setByte(index, any)
-                    is Short -> ps.setShort(index, any)
-                    is Int -> ps.setInt(index, any)
-                    is Long -> ps.setLong(index, any)
-                    is Float -> ps.setFloat(index, any)
-                    is Double -> ps.setDouble(index, any)
-                    is BigDecimal -> ps.setBigDecimal(index, any)
-                    is String -> ps.setString(index, any)
-                    is ByteArray -> ps.setBytes(index, any)
-                    is Date -> ps.setDate(index, any)
-                    is Time -> ps.setTime(index, any)
-                    is Timestamp -> ps.setTimestamp(index, any)
-                    is InputStream -> ps.setAsciiStream(index, any)
-                    else -> ps.setObject(index, any)
+                    is Boolean -> ps.setBoolean(index+1, any)
+                    is Byte -> ps.setByte(index+1, any)
+                    is Short -> ps.setShort(index+1, any)
+                    is Int -> ps.setInt(index+1, any)
+                    is Long -> ps.setLong(index+1, any)
+                    is Float -> ps.setFloat(index+1, any)
+                    is Double -> ps.setDouble(index+1, any)
+                    is BigDecimal -> ps.setBigDecimal(index+1, any)
+                    is String -> ps.setString(index+1, any)
+                    is ByteArray -> ps.setBytes(index+1, any)
+                    is Date -> ps.setDate(index+1, any)
+                    is Time -> ps.setTime(index+1, any)
+                    is Timestamp -> ps.setTimestamp(index+1, any)
+                    is InputStream -> ps.setAsciiStream(index+1, any)
+                    else -> ps.setObject(index+1, any)
                 }
             }
             return ps.executeQuery().also { ps.close() }
@@ -45,21 +45,21 @@ abstract class Database: SQL {
         safeConnection.prepareStatement(sql).also { ps ->
             params.forEachIndexed { index, any ->
                 when(any) {
-                    is Boolean -> ps.setBoolean(index, any)
-                    is Byte -> ps.setByte(index, any)
-                    is Short -> ps.setShort(index, any)
-                    is Int -> ps.setInt(index, any)
-                    is Long -> ps.setLong(index, any)
-                    is Float -> ps.setFloat(index, any)
-                    is Double -> ps.setDouble(index, any)
-                    is BigDecimal -> ps.setBigDecimal(index, any)
-                    is String -> ps.setString(index, any)
-                    is ByteArray -> ps.setBytes(index, any)
-                    is Date -> ps.setDate(index, any)
-                    is Time -> ps.setTime(index, any)
-                    is Timestamp -> ps.setTimestamp(index, any)
-                    is InputStream -> ps.setAsciiStream(index, any)
-                    else -> ps.setObject(index, any)
+                    is Boolean -> ps.setBoolean(index+1, any)
+                    is Byte -> ps.setByte(index+1, any)
+                    is Short -> ps.setShort(index+1, any)
+                    is Int -> ps.setInt(index+1, any)
+                    is Long -> ps.setLong(index+1, any)
+                    is Float -> ps.setFloat(index+1, any)
+                    is Double -> ps.setDouble(index+1, any)
+                    is BigDecimal -> ps.setBigDecimal(index+1, any)
+                    is String -> ps.setString(index+1, any)
+                    is ByteArray -> ps.setBytes(index+1, any)
+                    is Date -> ps.setDate(index+1, any)
+                    is Time -> ps.setTime(index+1, any)
+                    is Timestamp -> ps.setTimestamp(index+1, any)
+                    is InputStream -> ps.setAsciiStream(index+1, any)
+                    else -> ps.setObject(index+1, any)
                 }
             }
             ps.executeUpdate().also { ps.close() }

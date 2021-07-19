@@ -53,7 +53,7 @@ class MySQLTable(val connection: Connection, n: String): Table {
                 append(columnList.keys.joinToString(", ")).append(")")
             }
         )
-        keys.forEachIndexed { index, any -> (DataType.getTypeListByAny(any).getOrNull(0)?:VARCHAR).set(preparedStatement, index, any) }
+        keys.forEachIndexed { index, any -> (DataType.getTypeListByAny(any).getOrNull(0)?:VARCHAR).set(preparedStatement, index+1, any) }
         return preparedStatement
     }
 
