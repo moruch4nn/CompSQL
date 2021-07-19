@@ -1,6 +1,7 @@
 package dev.moru3.compsql.table.column
 
 import dev.moru3.compsql.DataType
+import dev.moru3.compsql.NativeDataType
 import dev.moru3.compsql.table.AfterTable
 
 interface AfterColumn {
@@ -10,7 +11,7 @@ interface AfterColumn {
     /**
      * テーブルにColumnを追加します。
      */
-    fun add(name: String, type: DataType<*>, action: (Column)->Unit): AfterColumn
+    fun add(name: String, type: DataType<*, *>, action: (Column)->Unit): AfterColumn
 
     /**
      * テーブルにColumnを追加します。

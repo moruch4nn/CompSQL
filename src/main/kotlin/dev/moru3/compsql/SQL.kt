@@ -2,9 +2,8 @@ package dev.moru3.compsql
 
 import dev.moru3.compsql.table.Table
 import java.io.Closeable
-import java.sql.ResultSet
 
-interface SQL: Closeable, dev.moru3.compsql.Connection {
+interface SQL: Closeable, Connection {
 
     val timeout: Int
 
@@ -43,14 +42,4 @@ interface SQL: Closeable, dev.moru3.compsql.Connection {
      * 接続が既に閉じているかを返します。
      */
     val isClosed: Boolean
-
-    /**
-     * SQLにQueryを送信します。例: SELECT
-     */
-    fun sendQuery(sql: String, vararg params: Any): ResultSet
-
-    /**
-     * SQLにUpdateを送信します。例: TABLE, INSERT, UPSERT
-     */
-    fun sendUpdate(sql: String, vararg params: Any)
 }

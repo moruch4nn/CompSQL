@@ -33,7 +33,7 @@ open class MySQLConnection(private val url: String, private val username: String
     }
 
     override fun table(name: String, force: Boolean, action: Table.() -> Unit) {
-        table(MySQLTable(name).apply(action), force)
+        table(MySQLTable(this, name).apply(action), force)
     }
 
     override fun insert(name: String, force: Boolean, action: Insert.() -> Unit) {

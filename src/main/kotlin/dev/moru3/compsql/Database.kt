@@ -2,10 +2,7 @@ package dev.moru3.compsql
 
 import java.io.InputStream
 import java.math.BigDecimal
-import java.sql.Date
-import java.sql.ResultSet
-import java.sql.Time
-import java.sql.Timestamp
+import java.sql.*
 
 abstract class Database: SQL {
 
@@ -38,6 +35,10 @@ abstract class Database: SQL {
             }
             return ps.executeQuery().also { ps.close() }
         }
+    }
+
+    override fun sendUpdate(preparedStatement: PreparedStatement) {
+        preparedStatement.executeUpdate()
     }
 
     override fun sendUpdate(sql: String, vararg params: Any) {
