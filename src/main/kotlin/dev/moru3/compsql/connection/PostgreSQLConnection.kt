@@ -2,11 +2,15 @@ package dev.moru3.compsql.connection
 
 import dev.moru3.compsql.DataHub
 import dev.moru3.compsql.Database
+import dev.moru3.compsql.Insert
 import dev.moru3.compsql.table.Table
 import java.sql.Connection
 import java.sql.DriverManager
 import java.util.*
 
+/**
+ * 新しくPostgreSQLのコネクションを開きます。すでに開いているコネクションがある場合はそのコネクションをcloseします。
+ */
 class PostgreSQLConnection(private val url: String, private val username: String, private val password: String, private val properties: Properties, override val timeout: Int = 5, action: PostgreSQLConnection.()->Unit = {}): Database() {
     init { url.also{ properties.keys.mapIndexed { index, key -> "${if(index==0) '?' else '&'}${key}=${properties[key]}" }.forEach(it::plus) } }
 
@@ -28,6 +32,22 @@ class PostgreSQLConnection(private val url: String, private val username: String
     }
 
     override fun table(name: String, force: Boolean, action: Table.() -> Unit) {
+        TODO("Not yet implemented")
+    }
+
+    override fun insert(name: String, force: Boolean, action: Insert.() -> Unit) {
+        TODO("Not yet implemented")
+    }
+
+    override fun insert(insert: Insert) {
+        TODO("Not yet implemented")
+    }
+
+    override fun upsert(name: String, force: Boolean, action: Table.() -> Unit) {
+        TODO("Not yet implemented")
+    }
+
+    override fun upsert(name: String, force: Boolean, vararg values: Pair<String, Any>, action: Insert.() -> Unit) {
         TODO("Not yet implemented")
     }
 

@@ -1,4 +1,4 @@
-package dev.moru3.compsql.mysql.table.column
+package dev.moru3.compsql.mysql.update.table.column
 
 import dev.moru3.compsql.DataType
 import dev.moru3.compsql.table.column.Column

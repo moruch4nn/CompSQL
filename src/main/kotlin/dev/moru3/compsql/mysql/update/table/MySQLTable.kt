@@ -1,8 +1,8 @@
-package dev.moru3.compsql.mysql.table
+package dev.moru3.compsql.mysql.update.table
 
 import dev.moru3.compsql.DataHub.Companion.connection
 import dev.moru3.compsql.DataType
-import dev.moru3.compsql.mysql.table.column.MySQLColumn
+import dev.moru3.compsql.mysql.update.table.column.MySQLColumn
 import dev.moru3.compsql.table.AfterTable
 import dev.moru3.compsql.table.Table
 import dev.moru3.compsql.table.column.Column
@@ -11,10 +11,7 @@ class MySQLTable(n: String): Table {
 
     override var name: String = n
         set(value) {
-            connection.safeConnection.prepareStatement("RENAME TABLE $field to $value").also {
-                it.executeUpdate()
-                it.close()
-            }
+            connection.sendUpdate("RENAME TABLE $field to $value")
             field = value
         }
 
@@ -48,10 +45,5 @@ class MySQLTable(n: String): Table {
         append(columnList.joinToString(", ")).append(")")
     }
 
-    override fun send(force: Boolean) {
-        connection.safeConnection.prepareStatement(build(force)).also {
-            it.executeUpdate()
-            it.close()
-        }
-    }
+    override fun send(force: Boolean) = connection.sendUpdate(build(force))
 }

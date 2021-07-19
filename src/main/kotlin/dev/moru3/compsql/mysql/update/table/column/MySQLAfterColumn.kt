@@ -1,5 +1,6 @@
-package dev.moru3.compsql.mysql.table.column
+package dev.moru3.compsql.mysql.update.table.column
 
+import dev.moru3.compsql.DataHub.Companion.connection
 import dev.moru3.compsql.DataType
 import dev.moru3.compsql.table.AfterTable
 import dev.moru3.compsql.table.column.AfterColumn
@@ -11,14 +12,17 @@ class MySQLAfterColumn(override val afterTable: AfterTable): AfterColumn {
     }
 
     override fun delete(name: String): AfterColumn {
-        TODO("Not yet implemented")
+        connection.sendUpdate("ALTER TABLE ${afterTable.name} DROP COLUMN $name")
+        return this
     }
 
     override fun rename(old: String, new: String): AfterColumn {
-        TODO("Not yet implemented")
+        connection.sendUpdate("ALTER TABLE ${afterTable.name} RENAME COLUMN $old TO $new")
+        return this
     }
 
     override fun add(column: Column): AfterColumn {
-        TODO("Not yet implemented")
+        connection.sendUpdate("ALTER TABLE ${afterTable.name} ADD (${column.build()})")
+        return this
     }
 }
