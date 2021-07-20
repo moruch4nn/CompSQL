@@ -1,13 +1,13 @@
 package dev.moru3.compsql.mysql.update.table.column
 
 import dev.moru3.compsql.DataHub.Companion.connection
-import dev.moru3.compsql.DataType
+import dev.moru3.compsql.IDataType
 import dev.moru3.compsql.table.AfterTable
 import dev.moru3.compsql.table.column.AfterColumn
 import dev.moru3.compsql.table.column.Column
 
 class MySQLAfterColumn(override val afterTable: AfterTable): AfterColumn {
-    override fun add(name: String, type: DataType<*, *>, action: (Column) -> Unit): AfterColumn {
+    override fun add(name: String, type: IDataType<*, *>, action: (Column) -> Unit): AfterColumn {
         return add(MySQLColumn(name, type).apply(action))
     }
 

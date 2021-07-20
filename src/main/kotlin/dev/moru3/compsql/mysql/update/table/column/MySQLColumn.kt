@@ -1,18 +1,24 @@
 package dev.moru3.compsql.mysql.update.table.column
 
-import dev.moru3.compsql.DataType
+import dev.moru3.compsql.IDataType
 import dev.moru3.compsql.table.column.Column
 
-class MySQLColumn(override val name: String, override val type: DataType<*, *>): Column {
+class MySQLColumn(override var name: String, override val type: IDataType<*, *>): Column {
     override var isPrimaryKey: Boolean = false
 
     override var isNotNull: Boolean = false
+        set(value) { field = value&&type.allowNotNull }
     override var isAutoIncrement: Boolean = false
+        set(value) { field = value&&type.allowAutoIncrement }
     override var defaultValue: Any? = null
+        set(value) { if(type.allowDefault) { field = value } }
     override var property: Any? = null
     override var isUniqueIndex: Boolean = false
+        set(value) { field = value&&type.allowUnique }
     override var isUnsigned: Boolean = false
-    override val isZeroFill: Boolean = false
+        set(value) { field = value&&type.allowUnsigned }
+    override var isZeroFill: Boolean = false
+        set(value) { field = value&&type.allowZeroFill }
 
     override fun buildAsRaw(): Pair<String, List<Any>> {
         val types = mutableListOf<Any>()
@@ -24,7 +30,6 @@ class MySQLColumn(override val name: String, override val type: DataType<*, *>):
             if(isUnsigned&&type.allowUnsigned) append(" UNSIGNED")
             if((isNotNull||isPrimaryKey)&&type.allowNotNull) append(" NOT")
             append(" NULL")
-            if(isPrimaryKey&&type.allowPrimaryKey) append(" PRIMARY KEY")
             if(isAutoIncrement&&type.allowAutoIncrement) append(" AUTO_INCREMENT")
             defaultValue?.takeIf{ type.allowDefault }?.also {
                 append(" DEFAULT ?")

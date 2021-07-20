@@ -2,15 +2,16 @@ package dev.moru3.compsql.mysql.update.insert
 
 import dev.moru3.compsql.DataHub.Companion.connection
 import dev.moru3.compsql.DataType
+import dev.moru3.compsql.IDataType
 import dev.moru3.compsql.Insert
 import dev.moru3.compsql.table.Table
 import java.sql.PreparedStatement
 
 class MySQLInsert(override val table: Table) : Insert {
 
-    val values = mutableMapOf<String, Pair<DataType<*, *>, Any>>()
+    val values = mutableMapOf<String, Pair<IDataType<*, *>, Any>>()
 
-    override fun add(type: DataType<*, *>, key: String, value: Any): Insert {
+    override fun add(type: IDataType<*, *>, key: String, value: Any): Insert {
         check(type.type.isInstance(value)) { "The type of the specified value does not match the `type` in DataType." }
         values[key] = type to value
         return this
@@ -27,7 +28,7 @@ class MySQLInsert(override val table: Table) : Insert {
         val result = buildAsRaw(force)
         val preparedStatement = connection.safeConnection.prepareStatement(result.first)
         val keys = result.second
-        keys.forEachIndexed { index, any -> checkNotNull(DataType.getTypeListByAny(any).getOrNull(0)) { "`${any}`に対応する型が見つかりません。" }.set(preparedStatement, index+1, any) }
+        keys.forEachIndexed { index, any -> checkNotNull(DataType.getTypeListByAny(any).getOrNull(0)) { "`${any::class.java.simpleName}`に対応する型が見つかりません。" }.set(preparedStatement, index+1, any) }
         return preparedStatement
     }
 
@@ -48,7 +49,7 @@ class MySQLInsert(override val table: Table) : Insert {
                 .append(MutableList(values.size){"?"}.joinToString(","))
                 .append(")")
         }
-        val valueList = values.values
+        val valueList = values.map { it.value.second }
         return result to valueList.toList()
     }
 }

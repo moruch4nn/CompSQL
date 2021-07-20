@@ -1,6 +1,8 @@
 package dev.moru3.compsql
 
+import dev.moru3.compsql.DataType.Companion.addCustomType
 import dev.moru3.compsql.DataType.Companion.dataTypeList
+import dev.moru3.compsql.DataType.Companion.getDataTypeList
 import java.math.BigDecimal
 import java.sql.*
 
@@ -10,7 +12,7 @@ class Range(val a: Int, val b: Int) {
     }
 }
 
-interface DataType<F, T> {
+interface IDataType<F, T> {
     val typeName: String
     val from: Class<F>
     val type: Class<T>
@@ -30,16 +32,67 @@ interface DataType<F, T> {
     val convert: (value: F)->T
 
     fun set(ps: PreparedStatement, index: Int, any: Any)
+}
 
+/**
+ * @param typeName RDBMSに格納される際に使用される型名です。複数のRDBMSで使用する場合はマッピングを作成する必要があります。
+ * @param type
+ */
+class NativeDataType<F, T>(
+    override val typeName: String,
+    override val from: Class<F>,
+    override val type: Class<T>,
+    override val sqlType: Int,
+    override val allowPrimaryKey: Boolean,
+    override val allowNotNull: Boolean,
+    override val allowUnique: Boolean,
+    override val allowUnsigned: Boolean,
+    override val allowZeroFill: Boolean,
+    override val allowAutoIncrement: Boolean,
+    override val allowDefault: Boolean,
+    override val defaultProperty: String? = null,
+    override val priority: Int,
+    override val action: (PreparedStatement, Int, T)->Unit
+): IDataType<F, T> {
+
+    override val convert = { value: F -> type.cast(value) }
+
+    override fun set(ps: PreparedStatement, index: Int, any: Any) {
+        check(from.isInstance(any)) { "The type of \"any\" is different from \"type\"." }
+        action.invoke(ps, index, type.cast(any))
+    }
+
+    init { addCustomType(this) }
+}
+
+class DataType {
     companion object {
+
+        /**
+         * データタイプがlistで格納されています。
+         */
+        private var dataTypeList = mutableListOf<IDataType<*,*>>()
+
+        fun addCustomType(dataType: IDataType<*,*>) {
+            dataTypeList.add(dataType)
+        }
+
+        fun getDataTypeList(): List<IDataType<*, *>> = dataTypeList.toMutableList()
+
+        fun getTypeListByAny(any: Any): List<IDataType<*,*>> {
+            return dataTypeList.filter { it.type==any::class.java }
+        }
+
         private inline fun <reified T> createDataType(typeName: String, sqlType: Int, allowPrimaryKey: Boolean, allowNotNull: Boolean, allowUnique: Boolean, allowUnsigned: Boolean, allowZeroFill: Boolean, allowAutoIncrement: Boolean, allowDefault: Boolean, defaultProperty: Any? = null, priority: Int, noinline setValue: (PreparedStatement, Int, T)->Unit): NativeDataType<T, T> {
-            val dp: String? = if(defaultProperty is String) { "\"${defaultProperty}\"" } else if(defaultProperty!=null) { defaultProperty.toString() } else null
+            val dp: String? = if(defaultProperty is String) { "\"${defaultProperty}\"" } else defaultProperty?.toString()
             return NativeDataType(typeName, T::class.java, T::class.java, sqlType, allowPrimaryKey, allowNotNull, allowUnique, allowUnsigned, allowZeroFill, allowAutoIncrement, allowDefault, dp, priority, setValue)
         }
-        // 文字列
-        val VARCHAR = createDataType<String>("VARCHAR", Types.VARCHAR, allowPrimaryKey = true, allowNotNull = true, allowUnique = true, allowUnsigned = false, allowZeroFill = false, allowAutoIncrement = false, allowDefault = true, defaultProperty = 65_535, 10) { ps, i, a -> ps.setString(i, a) }
+        // 文字列 注意: UTF8を使用する場合は一文字3byteになります。
+        val VARCHAR = createDataType<String>("VARCHAR", Types.VARCHAR, allowPrimaryKey = true, allowNotNull = true, allowUnique = true, allowUnsigned = false, allowZeroFill = false, allowAutoIncrement = false, allowDefault = true, defaultProperty = 65535, 10) { ps, i, a -> ps.setString(i, a) }
         val CHAR = createDataType<Char>("CHAR", Types.CHAR, allowPrimaryKey = true, allowNotNull = true, allowUnique = true, allowUnsigned = false, allowZeroFill = false, allowAutoIncrement = false, allowDefault = false, defaultProperty = 255, 11) { ps, i, a -> ps.setString(i, a.toString()) }
         val LONGVARCHAR = createDataType<String>("LONGVARCHAR", Types.LONGVARCHAR, allowPrimaryKey = true, allowNotNull = true, allowUnique = true, allowUnsigned = false, allowZeroFill = false, allowAutoIncrement = false, allowDefault = false, defaultProperty = 16_777_215, 14) { ps, i, a -> ps.setString(i, a) }
+        val TEXT = createDataType<String>("TEXT", Types.VARCHAR, allowPrimaryKey = false, allowNotNull = true, allowUnique = true, allowUnsigned = false, allowZeroFill = false, allowAutoIncrement = false, allowDefault = false, defaultProperty = 65535, priority = 14) { ps, i, a -> ps.setString(i, a) }
+        val LONGTEXT = createDataType<String>("LONGTEXT", Types.LONGVARCHAR, allowPrimaryKey = false, allowNotNull = true, allowUnique = true, allowUnsigned = false, allowZeroFill = false, allowAutoIncrement = false, allowDefault = false, defaultProperty = 2147483647, priority = 14) { ps, i, a -> ps.setString(i, a) }
 
         // BOOLEAN
         val BOOLEAN = createDataType<Boolean>("BIT(1)", Types.BOOLEAN, allowPrimaryKey = true, allowNotNull = true, allowUnique = true, allowUnsigned = false, allowZeroFill = false, allowAutoIncrement = false, allowDefault = false, priority = 10)  { ps, i, a -> ps.setBoolean(i, a) }
@@ -68,51 +121,10 @@ interface DataType<F, T> {
         val TIME = createDataType<Time>("TIME", Types.TIME, allowPrimaryKey = true, allowNotNull = true, allowUnique = true, allowUnsigned = false, allowZeroFill = false, allowDefault = false, allowAutoIncrement = false, priority = 5) { ps, i, a -> ps.setTime(i, a) }
         val TIMESTAMP = createDataType<Timestamp>("TIMESTAMP", Types.TIMESTAMP, allowPrimaryKey = true, allowNotNull = true, allowUnique = true, allowUnsigned = false, allowZeroFill = false,allowDefault = false,  allowAutoIncrement = false, priority = 10) { ps, i, a -> ps.setTimestamp(i, a) }
         val DATETIME = createDataType<Timestamp>("DATETIME", Types.TIMESTAMP, allowPrimaryKey = true, allowNotNull = true, allowUnique = true, allowUnsigned = false, allowZeroFill = false, allowDefault = false, allowAutoIncrement = false, priority = 1) { ps, i, a -> ps.setTimestamp(i, a) }
-
-        /**
-         * データタイプがlistで格納されています。
-         */
-        val dataTypeList = mutableListOf<DataType<*,*>>()
-            get() = field.toMutableList()
-
-        fun getTypeListByAny(any: Any): List<DataType<*,*>> {
-            return dataTypeList.filter { it.type==any::class.java }
-        }
     }
 }
 
-/**
- * @param typeName RDBMSに格納される際に使用される型名です。複数のRDBMSで使用する場合はマッピングを作成する必要があります。
- * @param type
- */
-open class NativeDataType<F, T>(
-    override val typeName: String,
-    override val from: Class<F>,
-    override val type: Class<T>,
-    override val sqlType: Int,
-    override val allowPrimaryKey: Boolean,
-    override val allowNotNull: Boolean,
-    override val allowUnique: Boolean,
-    override val allowUnsigned: Boolean,
-    override val allowZeroFill: Boolean,
-    override val allowAutoIncrement: Boolean,
-    override val allowDefault: Boolean,
-    override val defaultProperty: String? = null,
-    override val priority: Int,
-    override val action: (PreparedStatement, Int, T)->Unit
-): DataType<F, T> {
-
-    override val convert = { value: F -> type.cast(value) }
-
-    override fun set(ps: PreparedStatement, index: Int, any: Any) {
-        check(from.isInstance(any)) { "The type of \"any\" is different from \"type\"." }
-        action.invoke(ps, index, type.cast(any))
-    }
-
-    init { dataTypeList.add(this) }
-}
-
-class CustomDataType<F, T>(base: DataType<F, T>, override val convert: (value: F) -> T): DataType<F, T> {
+class CustomDataType<F, T>(base: IDataType<F, T>, override val convert: (value: F) -> T): IDataType<F, T> {
     override val typeName: String = base.typeName
     override val from: Class<F> = base.from
     override val type: Class<T> = base.type

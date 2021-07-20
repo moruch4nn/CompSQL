@@ -1,29 +1,29 @@
 package dev.moru3.compsql.table.column
 
-import dev.moru3.compsql.DataType
+import dev.moru3.compsql.IDataType
 import dev.moru3.compsql.interfaces.NonCompleteSyntax
 
 interface Column: NonCompleteSyntax {
     /**
      *
      */
-    val type: DataType<*, *>
+    val type: IDataType<*, *>
 
-    val name: String
+    var name: String
 
-    val isZeroFill: Boolean
+    var isZeroFill: Boolean
 
-    val isPrimaryKey: Boolean
+    var isPrimaryKey: Boolean
 
-    val isNotNull: Boolean
+    var isNotNull: Boolean
 
-    val isAutoIncrement: Boolean
+    var isAutoIncrement: Boolean
 
-    val defaultValue: Any?
+    var defaultValue: Any?
 
-    val property: Any?
+    var property: Any?
 
-    val isUniqueIndex: Boolean
+    var isUniqueIndex: Boolean
 
-    val isUnsigned: Boolean
+    var isUnsigned: Boolean
 }

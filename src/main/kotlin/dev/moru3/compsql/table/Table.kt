@@ -1,6 +1,6 @@
 package dev.moru3.compsql.table
 
-import dev.moru3.compsql.DataType
+import dev.moru3.compsql.IDataType
 import dev.moru3.compsql.interfaces.NonCompleteSyntax
 import dev.moru3.compsql.interfaces.SendSyntax
 import dev.moru3.compsql.table.column.Column
@@ -15,7 +15,7 @@ interface Table: SendSyntax, NonCompleteSyntax {
     /**
      * 新しくColumnを作成し、追加します。
      */
-    fun column(name: String, type: DataType<*, *>, action: (Column)->Unit): Table
+    fun column(name: String, type: IDataType<*, *>, action: (Column)->Unit = {}): Table
 
     /**
      * Columnを追加します。

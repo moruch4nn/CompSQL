@@ -3,6 +3,7 @@ package dev.moru3.compsql.connection
 import dev.moru3.compsql.DataHub
 import dev.moru3.compsql.Database
 import dev.moru3.compsql.Insert
+import dev.moru3.compsql.Upsert
 import dev.moru3.compsql.table.Table
 import java.sql.Connection
 import java.sql.DriverManager
@@ -11,10 +12,10 @@ import java.util.*
 /**
  * 新しくPostgreSQLのコネクションを開きます。すでに開いているコネクションがある場合はそのコネクションをcloseします。
  */
-class PostgreSQLConnection(private val url: String, private val username: String, private val password: String, private val properties: Properties, override val timeout: Int = 5, action: PostgreSQLConnection.()->Unit = {}): Database() {
-    init { url.also{ properties.keys.mapIndexed { index, key -> "${if(index==0) '?' else '&'}${key}=${properties[key]}" }.forEach(it::plus) } }
+class PostgreSQLConnection(private var url: String, private val username: String, private val password: String, private val properties: TreeMap<String, Any>, override val timeout: Int = 5, action: PostgreSQLConnection.()->Unit = {}): Database() {
+    init { url.also{ properties.keys.mapIndexed { index, key -> url+="${if(index==0) '?' else '&'}${key}=${properties[key]}" }.forEach(it::plus) } }
 
-    constructor(host: String, database: String, username: String, password: String, properties: Properties, timeout: Int = 5, action: PostgreSQLConnection.()->Unit = {}): this("jdbc:postgresql://${host}/${database}", username, password, properties, timeout, action)
+    constructor(host: String, database: String, username: String, password: String, properties: TreeMap<String, Any>, timeout: Int = 5, action: PostgreSQLConnection.()->Unit = {}): this("jdbc:postgresql://${host}/${database}", username, password, properties, timeout, action)
 
     override var connection: Connection = DriverManager.getConnection(url, username, password)
         private set
@@ -39,15 +40,15 @@ class PostgreSQLConnection(private val url: String, private val username: String
         TODO("Not yet implemented")
     }
 
-    override fun insert(insert: Insert) {
+    override fun insert(insert: Insert, force: Boolean) {
         TODO("Not yet implemented")
     }
 
-    override fun upsert(name: String, force: Boolean, action: Table.() -> Unit) {
+    override fun upsert(upsert: Upsert) {
         TODO("Not yet implemented")
     }
 
-    override fun upsert(name: String, force: Boolean, vararg values: Pair<String, Any>, action: Insert.() -> Unit) {
+    override fun upsert(name: String, action: Upsert.() -> Unit) {
         TODO("Not yet implemented")
     }
 

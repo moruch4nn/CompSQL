@@ -2,15 +2,16 @@ package dev.moru3.compsql.mysql.update.insert
 
 import dev.moru3.compsql.DataHub.Companion.connection
 import dev.moru3.compsql.DataType
+import dev.moru3.compsql.IDataType
 import dev.moru3.compsql.Upsert
 import dev.moru3.compsql.table.Table
 import java.sql.PreparedStatement
 
 class MySQLUpsert(override val table: Table) : Upsert {
 
-    val values = mutableMapOf<String, Pair<DataType<*, *>, Any>>()
+    val values = mutableMapOf<String, Pair<IDataType<*, *>, Any>>()
 
-    override fun add(type: DataType<*, *>, key: String, value: Any): Upsert {
+    override fun add(type: IDataType<*, *>, key: String, value: Any): Upsert {
         check(type.type.isInstance(value)) { "The type of the specified value does not match the `type` in DataType." }
         values[key] = type to value
         return this
@@ -37,7 +38,7 @@ class MySQLUpsert(override val table: Table) : Upsert {
         }.buildAsRaw(true)
         val keys = insert.second.toMutableList()
         val sql =
-            "${insert.first} ON CONFLICT(${values.keys.joinToString(",")}) DO UPDATE SET ${values.map { (key, any) -> keys.add(any.second);"${key}=?" }.joinToString(",")}"
+            "${insert.first} ON DUPLICATE KEY UPDATE ${values.map { (key, any) -> keys.add(any.second);"${key}=?" }.joinToString(",")}"
         return sql to keys
     }
 

@@ -2,6 +2,7 @@ package dev.moru3.compsql.mysql.update.table
 
 import dev.moru3.compsql.Connection
 import dev.moru3.compsql.DataType
+import dev.moru3.compsql.IDataType
 import dev.moru3.compsql.mysql.update.table.column.MySQLColumn
 import dev.moru3.compsql.table.AfterTable
 import dev.moru3.compsql.table.Table
@@ -20,7 +21,7 @@ class MySQLTable(val connection: Connection, n: String): Table {
 
     private val columns: MutableList<Column> = mutableListOf()
 
-    override fun column(name: String, type: DataType<*, *>, action: (Column) -> Unit): Table {
+    override fun column(name: String, type: IDataType<*, *>, action: (Column) -> Unit): Table {
         return column(MySQLColumn(name, type).apply(action))
     }
 
@@ -38,14 +39,13 @@ class MySQLTable(val connection: Connection, n: String): Table {
         val result = buildString {
             append("CREATE TABLE ");if(!force) append("IF NOT EXISTS $name");append(" (")
             val primaryKeys: List<Column> = columns.filter(Column::isPrimaryKey)
-            val autoIncrements: List<Column> = columns.filter(Column::isAutoIncrement)
+            // val autoIncrements: List<Column> = columns.filter(Column::isAutoIncrement)
             val uniqueIndexes: List<Column> = columns.filter(Column::isUniqueIndex)
-            check(autoIncrements.size in 0..1) { "The maximum number of AI that can be set is 1." }
             val columnList: MutableMap<String, List<Any>> = mutableMapOf()
             val primaryKeyList: MutableList<String> = mutableListOf()
             columns.map(Column::buildAsRaw).forEach{ columnList[it.first] = it.second }
-            columns.map(Column::name).forEach(primaryKeyList::add)
-            if(primaryKeys.isNotEmpty()) columnList["PRIMARY KEY (`${primaryKeyList.joinToString(", ")}`)"] = listOf()
+            columns.filter(Column::isPrimaryKey).map(Column::name).forEach(primaryKeyList::add)
+            if(primaryKeys.isNotEmpty()) columnList["PRIMARY KEY (${primaryKeyList.map { "`${it}`" }.joinToString(", ")})"] = listOf()
             if(uniqueIndexes.isNotEmpty()) uniqueIndexes.forEach { columnList["UNIQUE `${name}_UNIQUE` (`${it.name}` ASC) VISIBLE"] = listOf() }
             columnList.values.forEach(valueList::addAll)
             append(columnList.keys.joinToString(", ")).append(")")

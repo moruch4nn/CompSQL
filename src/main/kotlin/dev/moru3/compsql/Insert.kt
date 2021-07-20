@@ -12,7 +12,7 @@ interface Insert: SendSyntax, NonCompleteSyntax {
      */
     val table: Table
 
-    fun add(type: DataType<*, *>, key: String, value: Any): Insert
+    fun add(type: IDataType<*, *>, key: String, value: Any): Insert
 
     fun add(key: String, value: Any): Insert
 

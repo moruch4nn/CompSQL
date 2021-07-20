@@ -26,17 +26,17 @@ interface SQL: Closeable, Connection {
     /**
      * テーブルを作成します。また、自動的にSQLに変更内容が同期されます。
      */
-    fun upsert(name: String, force: Boolean = false, action: Table.()->Unit = {})
+    fun upsert(name: String, action: Upsert.()->Unit = {})
 
     /**
      * データをinsertします。
      */
-    fun upsert(name: String, force: Boolean, vararg values: Pair<String, Any> = arrayOf(), action: Insert.() -> Unit)
+    fun upsert(upsert: Upsert)
 
     /**
      * データをinsertします。
      */
-    fun insert(insert: Insert)
+    fun insert(insert: Insert,  force: Boolean)
 
     /**
      * 接続が既に閉じているかを返します。
