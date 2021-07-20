@@ -1,12 +1,12 @@
 package dev.moru3.compsql.table
 
 import dev.moru3.compsql.DataType
-import dev.moru3.compsql.NativeDataType
+import dev.moru3.compsql.interfaces.NonCompleteSyntax
 import dev.moru3.compsql.interfaces.SendSyntax
 import dev.moru3.compsql.table.column.Column
 import java.sql.PreparedStatement
 
-interface Table: SendSyntax {
+interface Table: SendSyntax, NonCompleteSyntax {
     /**
      * テーブル名。setするとRENAMEされます。
      */
@@ -28,4 +28,6 @@ interface Table: SendSyntax {
     val after: AfterTable
 
     fun build(force: Boolean): PreparedStatement
+
+    fun buildAsRaw(force: Boolean): Pair<String, List<Any>>
 }

@@ -1,9 +1,7 @@
 package dev.moru3.compsql.table.column
 
 import dev.moru3.compsql.DataType
-import dev.moru3.compsql.NativeDataType
 import dev.moru3.compsql.interfaces.NonCompleteSyntax
-import dev.moru3.compsql.interfaces.Syntax
 
 interface Column: NonCompleteSyntax {
     /**

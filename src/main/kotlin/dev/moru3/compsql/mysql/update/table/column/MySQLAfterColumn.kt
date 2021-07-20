@@ -2,7 +2,6 @@ package dev.moru3.compsql.mysql.update.table.column
 
 import dev.moru3.compsql.DataHub.Companion.connection
 import dev.moru3.compsql.DataType
-import dev.moru3.compsql.NativeDataType
 import dev.moru3.compsql.table.AfterTable
 import dev.moru3.compsql.table.column.AfterColumn
 import dev.moru3.compsql.table.column.Column
@@ -23,7 +22,7 @@ class MySQLAfterColumn(override val afterTable: AfterTable): AfterColumn {
     }
 
     override fun add(column: Column): AfterColumn {
-        connection.sendUpdate("ALTER TABLE ${afterTable.name} ADD (${column.build()})")
+        connection.sendUpdate("ALTER TABLE ${afterTable.name} ADD (${column.buildAsRaw()})")
         return this
     }
 }

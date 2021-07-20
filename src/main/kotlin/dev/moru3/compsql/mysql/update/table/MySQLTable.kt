@@ -1,10 +1,7 @@
 package dev.moru3.compsql.mysql.update.table
 
 import dev.moru3.compsql.Connection
-import dev.moru3.compsql.DataHub.Companion.connection
 import dev.moru3.compsql.DataType
-import dev.moru3.compsql.DataType.Companion.VARCHAR
-import dev.moru3.compsql.NativeDataType
 import dev.moru3.compsql.mysql.update.table.column.MySQLColumn
 import dev.moru3.compsql.table.AfterTable
 import dev.moru3.compsql.table.Table
@@ -34,26 +31,33 @@ class MySQLTable(val connection: Connection, n: String): Table {
 
     override fun build(): PreparedStatement = build(false)
 
+    override fun buildAsRaw(): Pair<String, List<Any>>  = buildAsRaw(false)
+
+    override fun buildAsRaw(force: Boolean): Pair<String, List<Any>> {
+        val valueList = mutableListOf<Any>()
+        val result = buildString {
+            append("CREATE TABLE ");if(!force) append("IF NOT EXISTS $name");append(" (")
+            val primaryKeys: List<Column> = columns.filter(Column::isPrimaryKey)
+            val autoIncrements: List<Column> = columns.filter(Column::isAutoIncrement)
+            val uniqueIndexes: List<Column> = columns.filter(Column::isUniqueIndex)
+            check(autoIncrements.size in 0..1) { "The maximum number of AI that can be set is 1." }
+            val columnList: MutableMap<String, List<Any>> = mutableMapOf()
+            val primaryKeyList: MutableList<String> = mutableListOf()
+            columns.map(Column::buildAsRaw).forEach{ columnList[it.first] = it.second }
+            columns.map(Column::name).forEach(primaryKeyList::add)
+            if(primaryKeys.isNotEmpty()) columnList["PRIMARY KEY (`${primaryKeyList.joinToString(", ")}`)"] = listOf()
+            if(uniqueIndexes.isNotEmpty()) uniqueIndexes.forEach { columnList["UNIQUE `${name}_UNIQUE` (`${it.name}` ASC) VISIBLE"] = listOf() }
+            columnList.values.forEach(valueList::addAll)
+            append(columnList.keys.joinToString(", ")).append(")")
+        }
+        return result to valueList
+    }
+
     override fun build(force: Boolean): PreparedStatement {
-        val keys = mutableListOf<Any>()
-        val preparedStatement = connection.safeConnection.prepareStatement(
-            buildString {
-                append("CREATE TABLE ");if(!force) append("IF NOT EXISTS $name");append(" (")
-                val primaryKeys: List<Column> = columns.filter(Column::isPrimaryKey)
-                val autoIncrements: List<Column> = columns.filter(Column::isAutoIncrement)
-                val uniqueIndexes: List<Column> = columns.filter(Column::isUniqueIndex)
-                check(autoIncrements.size in 0..1) { "The maximum number of AI that can be set is 1." }
-                val columnList: MutableMap<String, List<Any>> = mutableMapOf()
-                val primaryKeyList: MutableList<String> = mutableListOf()
-                columns.map(Column::build).forEach{ columnList[it.first] = it.second }
-                columns.map(Column::name).forEach(primaryKeyList::add)
-                if(primaryKeys.isNotEmpty()) columnList["PRIMARY KEY (`${primaryKeyList.joinToString(", ")}`)"] = listOf()
-                if(uniqueIndexes.isNotEmpty()) uniqueIndexes.forEach { columnList["UNIQUE `${name}_UNIQUE` (`${it.name}` ASC) VISIBLE"] = listOf() }
-                columnList.values.forEach(keys::addAll)
-                append(columnList.keys.joinToString(", ")).append(")")
-            }
-        )
-        keys.forEachIndexed { index, any -> (DataType.getTypeListByAny(any).getOrNull(0)?:VARCHAR).set(preparedStatement, index+1, any) }
+        val result = buildAsRaw(force)
+        val preparedStatement = connection.safeConnection.prepareStatement(result.first)
+        val keys = result.second
+        keys.forEachIndexed { index, any -> checkNotNull(DataType.getTypeListByAny(any).getOrNull(0)) { "`${any}`に対応する型が見つかりません。" }.set(preparedStatement, index+1, any) }
         return preparedStatement
     }
 

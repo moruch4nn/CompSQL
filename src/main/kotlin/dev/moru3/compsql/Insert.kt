@@ -1,9 +1,11 @@
 package dev.moru3.compsql
 
+import dev.moru3.compsql.interfaces.NonCompleteSyntax
+import dev.moru3.compsql.interfaces.SendSyntax
 import dev.moru3.compsql.table.Table
 import java.sql.PreparedStatement
 
-interface Insert {
+interface Insert: SendSyntax, NonCompleteSyntax {
 
     /**
      * テーブル名
@@ -16,8 +18,5 @@ interface Insert {
 
     fun build(force: Boolean): PreparedStatement
 
-    /**
-     * 変更を送信します。
-     */
-    fun send(force: Boolean)
+    fun buildAsRaw(force: Boolean): Pair<String, List<Any>>
 }

@@ -7,5 +7,5 @@ interface Syntax {
 }
 
 interface NonCompleteSyntax {
-    fun build(): Pair<String, List<Any>>
+    fun buildAsRaw(): Pair<String, List<Any>>
 }

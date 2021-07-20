@@ -1,7 +1,6 @@
 package dev.moru3.compsql.mysql.update.table.column
 
 import dev.moru3.compsql.DataType
-import dev.moru3.compsql.NativeDataType
 import dev.moru3.compsql.table.column.Column
 
 class MySQLColumn(override val name: String, override val type: DataType<*, *>): Column {
@@ -15,7 +14,7 @@ class MySQLColumn(override val name: String, override val type: DataType<*, *>):
     override var isUnsigned: Boolean = false
     override val isZeroFill: Boolean = false
 
-    override fun build(): Pair<String, List<Any>> {
+    override fun buildAsRaw(): Pair<String, List<Any>> {
         val types = mutableListOf<Any>()
         val result = buildString {
             append("`").append(name).append("` ").append(type.typeName)
