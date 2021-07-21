@@ -1,8 +1,7 @@
 package dev.moru3.compsql.mysql.update.table
 
 import dev.moru3.compsql.Connection
-import dev.moru3.compsql.DataType
-import dev.moru3.compsql.IDataType
+import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.mysql.update.table.column.MySQLColumn
 import dev.moru3.compsql.table.AfterTable
 import dev.moru3.compsql.table.Table
@@ -21,7 +20,7 @@ class MySQLTable(val connection: Connection, n: String): Table {
 
     private val columns: MutableList<Column> = mutableListOf()
 
-    override fun column(name: String, type: IDataType<*, *>, action: (Column) -> Unit): Table {
+    override fun column(name: String, type: DataType<*, *>, action: (Column) -> Unit): Table {
         return column(MySQLColumn(name, type).apply(action))
     }
 

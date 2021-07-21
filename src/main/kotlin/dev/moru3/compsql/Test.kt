@@ -1,6 +1,7 @@
 package dev.moru3.compsql
 
 import dev.moru3.compsql.connection.MySQLConnection
+import dev.moru3.compsql.datatype.DataType
 import java.util.*
 
 fun main() {

@@ -22,7 +22,7 @@ class NativeDataType<F, T>(
     override val allowPrimaryKey: Boolean,
     override val allowNotNull: Boolean,
     override val allowUnique: Boolean,
-    override val allowUnsigned: Boolean,
+    override val isUnsigned: Boolean,
     override val allowZeroFill: Boolean,
     override val allowAutoIncrement: Boolean,
     override val allowDefault: Boolean,
@@ -50,7 +50,7 @@ interface DataType<F, T> {
     val allowPrimaryKey: Boolean
     val allowNotNull: Boolean
     val allowUnique: Boolean
-    val allowUnsigned: Boolean
+    val isUnsigned: Boolean
     val allowZeroFill: Boolean
     val allowAutoIncrement: Boolean
     val allowDefault: Boolean
@@ -128,7 +128,7 @@ class CustomDataType<F, T>(base: DataType<F, T>, override val convert: (value: F
     override val allowPrimaryKey: Boolean = base.allowPrimaryKey
     override val allowNotNull: Boolean = base.allowNotNull
     override val allowUnique: Boolean = base.allowUnique
-    override val allowUnsigned: Boolean = base.allowUnsigned
+    override val isUnsigned: Boolean = base.isUnsigned
     override val allowZeroFill: Boolean = base.allowZeroFill
     override val allowAutoIncrement: Boolean = base.allowAutoIncrement
     override val allowDefault: Boolean = base.allowDefault

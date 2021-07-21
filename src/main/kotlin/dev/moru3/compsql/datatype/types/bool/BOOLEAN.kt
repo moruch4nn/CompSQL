@@ -1,6 +1,5 @@
-package dev.moru3.compsql.datatype.types
+package dev.moru3.compsql.datatype.types.bool
 
-import com.sun.org.apache.xpath.internal.operations.Bool
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.datatype.DataType.Companion.addCustomType
 import java.sql.PreparedStatement
@@ -8,18 +7,18 @@ import java.sql.Types
 
 class BOOLEAN(): DataType<Boolean, Boolean> {
 
-    override val typeName: String = "BOOLEAN"
+    override val typeName: String = "BIT"
     override val from: Class<Boolean> = Boolean::class.java
     override val type: Class<Boolean> = Boolean::class.java
-    override val sqlType: Int = Types.VARCHAR
+    override val sqlType: Int = Types.BOOLEAN
     override val allowPrimaryKey: Boolean = true
     override val allowNotNull: Boolean = true
     override val allowUnique: Boolean = true
-    override val allowUnsigned: Boolean = false
+    override val isUnsigned: Boolean = false
     override val allowZeroFill: Boolean = false
     override val allowAutoIncrement: Boolean = false
     override val allowDefault: Boolean = false
-    override val defaultProperty: String? = null
+    override val defaultProperty: String = "1"
     override val priority: Int = 10
     override val action: (PreparedStatement, Int, Boolean) -> Unit = { ps, i, a -> ps.setBoolean(i, a) }
     override val convert: (value: Boolean) -> Boolean = { it }

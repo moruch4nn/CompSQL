@@ -1,13 +1,13 @@
 package dev.moru3.compsql.table.column
 
-import dev.moru3.compsql.IDataType
+import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.interfaces.NonCompleteSyntax
 
 interface Column: NonCompleteSyntax {
     /**
      *
      */
-    val type: IDataType<*, *>
+    val type: DataType<*, *>
 
     var name: String
 
@@ -25,5 +25,5 @@ interface Column: NonCompleteSyntax {
 
     var isUniqueIndex: Boolean
 
-    var isUnsigned: Boolean
+    val isUnsigned: Boolean
 }

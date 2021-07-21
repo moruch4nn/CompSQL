@@ -1,9 +1,9 @@
 package dev.moru3.compsql.mysql.update.table.column
 
-import dev.moru3.compsql.IDataType
+import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.table.column.Column
 
-class MySQLColumn(override var name: String, override val type: IDataType<*, *>): Column {
+class MySQLColumn(override var name: String, override val type: DataType<*, *>): Column {
     override var isPrimaryKey: Boolean = false
 
     override var isNotNull: Boolean = false
@@ -15,10 +15,9 @@ class MySQLColumn(override var name: String, override val type: IDataType<*, *>)
     override var property: Any? = null
     override var isUniqueIndex: Boolean = false
         set(value) { field = value&&type.allowUnique }
-    override var isUnsigned: Boolean = false
-        set(value) { field = value&&type.allowUnsigned }
     override var isZeroFill: Boolean = false
         set(value) { field = value&&type.allowZeroFill }
+    override val isUnsigned: Boolean = type.isUnsigned
 
     override fun buildAsRaw(): Pair<String, List<Any>> {
         val types = mutableListOf<Any>()
@@ -27,7 +26,7 @@ class MySQLColumn(override var name: String, override val type: IDataType<*, *>)
             property?.also { append("(").append(it.toString()).append(")") }?: type.defaultProperty?.also { append("(").append(it).append(")") }
             // MYSQL ONLY
             if(isZeroFill&&type.allowZeroFill) append(" ZEROFILL")
-            if(isUnsigned&&type.allowUnsigned) append(" UNSIGNED")
+            if(isUnsigned) append(" UNSIGNED")
             if((isNotNull||isPrimaryKey)&&type.allowNotNull) append(" NOT")
             append(" NULL")
             if(isAutoIncrement&&type.allowAutoIncrement) append(" AUTO_INCREMENT")
