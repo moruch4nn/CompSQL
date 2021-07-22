@@ -24,16 +24,12 @@ class MySQLColumn(override var name: String, override val type: DataType<*, *>):
         val result = buildString {
             append("`").append(name).append("` ").append(type.typeName)
             property?.also { append("(").append(it.toString()).append(")") }?: type.defaultProperty?.also { append("(").append(it).append(")") }
-            // MYSQL ONLY
-            if(isZeroFill&&type.allowZeroFill) append(" ZEROFILL")
-            if(isUnsigned) append(" UNSIGNED")
-            if((isNotNull||isPrimaryKey)&&type.allowNotNull) append(" NOT")
+            if(isZeroFill&&type.allowZeroFill) { append(" ZEROFILL") }
+            if(isUnsigned) { append(" UNSIGNED") }
+            if((isNotNull||isPrimaryKey)&&type.allowNotNull) { append(" NOT") }
             append(" NULL")
-            if(isAutoIncrement&&type.allowAutoIncrement) append(" AUTO_INCREMENT")
-            defaultValue?.takeIf{ type.allowDefault }?.also {
-                append(" DEFAULT ?")
-                types+=it
-            }
+            if(isAutoIncrement&&type.allowAutoIncrement) { append(" AUTO_INCREMENT") }
+            defaultValue?.takeIf{ type.allowDefault }?.also { append(" DEFAULT ?") }?.also(types::add)
             // UniqueIndexはMySQLTableで設定します。
         }
         return result to types

@@ -5,6 +5,11 @@ import dev.moru3.compsql.datatype.DataType.Companion.addCustomType
 import java.sql.PreparedStatement
 import java.sql.Types
 
+/**
+ * LONGTEXT とは 0KBから65535KB までの文字を格納できます。これ以上のサイズが必要な場合はLONGTEXTを使用してください。
+ * 文字数ではないためUTF8を使用する場合は一文字に3KB使用します。
+ * CharやVarcharとは違い、PrimaryKeyとしては利用できません。
+ */
 class TEXT(property: Int): DataType<String, String> {
 
     constructor(): this(65535)

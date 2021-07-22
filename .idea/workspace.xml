@@ -5,32 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f0d9d670-a8dc-4a15-8599-606a86f01dba" name="デフォルト変更リスト" comment="update.">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/BIGINT.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/INTEGER.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/unsigned/UBIGINT.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/unsigned/UINTEGER.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/unsigned/USMALLINT.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/unsigned/UTINYINT.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/Insert.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/Insert.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/Test.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/Test.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/Upsert.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/Upsert.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/DataType.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/DataType.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/BOOLEAN.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/bool/BOOLEAN.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/CHAR.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/CHAR.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/LONGTEXT.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/LONGTEXT.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/SMALLINT.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/SMALLINT.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/TEXT.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/TEXT.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/TINYINT.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/TINYINT.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/VARCHAR.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/VARCHAR.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/insert/MySQLInsert.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/insert/MySQLInsert.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/insert/MySQLUpsert.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/insert/MySQLUpsert.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/table/MySQLTable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/table/MySQLTable.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/table/column/MySQLAfterColumn.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/table/column/MySQLAfterColumn.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/bool/BOOLEAN.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/bool/BOOLEAN.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/CHAR.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/CHAR.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/LONGTEXT.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/LONGTEXT.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/TEXT.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/TEXT.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/VARCHAR.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/VARCHAR.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/table/column/MySQLColumn.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/table/column/MySQLColumn.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/table/Table.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/table/Table.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/table/column/AfterColumn.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/table/column/AfterColumn.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/table/column/Column.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/table/column/Column.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +75,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="ml.local.models.training.notification.expired" value="true" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.language.Kotlin.scripting" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
@@ -204,7 +185,12 @@
     <option name="LAST_COMMIT_MESSAGE" value="update." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
+    <expand>
+      <path>
+        <item name="CompSQL" type="b2602c69:ProjectViewProjectNode" />
+        <item name="CompSQL" type="462c0819:PsiDirectoryNode" />
+      </path>
+    </expand>
     <select />
   </component>
 </project>

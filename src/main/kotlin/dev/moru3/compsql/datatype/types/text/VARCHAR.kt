@@ -5,6 +5,10 @@ import dev.moru3.compsql.datatype.DataType.Companion.addCustomType
 import java.sql.PreparedStatement
 import java.sql.Types
 
+/**
+ * VARCHARとは 0 から 65535 文字までの文字を格納できます。
+ * 65535文字以上を格納する場合はTEXT型を使用してください。
+ */
 class VARCHAR(property: Int): DataType<String, String> {
 
     constructor(): this(65535)

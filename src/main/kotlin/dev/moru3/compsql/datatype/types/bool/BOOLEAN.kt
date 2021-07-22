@@ -5,7 +5,10 @@ import dev.moru3.compsql.datatype.DataType.Companion.addCustomType
 import java.sql.PreparedStatement
 import java.sql.Types
 
-class BOOLEAN(): DataType<Boolean, Boolean> {
+/**
+ * BOOLEANとはtrue、falseの1bitを格納できるSQLの型です。
+ */
+class BOOLEAN: DataType<Boolean, Boolean> {
 
     override val typeName: String = "BIT"
     override val from: Class<Boolean> = Boolean::class.java
