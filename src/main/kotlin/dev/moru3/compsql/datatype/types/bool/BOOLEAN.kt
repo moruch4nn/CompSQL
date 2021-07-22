@@ -20,7 +20,7 @@ class BOOLEAN: DataType<Boolean, Boolean> {
     override val isUnsigned: Boolean = false
     override val allowZeroFill: Boolean = false
     override val allowAutoIncrement: Boolean = false
-    override val allowDefault: Boolean = false
+    override val allowDefault: Boolean = true
     override val defaultProperty: String = "1"
     override val priority: Int = 10
     override val action: (PreparedStatement, Int, Boolean) -> Unit = { ps, i, a -> ps.setBoolean(i, a) }

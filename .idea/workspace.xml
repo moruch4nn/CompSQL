@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f0d9d670-a8dc-4a15-8599-606a86f01dba" name="デフォルト変更リスト" comment="update.">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/binary/BINARY.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/bool/BOOLEAN.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/bool/BOOLEAN.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +82,7 @@
       <recent name="dev.moru3.compsql" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="dev.moru3.compsql.datatype.types.binary" />
       <recent name="dev.moru3.compsql.datatype.types.numeric.unsigned" />
       <recent name="dev.moru3.compsql.datatype.types.numeric" />
       <recent name="dev.moru3.compsql.datatype.types" />
@@ -107,8 +110,14 @@
       <method v="2" />
     </configuration>
     <configuration name="TestKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="dev.moru3.compsql.TestKt" />
       <module name="CompSQL.main" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" value="dev.moru3.compsql.TestKt" />
+      <option name="WORKING_DIRECTORY" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
