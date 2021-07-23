@@ -7,13 +7,14 @@ import java.sql.Types
 
 /**
  * BINARYとは0から255までの固定長のバイナリを格納できます。
- * 256以上のサイズを格納する場合はBLOBを使用します。
  */
-class BINARY(val property: Int): DataType<ByteArray, ByteArray> {
+class LONGBLOB(val property: Long): DataType<ByteArray, ByteArray> {
 
-    constructor(): this(255)
+    constructor(): this(4294967295)
 
-    override val typeName: String = "BINARY"
+    constructor(int: Int): this(int.toLong())
+
+    override val typeName: String = "LONGBLOB"
     override val from: Class<ByteArray> = ByteArray::class.java
     override val type: Class<ByteArray> = ByteArray::class.java
     override val sqlType: Int = Types.BINARY

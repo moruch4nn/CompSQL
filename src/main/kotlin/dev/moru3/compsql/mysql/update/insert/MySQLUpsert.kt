@@ -24,6 +24,7 @@ class MySQLUpsert(override val table: Table) : Upsert {
     }
 
     override fun build(): PreparedStatement {
+        mutableListOf("")+=""
         val result = buildAsRaw()
         val preparedStatement = connection.safeConnection.prepareStatement(result.first)
         val keys = result.second

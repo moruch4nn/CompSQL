@@ -7,13 +7,13 @@ import java.sql.Types
 
 /**
  * BINARYとは0から255までの固定長のバイナリを格納できます。
- * 256以上のサイズを格納する場合はBLOBを使用します。
+ * 256以上のサイズを格納する場合あ￥はVARBINARYを使用します。
  */
-class BINARY(val property: Int): DataType<ByteArray, ByteArray> {
+class VARBINARY(val property: Int): DataType<ByteArray, ByteArray> {
 
-    constructor(): this(255)
+    constructor(): this(65535)
 
-    override val typeName: String = "BINARY"
+    override val typeName: String = "VARBINARY"
     override val from: Class<ByteArray> = ByteArray::class.java
     override val type: Class<ByteArray> = ByteArray::class.java
     override val sqlType: Int = Types.BINARY
