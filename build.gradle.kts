@@ -21,6 +21,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-native-mt")
     implementation(kotlin("stdlib"))
     testCompile("junit", "junit", "4.12")
     implementation("mysql:mysql-connector-java:5.1.6")
