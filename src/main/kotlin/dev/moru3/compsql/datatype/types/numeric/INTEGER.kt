@@ -1,7 +1,7 @@
 package dev.moru3.compsql.datatype.types.numeric
 
+import dev.moru3.compsql.DataHub.addCustomType
 import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.datatype.DataType.Companion.addCustomType
 import java.sql.PreparedStatement
 import java.sql.Types
 
@@ -9,17 +9,16 @@ import java.sql.Types
  * Integerとは -2147483648 から 2147483647 までの整数を格納できるSQLの型です。
  * これより大きな型が必要な場合はBIGINT、UBIGINTを使用します。
  * Unsigned: UINTEGER, Non-Unsigned: INTEGER
+ * 注意: numeric系のプロパティは"最大数"ではなく"最大桁数"なのでお間違えなく。
  *
  * -2147483648 = マイナス21億4748万3648
  * 2147483647 = 21億4748万3647
  */
-class INTEGER(val property: Int): DataType<Int, Int> {
-
-    constructor(): this(2_147_483_647)
+open class INTEGER(val property: Byte): DataType<Int, Int> {
 
     override val typeName: String = "INT"
-    override val from: Class<Int> = Int::class.java
-    override val type: Class<Int> = Int::class.java
+    override val from: Class<Int> = Int::class.javaObjectType
+    override val type: Class<Int> = Int::class.javaObjectType
     override val sqlType: Int = Types.INTEGER
     override val allowPrimaryKey: Boolean = true
     override val allowNotNull: Boolean = true

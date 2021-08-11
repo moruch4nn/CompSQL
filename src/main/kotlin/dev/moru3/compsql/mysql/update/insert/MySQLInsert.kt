@@ -1,6 +1,7 @@
 package dev.moru3.compsql.mysql.update.insert
 
-import dev.moru3.compsql.DataHub.Companion.connection
+import dev.moru3.compsql.DataHub.connection
+import dev.moru3.compsql.DataHub.getTypeListByAny
 import dev.moru3.compsql.Insert
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.table.Table
@@ -20,14 +21,14 @@ class MySQLInsert(override val table: Table) : Insert {
      * valueから型を推論します。推論できない場合はVARCHARに変換されます。
      */
     override fun add(key: String, value: Any): Insert {
-        return add(checkNotNull(DataType.getTypeListByAny(value).getOrNull(0)) { "`${value}`に対応する型が見つかりません。" }, key, value)
+        return add(checkNotNull(getTypeListByAny(value).getOrNull(0)) { "`${value::class.java.name}`に対応する型が見つかりません。" }, key, value)
     }
 
     override fun build(force: Boolean): PreparedStatement {
         val result = buildAsRaw(force)
         val preparedStatement = connection.safeConnection.prepareStatement(result.first)
         val keys = result.second
-        keys.forEachIndexed { index, any -> checkNotNull(DataType.getTypeListByAny(any).getOrNull(0)) { "`${any::class.java.simpleName}`に対応する型が見つかりません。" }.set(preparedStatement, index+1, any) }
+        keys.forEachIndexed { index, pair -> pair.second.set(preparedStatement, index+1, pair.first) }
         return preparedStatement
     }
 
@@ -37,9 +38,9 @@ class MySQLInsert(override val table: Table) : Insert {
         connection.sendUpdate(build(force))
     }
 
-    override fun buildAsRaw(): Pair<String, List<Any>> = buildAsRaw(false)
+    override fun buildAsRaw(): Pair<String, List<Pair<Any, DataType<*,*>>>> = buildAsRaw(false)
 
-    override fun buildAsRaw(force: Boolean): Pair<String, List<Any>> {
+    override fun buildAsRaw(force: Boolean): Pair<String, List<Pair<Any, DataType<*,*>>>> {
         val result = buildString {
             append("INSERT")
             if(!force) { append(" IGNORE") }
@@ -48,7 +49,7 @@ class MySQLInsert(override val table: Table) : Insert {
                 .append(MutableList(values.size){"?"}.joinToString(","))
                 .append(")")
         }
-        val valueList = values.map { it.value.second }
-        return result to valueList.toList()
+        val valueList = values.values.map { Pair(it.second, it.first) }
+        return result to valueList
     }
 }

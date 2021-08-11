@@ -1,6 +1,6 @@
 package dev.moru3.compsql.mysql.update.table.column
 
-import dev.moru3.compsql.DataHub.Companion.connection
+import dev.moru3.compsql.DataHub.connection
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.table.AfterTable
 import dev.moru3.compsql.table.column.AfterColumn

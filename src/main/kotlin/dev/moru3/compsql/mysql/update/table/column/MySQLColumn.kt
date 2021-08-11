@@ -19,8 +19,8 @@ class MySQLColumn(override var name: String, override val type: DataType<*, *>):
         set(value) { field = value&&type.allowZeroFill }
     override val isUnsigned: Boolean = type.isUnsigned
 
-    override fun buildAsRaw(): Pair<String, List<Any>> {
-        val types = mutableListOf<Any>()
+    override fun buildAsRaw(): Pair<String, List<Pair<Any, DataType<*, *>>>> {
+        val types = mutableListOf<Pair<Any, DataType<*, *>>>()
         val result = buildString {
             append("`").append(name).append("` ").append(type.typeName)
             property?.also { append("(").append(it.toString()).append(")") }?: type.defaultProperty?.also { append("(").append(it).append(")") }
@@ -29,7 +29,7 @@ class MySQLColumn(override var name: String, override val type: DataType<*, *>):
             if((isNotNull||isPrimaryKey)&&type.allowNotNull) { append(" NOT") }
             append(" NULL")
             if(isAutoIncrement&&type.allowAutoIncrement) { append(" AUTO_INCREMENT") }
-            defaultValue?.takeIf{ type.allowDefault }?.also { append(" DEFAULT ?") }?.also(types::add)
+            defaultValue?.takeIf{ type.allowDefault }?.also { append(" DEFAULT ?") }?.also { types.add(Pair(it, type)) }
             // UniqueIndexはMySQLTableで設定します。
         }
         return result to types

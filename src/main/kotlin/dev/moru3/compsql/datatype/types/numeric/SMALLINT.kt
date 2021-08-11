@@ -1,7 +1,7 @@
 package dev.moru3.compsql.datatype.types.numeric
 
 import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.datatype.DataType.Companion.addCustomType
+import dev.moru3.compsql.DataHub.addCustomType
 import java.sql.PreparedStatement
 import java.sql.Types
 
@@ -9,14 +9,13 @@ import java.sql.Types
  * SmallInt -32768 から 32767 までの整数を格納できるSQLの型です。
  * これ以上大きな型が必要な場合は INTEGER, UINTEGER を使用します。
  * Unsigned: USMALLINT, Non-Unsigned: SMALLINT
+ * 注意: numeric系のプロパティは"最大数"ではなく"最大桁数"なのでお間違えなく。
  */
-class SMALLINT(val property: Int): DataType<Short, Short> {
-
-    constructor(): this(32767)
+open class SMALLINT(val property: Byte): DataType<Short, Short> {
 
     override val typeName: String = "SMALLINT"
-    override val from: Class<Short> = Short::class.java
-    override val type: Class<Short> = Short::class.java
+    override val from: Class<Short> = Short::class.javaObjectType
+    override val type: Class<Short> = Short::class.javaObjectType
     override val sqlType: Int = Types.SMALLINT
     override val allowPrimaryKey: Boolean = true
     override val allowNotNull: Boolean = true

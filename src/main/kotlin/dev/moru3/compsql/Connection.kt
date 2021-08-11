@@ -30,6 +30,8 @@ interface Connection {
      */
     fun sendQuery(sql: String, vararg params: Any): ResultSet
 
+    fun sendQuery(preparedStatement: PreparedStatement): ResultSet
+
     /**
      * SQLにUpdateを送信します。例: TABLE, INSERT, UPSERT
      */

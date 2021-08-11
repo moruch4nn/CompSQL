@@ -1,7 +1,7 @@
 package dev.moru3.compsql.datatype.types.numeric
 
 import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.datatype.DataType.Companion.addCustomType
+import dev.moru3.compsql.DataHub.addCustomType
 import java.sql.PreparedStatement
 import java.sql.Types
 
@@ -10,17 +10,16 @@ import java.sql.Types
  * BigIntとは -9223372036854775808 から 9223372036854775807 までの整数を格納できるSQLの型です。
  * これ以上大きな型が必要な場合はDECIMAL、NUMERICを使用します。
  * Unsigned: UBIGINT, Non-Unsigned: BIGINT
+ * 注意: numeric系のプロパティは"最大数"ではなく"最大桁数"なのでお間違えなく。
  *
  * -9223372036854775808 = マイナス922京3372兆368億5477万5808
  * 9223372036854775807 = 922京3372兆368億5477万5807
  */
-class BIGINT(val property: Long): DataType<Long, Long> {
-
-    constructor(): this(9_223_372_036_854_775_807)
+open class BIGINT(val property: Byte): DataType<Long, Long> {
 
     override val typeName: String = "BIGINT"
-    override val from: Class<Long> = Long::class.java
-    override val type: Class<Long> = Long::class.java
+    override val from: Class<Long> = Long::class.javaObjectType
+    override val type: Class<Long> = Long::class.javaObjectType
     override val sqlType: Int = Types.BIGINT
     override val allowPrimaryKey: Boolean = true
     override val allowNotNull: Boolean = true

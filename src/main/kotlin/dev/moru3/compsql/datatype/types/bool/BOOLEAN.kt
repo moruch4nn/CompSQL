@@ -1,14 +1,14 @@
 package dev.moru3.compsql.datatype.types.bool
 
 import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.datatype.DataType.Companion.addCustomType
+import dev.moru3.compsql.DataHub.addCustomType
 import java.sql.PreparedStatement
 import java.sql.Types
 
 /**
  * BOOLEANとはtrue、falseの1bitを格納できるSQLの型です。
  */
-class BOOLEAN: DataType<Boolean, Boolean> {
+open class BOOLEAN: DataType<Boolean, Boolean> {
 
     override val typeName: String = "BIT"
     override val from: Class<Boolean> = Boolean::class.java

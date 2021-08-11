@@ -1,7 +1,7 @@
 package dev.moru3.compsql.datatype.types.text
 
 import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.datatype.DataType.Companion.addCustomType
+import dev.moru3.compsql.DataHub.addCustomType
 import java.sql.PreparedStatement
 import java.sql.Types
 
@@ -10,9 +10,7 @@ import java.sql.Types
  * 文字数ではないためUTF8を使用する場合は一文字に3KB使用します。
  * CharやVarcharとは違い、PrimaryKeyとしては利用できません。
  */
-class TEXT(property: Int): DataType<String, String> {
-
-    constructor(): this(65535)
+open class TEXT(property: Int): DataType<String, String> {
 
     override val typeName: String = "TEXT"
     override val from: Class<String> = String::class.java

@@ -1,6 +1,6 @@
 package dev.moru3.compsql.connection
 
-import dev.moru3.compsql.DataHub.Companion.setConnection
+import dev.moru3.compsql.DataHub.setConnection
 import dev.moru3.compsql.Database
 import dev.moru3.compsql.Insert
 import dev.moru3.compsql.Upsert
@@ -13,12 +13,22 @@ import java.util.*
 
 /**
  * 新しくMySQLのコネクションを開きます。すでに開いているコネクションがある場合はそのコネクションをcloseします。
+ * @param url jdbc:mysql://host/database
  */
-open class MySQLConnection(private var url: String, private val username: String, private val password: String, private val properties: TreeMap<String, Any>, override val timeout: Int = 5, action: MySQLConnection.()->Unit = {}): Database() {
+open class MySQLConnection(private var url: String, private val username: String, private val password: String, private val properties: Map<String, Any>, override val timeout: Int = 5, action: MySQLConnection.()->Unit = {}): Database() {
 
-    init { url.also{ properties.keys.mapIndexed { index, key -> url+="${if(index==0) '?' else '&'}${key}=${properties[key]}" }.forEach(it::plus) } }
+    val database: String = url.split("/").last()
 
-    constructor(host: String, database: String, username: String, password: String, properties: TreeMap<String, Any>, timeout: Int = 5, action: MySQLConnection.()->Unit = {}): this("jdbc:mysql://${host}/${database}", username, password, properties, timeout, action)
+    init {
+        val ndburl = url.replaceFirst(Regex("/${database}\$"), "").also{ properties.keys.mapIndexed { index, key -> "${if(index==0) '?' else '&'}${key}=${properties[key]}" }.forEach(it::plus) }
+        val ndbcon = DriverManager.getConnection(ndburl, username, password)
+        ndbcon.prepareStatement("CREATE DATABASE IF NOT EXISTS $database").also { it.executeUpdate() }.close()
+        ndbcon.close()
+    }
+
+    init { url = url.also{ properties.keys.mapIndexed { index, key -> "${if(index==0) '?' else '&'}${key}=${properties[key]}" }.forEach(it::plus) } }
+
+    constructor(host: String, database: String, username: String, password: String, properties: Map<String, Any>, timeout: Int = 5, action: MySQLConnection.()->Unit = {}): this("jdbc:mysql://${host}/${database}", username, password, properties, timeout, action)
 
     override val safeConnection: Connection get() = reconnect(false)
 

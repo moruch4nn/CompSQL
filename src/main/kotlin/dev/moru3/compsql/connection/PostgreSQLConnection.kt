@@ -12,10 +12,10 @@ import java.util.*
 /**
  * 新しくPostgreSQLのコネクションを開きます。すでに開いているコネクションがある場合はそのコネクションをcloseします。
  */
-class PostgreSQLConnection(private var url: String, private val username: String, private val password: String, private val properties: TreeMap<String, Any>, override val timeout: Int = 5, action: PostgreSQLConnection.()->Unit = {}): Database() {
+class PostgreSQLConnection(private var url: String, private val username: String, private val password: String, private val properties: Map<String, Any>, override val timeout: Int = 5, action: PostgreSQLConnection.()->Unit = {}): Database() {
     init { url.also{ properties.keys.mapIndexed { index, key -> url+="${if(index==0) '?' else '&'}${key}=${properties[key]}" }.forEach(it::plus) } }
 
-    constructor(host: String, database: String, username: String, password: String, properties: TreeMap<String, Any>, timeout: Int = 5, action: PostgreSQLConnection.()->Unit = {}): this("jdbc:postgresql://${host}/${database}", username, password, properties, timeout, action)
+    constructor(host: String, database: String, username: String, password: String, properties: Map<String, Any>, timeout: Int = 5, action: PostgreSQLConnection.()->Unit = {}): this("jdbc:postgresql://${host}/${database}", username, password, properties, timeout, action)
 
     override var connection: Connection = DriverManager.getConnection(url, username, password)
         private set

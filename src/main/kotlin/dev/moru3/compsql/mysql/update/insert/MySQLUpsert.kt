@@ -1,6 +1,7 @@
 package dev.moru3.compsql.mysql.update.insert
 
-import dev.moru3.compsql.DataHub.Companion.connection
+import dev.moru3.compsql.DataHub.connection
+import dev.moru3.compsql.DataHub.getTypeListByAny
 import dev.moru3.compsql.Upsert
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.table.Table
@@ -20,25 +21,23 @@ class MySQLUpsert(override val table: Table) : Upsert {
      * valueから型を推論します。推論できない場合はVARCHARに変換されます。
      */
     override fun add(key: String, value: Any): Upsert {
-        return add(checkNotNull(DataType.getTypeListByAny(value).getOrNull(0)) { "`${value}`に対応する型が見つかりません。" }, key, value)
+        return add(checkNotNull(getTypeListByAny(value).getOrNull(0)) { "`${value}`に対応する型が見つかりません。" }, key, value)
     }
 
     override fun build(): PreparedStatement {
-        mutableListOf("")+=""
         val result = buildAsRaw()
         val preparedStatement = connection.safeConnection.prepareStatement(result.first)
         val keys = result.second
-        keys.forEachIndexed { index, any -> checkNotNull(DataType.getTypeListByAny(any).getOrNull(0)) { "`${any}`に対応する型が見つかりません。" }.set(preparedStatement, index+1, any) }
+        keys.forEachIndexed { index, pair -> pair.second.set(preparedStatement, index+1, pair.first) }
         return preparedStatement
     }
 
-    override fun buildAsRaw(): Pair<String, List<Any>> {
-        val insert = MySQLInsert(table).also {
-            values.forEach { (key, any) -> it.add(any.first, key, any.second) }
+    override fun buildAsRaw(): Pair<String, List<Pair<Any, DataType<*, *>>>> {
+        val insert = MySQLInsert(table).also { values.forEach { (key, pair) -> it.add(pair.first, key, pair.second) }
         }.buildAsRaw(true)
-        val keys = insert.second.toMutableList()
+        val keys = values.values.map { Pair(it.second, it.first) }.toMutableList()
         val sql =
-            "${insert.first} ON DUPLICATE KEY UPDATE ${values.map { (key, any) -> keys.add(any.second);"${key}=?" }.joinToString(",")}"
+            "${insert.first} ON DUPLICATE KEY UPDATE ${values.map { (key, pair) -> keys.add(Pair(pair.second, pair.first));"${key}=?" }.joinToString(",")}"
         return sql to keys
     }
 

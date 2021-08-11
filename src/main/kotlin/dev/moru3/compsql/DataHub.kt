@@ -1,11 +1,21 @@
 package dev.moru3.compsql
 
-class DataHub {
-    companion object {
-        private var connection1: SQL? = null
+import dev.moru3.compsql.datatype.DataType
 
-        fun setConnection(connection: SQL) { this.connection1 = connection }
+object DataHub {
+    private var connection1: SQL? = null
 
-        val connection: SQL get() = checkNotNull(connection1) { "No connection has been created." }
+    fun setConnection(connection: SQL) { this.connection1 = connection }
+
+    val connection: SQL get() = checkNotNull(connection1) { "No connection has been created." }
+
+    private var dataTypeList = mutableSetOf<DataType<*, *>>()
+
+    fun addCustomType(dataType: DataType<*, *>) { if(!dataTypeList.map { it::class.java }.any { it == dataType::class.java }) { dataTypeList.add(dataType) } }
+
+    fun getDataTypeList(): List<DataType<*, *>> = dataTypeList.toMutableList()
+
+    fun getTypeListByAny(any: Any): List<DataType<*, *>> {
+        return dataTypeList.filter { it.type.isInstance(any) }.sortedBy { it.priority }
     }
 }

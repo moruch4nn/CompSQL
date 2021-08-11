@@ -1,16 +1,14 @@
 package dev.moru3.compsql.datatype.types.binary
 
 import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.datatype.DataType.Companion.addCustomType
+import dev.moru3.compsql.DataHub.addCustomType
 import java.sql.PreparedStatement
 import java.sql.Types
 
 /**
  * BINARYとは0から255までの固定長のバイナリを格納できます。
  */
-class LONGBLOB(val property: Long): DataType<ByteArray, ByteArray> {
-
-    constructor(): this(4294967295)
+open class LONGBLOB(val property: Long): DataType<ByteArray, ByteArray> {
 
     constructor(int: Int): this(int.toLong())
 

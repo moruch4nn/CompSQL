@@ -1,7 +1,7 @@
 package dev.moru3.compsql.datatype.types.numeric.unsigned
 
 import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.datatype.DataType.Companion.addCustomType
+import dev.moru3.compsql.DataHub.addCustomType
 import java.sql.PreparedStatement
 import java.sql.Types
 
@@ -9,16 +9,13 @@ import java.sql.Types
  * UTINYINT 0 から 255 までの整数を格納できるSQLの型です。
  * これ以上大きな型が必要な場合は SMALLINT, USMALLINT を使用します。
  * Unsigned: UTINYINT, Non-Unsigned: TINYINT
+ * 注意: numeric系のプロパティは"最大数"ではなく"最大桁数"なのでお間違えなく。
  */
-class UTINYINT(val property: Long): DataType<Byte, Byte> {
-
-    constructor(): this(127)
-
-    constructor(property: Int): this(property.toLong())
+open class UTINYINT(val property: Byte): DataType<Byte, Byte> {
 
     override val typeName: String = "TINYINT"
-    override val from: Class<Byte> = Byte::class.java
-    override val type: Class<Byte> = Byte::class.java
+    override val from: Class<Byte> = Byte::class.javaObjectType
+    override val type: Class<Byte> = Byte::class.javaObjectType
     override val sqlType: Int = Types.TINYINT
     override val allowPrimaryKey: Boolean = true
     override val allowNotNull: Boolean = true

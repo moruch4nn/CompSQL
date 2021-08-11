@@ -1,17 +1,16 @@
 package dev.moru3.compsql.datatype.types.text
 
 import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.datatype.DataType.Companion.addCustomType
+import dev.moru3.compsql.DataHub.addCustomType
 import java.sql.PreparedStatement
 import java.sql.Types
 
 /**
  * CHARとは 0から255文字までの文字を格納できます。
  * 256文字以上を格納する場合はVARCHAR、TEXT型を使用してください。
+ * TEXTやLONGTEXTと違いPrimaryKeyとして利用可能です。
  */
-class CHAR(property: Int): DataType<String, String> {
-
-    constructor(): this(255)
+open class CHAR(property: Int): DataType<String, String> {
 
     override val typeName: String = "CHAR"
     override val from: Class<String> = String::class.java

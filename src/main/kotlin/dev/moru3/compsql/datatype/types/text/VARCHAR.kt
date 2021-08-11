@@ -1,17 +1,17 @@
 package dev.moru3.compsql.datatype.types.text
 
 import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.datatype.DataType.Companion.addCustomType
+import dev.moru3.compsql.DataHub.addCustomType
 import java.sql.PreparedStatement
+import java.sql.ResultSet
 import java.sql.Types
 
 /**
  * VARCHARとは 0 から 65535 文字までの文字を格納できます。
  * 65535文字以上を格納する場合はTEXT型を使用してください。
+ * TEXTやLONGTEXTと違いPrimaryKeyとして利用可能です。
  */
-class VARCHAR(property: Int): DataType<String, String> {
-
-    constructor(): this(65535)
+open class VARCHAR(property: Int): DataType<String, String> {
 
     override val typeName: String = "VARCHAR"
     override val from: Class<String> = String::class.java

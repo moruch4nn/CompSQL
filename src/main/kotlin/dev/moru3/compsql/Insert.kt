@@ -19,5 +19,5 @@ interface Insert: SendSyntax, NonCompleteSyntax {
 
     fun build(force: Boolean): PreparedStatement
 
-    fun buildAsRaw(force: Boolean): Pair<String, List<Any>>
+    fun buildAsRaw(force: Boolean): Pair<String, List<Pair<Any, DataType<*,*>>>>
 }

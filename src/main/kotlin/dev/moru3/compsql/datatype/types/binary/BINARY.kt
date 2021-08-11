@@ -1,7 +1,7 @@
 package dev.moru3.compsql.datatype.types.binary
 
 import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.datatype.DataType.Companion.addCustomType
+import dev.moru3.compsql.DataHub.addCustomType
 import java.sql.PreparedStatement
 import java.sql.Types
 
@@ -9,9 +9,7 @@ import java.sql.Types
  * BINARYとは0から255までの固定長のバイナリを格納できます。
  * 256以上のサイズを格納する場合はBLOBを使用します。
  */
-class BINARY(val property: Int): DataType<ByteArray, ByteArray> {
-
-    constructor(): this(255)
+open class BINARY(val property: Int): DataType<ByteArray, ByteArray> {
 
     override val typeName: String = "BINARY"
     override val from: Class<ByteArray> = ByteArray::class.java
