@@ -9,7 +9,7 @@ class MySQLWhere: Where {
 
     private var string = ""
 
-    private var order: MutableMap<String, OrderType?> = mutableMapOf()
+    private var order: MutableMap<String, OrderType> = mutableMapOf()
 
     override fun add(string: String, vararg any: Any): FilteredWhere {
         this.string+=string
@@ -32,7 +32,13 @@ class MySQLWhere: Where {
     }
 
     override fun buildAsRaw(): Pair<String, List<Pair<Any, DataType<*, *>>>> {
-        TODO("Not yet implemented")
+        if(order.isNotEmpty()) {
+            string += " ORDER BY"
+            val orders = mutableListOf<String>()
+            order.forEach { orders += " ${it.key} ${it.value}" }
+            string += orders.joinToString(", ")
+        }
+        return string to list
     }
 }
 

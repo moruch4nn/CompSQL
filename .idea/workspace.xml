@@ -5,24 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a3782d09-d696-42a3-8357-27707278b596" name="変更" comment="変更">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/annotation/Column.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/annotation/IgnoreColumn.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/annotation/TableName.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/query/select/MySQLWhere.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/DataHub.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/DataHub.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/Database.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/Database.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/SQL.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/SQL.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/Select.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/Where.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/Test.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/Test.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/connection/MySQLConnection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/connection/MySQLConnection.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/connection/PostgreSQLConnection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/connection/PostgreSQLConnection.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/connection/SQLiteConnection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/connection/SQLiteConnection.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/interfaces/Syntax.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/interfaces/Syntax.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/insert/MySQLInsert.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/insert/MySQLInsert.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/insert/MySQLUpsert.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/insert/MySQLUpsert.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/table/column/MySQLColumn.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/table/column/MySQLColumn.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/query/select/MySQLWhere.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/query/select/MySQLWhere.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +51,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Daemon" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -123,6 +107,8 @@
       <workItem from="1628572566514" duration="2690000" />
       <workItem from="1628629647465" duration="639000" />
       <workItem from="1628632938200" duration="53800000" />
+      <workItem from="1628797959958" duration="295000" />
+      <workItem from="1628798269824" duration="2652000" />
     </task>
     <task id="LOCAL-00001" summary="変更">
       <created>1628672927225</created>
