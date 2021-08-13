@@ -3,6 +3,7 @@ package dev.moru3.compsql.datatype.types.numeric
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.DataHub.addCustomType
 import java.sql.PreparedStatement
+import java.sql.ResultSet
 import java.sql.Types
 
 /**
@@ -29,10 +30,12 @@ open class TINYINT(val property: Byte): DataType<Byte, Byte> {
     override val action: (PreparedStatement, Int, Byte) -> Unit = { ps, i, a -> ps.setByte(i, a) }
     override val convert: (value: Byte) -> Byte = { it }
 
-    override fun set(ps: PreparedStatement, index: Int, any: Any) {
+    override fun set(ps: PreparedStatement, index: Int, any: Any?) {
         check(any is Byte) { "The type of \"any\" is different from \"type\"." }
         action.invoke(ps, index, any)
     }
+
+    override fun get(resultSet: ResultSet, id: String): Byte? = resultSet.getByte(id)
 
     init { addCustomType(this) }
 }

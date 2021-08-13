@@ -14,5 +14,5 @@ interface NonCompleteSyntax {
      * Any1: ?を置換するオブジェクトです。
      * DataType: Any1のデータタイプです。
      */
-    fun buildAsRaw(): Pair<String, List<Pair<Any, DataType<*,*>>>>
+    fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>>
 }

@@ -35,7 +35,9 @@ interface DataType<F, T> {
 
     val convert: (value: F)->T
 
-    fun set(ps: PreparedStatement, index: Int, any: Any)
+    fun set(ps: PreparedStatement, index: Int, any: Any?)
+
+    fun get(resultSet: ResultSet, id: String): F?
 
     companion object {
         // binary系
@@ -61,6 +63,6 @@ interface DataType<F, T> {
         val CHAR = CHAR(255)
         val LONGTEXT = LONGTEXT(2147483647)
         val TEXT = TEXT(65535)
-        val VARCHAR = VARCHAR(65535)
+        val VARCHAR = VARCHAR(16383)
     }
 }

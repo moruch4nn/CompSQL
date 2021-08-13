@@ -2,14 +2,15 @@ package dev.moru3.compsql.mysql.query.select
 
 import dev.moru3.compsql.*
 import dev.moru3.compsql.datatype.DataType
+import dev.moru3.compsql.datatype.types.NULL
 
 class MySQLWhere: Where {
 
-    private val list = mutableListOf<Pair<Any, DataType<*, *>>>()
+    val list = mutableListOf<Pair<Any?, DataType<*,*>>>()
 
-    private var string = ""
+    var string = ""
 
-    private var order: MutableMap<String, OrderType> = mutableMapOf()
+    var order: MutableMap<String, OrderType> = mutableMapOf()
 
     override fun add(string: String, vararg any: Any): FilteredWhere {
         this.string+=string
@@ -18,7 +19,8 @@ class MySQLWhere: Where {
     }
 
     override fun key(key: String): KeyedWhere {
-        TODO("Not yet implemented")
+        string += " $key"
+        return MySQLKeyedWhere(this)
     }
 
     override fun orderBy(vararg values: Pair<String, OrderType>): Where {
@@ -31,78 +33,81 @@ class MySQLWhere: Where {
         return this
     }
 
-    override fun buildAsRaw(): Pair<String, List<Pair<Any, DataType<*, *>>>> {
+    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>> {
         if(order.isNotEmpty()) {
             string += " ORDER BY"
             val orders = mutableListOf<String>()
             order.forEach { orders += " ${it.key} ${it.value}" }
             string += orders.joinToString(", ")
         }
-        return string to list
+        return (if(string.isEmpty()) "" else " WHERE $string") to list
     }
 }
 
-class MySQLKeyedWhere(private val data: Where): KeyedWhere {
+class MySQLKeyedWhere(private val data: MySQLWhere): KeyedWhere {
     override fun equal(value: Any?): FilteredWhere {
-        TODO("Not yet implemented")
+        data.string += " = ?"
+        data.list.add((value to (value?.run { checkNotNull(DataHub.getTypeListByAny(value).getOrNull(0)) }?: NULL())))
+        return MySQLFilteredWhere(data)
     }
 
     override fun notEquals(value: Any?): FilteredWhere {
-        TODO("Not yet implemented")
+        data.string += " != ?"
+        data.list.add((value to (value?.run { checkNotNull(DataHub.getTypeListByAny(value).getOrNull(0)) }?: NULL())))
+        return MySQLFilteredWhere(data)
     }
 
     override fun greater(value: Any?): FilteredWhere {
-        TODO("Not yet implemented")
+        data.string += " > ?"
+        data.list.add((value to (value?.run { checkNotNull(DataHub.getTypeListByAny(value).getOrNull(0)) }?: NULL())))
+        return MySQLFilteredWhere(data)
     }
 
     override fun less(value: Any?): FilteredWhere {
-        TODO("Not yet implemented")
+        data.string += " < ?"
+        data.list.add((value to (value?.run { checkNotNull(DataHub.getTypeListByAny(value).getOrNull(0)) }?: NULL())))
+        return MySQLFilteredWhere(data)
     }
 
     override fun greaterOrEquals(value: Any?): FilteredWhere {
-        TODO("Not yet implemented")
+        data.string += " >= ?"
+        data.list.add((value to (value?.run { checkNotNull(DataHub.getTypeListByAny(value).getOrNull(0)) }?: NULL())))
+        return MySQLFilteredWhere(data)
     }
 
     override fun lessOrEquals(value: Any?): FilteredWhere {
-        TODO("Not yet implemented")
+        data.string += " <= ?"
+        data.list.add((value to (value?.run { checkNotNull(DataHub.getTypeListByAny(value).getOrNull(0)) }?: NULL())))
+        return MySQLFilteredWhere(data)
     }
-
-    override fun isIn(value: List<Any?>): FilteredWhere {
-        TODO("Not yet implemented")
-    }
-
-    override fun isIn(vararg value: Any?): FilteredWhere {
-        TODO("Not yet implemented")
-    }
-
 }
 
-class MySQLFilteredWhere(private val data: Where): FilteredWhere {
+class MySQLFilteredWhere(private val data: MySQLWhere): FilteredWhere {
     override fun and(key: String): KeyedWhere {
-        TODO("Not yet implemented")
+        data.string += " and $key"
+        return MySQLKeyedWhere(data)
     }
 
     override fun or(key: String): KeyedWhere {
-        TODO("Not yet implemented")
-    }
-
-    override fun orderBy(table: String, orderType: OrderType): FilteredWhere {
-        TODO("Not yet implemented")
+        data.string += " or $key"
+        return MySQLKeyedWhere(data)
     }
 
     override fun orderBy(vararg values: Pair<String, OrderType>): FilteredWhere {
-        TODO("Not yet implemented")
+        values.forEach { data.order[it.first] = it.second }
+        return this
     }
 
-    override fun key(key: String): KeyedWhere {
-        TODO("Not yet implemented")
+    override fun orderBy(table: String, orderType: OrderType): FilteredWhere {
+        data.order[table] = orderType
+        return this
     }
 
     override fun add(string: String, vararg any: Any): FilteredWhere {
-        TODO("Not yet implemented")
+        data.string+=string
+        any.forEach { data.list += any to checkNotNull(DataHub.getTypeListByAny(it).getOrNull(0)) }
+        return this
     }
 
-    override fun buildAsRaw(): Pair<String, List<Pair<Any, DataType<*, *>>>> {
-        TODO("Not yet implemented")
-    }
+    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>> = data.buildAsRaw()
 }

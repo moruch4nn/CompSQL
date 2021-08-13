@@ -18,8 +18,6 @@ interface FilteredWhere: NonCompleteSyntax {
 
     fun orderBy(vararg values: Pair<String, OrderType>): FilteredWhere
 
-    fun key(key: String): KeyedWhere
-
     fun add(string: String, vararg any: Any): FilteredWhere
 
     fun and(key: String): KeyedWhere
@@ -57,10 +55,6 @@ interface KeyedWhere {
      * 小なり(<=)
      */
     fun lessOrEquals(value: Any?): FilteredWhere
-
-    fun isIn(value: List<Any?>): FilteredWhere
-
-    fun isIn(vararg value: Any?): FilteredWhere
 }
 
 enum class OrderType {

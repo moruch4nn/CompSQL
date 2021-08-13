@@ -1,7 +1,6 @@
 package dev.moru3.compsql;
 
-public class TestJava {
-    public void test() {
+import dev.moru3.compsql.connection.MySQLConnection;
 
-    }
+public class TestJava {
 }

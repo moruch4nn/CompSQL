@@ -22,6 +22,10 @@ object DataHub {
     fun getDataTypeList(): List<DataType<*, *>> = dataTypeList.toMutableList()
 
     fun getTypeListByAny(any: Any): List<DataType<*, *>> {
-        return dataTypeList.filter { it.type.isInstance(any) }.sortedBy { it.priority }
+        return dataTypeList.filter { it.from.isInstance(any) }.sortedBy { it.priority }
+    }
+
+    fun getTypeListByClass(type: Class<*>): List<DataType<*, *>> {
+        return dataTypeList.filter { it.from == type }.sortedBy { it.priority }
     }
 }

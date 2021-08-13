@@ -29,10 +29,12 @@ open class VARCHAR(property: Int): DataType<String, String> {
     override val action: (PreparedStatement, Int, String) -> Unit = { ps, i, a -> ps.setString(i, a) }
     override val convert: (value: String) -> String = { it }
 
-    override fun set(ps: PreparedStatement, index: Int, any: Any) {
+    override fun set(ps: PreparedStatement, index: Int, any: Any?) {
         check(any is String) { "The type of \"any\" is different from \"type\"." }
         action.invoke(ps, index, any)
     }
+
+    override fun get(resultSet: ResultSet, id: String): String? = resultSet.getNString(id)
 
     init { addCustomType(this) }
 }

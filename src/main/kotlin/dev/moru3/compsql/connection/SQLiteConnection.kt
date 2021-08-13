@@ -1,9 +1,6 @@
 package dev.moru3.compsql.connection
 
-import dev.moru3.compsql.DataHub
-import dev.moru3.compsql.Database
-import dev.moru3.compsql.Insert
-import dev.moru3.compsql.Upsert
+import dev.moru3.compsql.*
 import dev.moru3.compsql.table.Table
 import java.io.File
 import java.sql.Connection
@@ -60,6 +57,14 @@ class SQLiteConnection(private val url: String, override val timeout: Int = 10, 
     }
 
     override fun put(instance: Any, force: Boolean) {
+        TODO("Not yet implemented")
+    }
+
+    override fun <T> get(type: Class<T>, limit: Int): List<T> {
+        TODO("Not yet implemented")
+    }
+
+    override fun <T> get(type: Class<T>, where: Where, limit: Int): List<T> {
         TODO("Not yet implemented")
     }
 

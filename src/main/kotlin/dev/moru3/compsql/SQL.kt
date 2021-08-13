@@ -21,7 +21,7 @@ interface SQL: Closeable, Connection {
     /**
      * データをinsertします。
      */
-    fun insert(name: String, force: Boolean, action: Insert.() -> Unit)
+    fun insert(name: String, force: Boolean, action: Insert.() -> Unit = {})
 
     /**
      * テーブルを作成します。また、自動的にSQLに変更内容が同期されます。
@@ -56,12 +56,12 @@ interface SQL: Closeable, Connection {
     /**
      * Whereを元にデータベースからデータを取得します。
      */
-    fun get(instance: Any, where: Where, limit: Int = 1)
+    fun <T> get(type: Class<T>, where: Where, limit: Int = 1): List<T>
 
     /**
      * データベースからデータを取得します。
      */
-    fun get(instance: Any, limit: Int = 1)
+    fun <T> get(type: Class<T>, limit: Int = 1): List<T>
 
     /**
      * 接続が既に閉じているかを返します。

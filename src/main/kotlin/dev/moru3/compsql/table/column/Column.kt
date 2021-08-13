@@ -9,21 +9,35 @@ interface Column: NonCompleteSyntax {
      */
     val type: DataType<*, *>
 
-    var name: String
+    val name: String
 
-    var isZeroFill: Boolean
+    val isZeroFill: Boolean
 
-    var isPrimaryKey: Boolean
+    val isPrimaryKey: Boolean
 
-    var isNotNull: Boolean
+    val isNotNull: Boolean
 
-    var isAutoIncrement: Boolean
+    val isAutoIncrement: Boolean
 
-    var defaultValue: Any?
+    val defaultValue: Any?
 
-    var property: Any?
+    val property: Any?
 
-    var isUniqueIndex: Boolean
+    val isUniqueIndex: Boolean
 
     val isUnsigned: Boolean
+
+    fun setPrimaryKey(boolean: Boolean): Column
+
+    fun setNotNull(boolean: Boolean): Column
+
+    fun setAutoIncrement(bolean: Boolean): Column
+
+    fun setDefaultValue(any: Any?): Column
+
+    fun setProperty(any: Any?): Column
+
+    fun setUniqueIndex(boolean: Boolean): Column
+
+    fun setZeroFill(boolean: Boolean): Column
 }

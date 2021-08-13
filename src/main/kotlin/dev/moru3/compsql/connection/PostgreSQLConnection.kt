@@ -1,9 +1,6 @@
 package dev.moru3.compsql.connection
 
-import dev.moru3.compsql.DataHub
-import dev.moru3.compsql.Database
-import dev.moru3.compsql.Insert
-import dev.moru3.compsql.Upsert
+import dev.moru3.compsql.*
 import dev.moru3.compsql.table.Table
 import java.sql.Connection
 import java.sql.DriverManager
@@ -61,6 +58,14 @@ class PostgreSQLConnection(private var url: String, private val username: String
     }
 
     override fun upsert(name: String, action: Upsert.() -> Unit) {
+        TODO("Not yet implemented")
+    }
+
+    override fun <T> get(type: Class<T>, limit: Int): List<T> {
+        TODO("Not yet implemented")
+    }
+
+    override fun <T> get(type: Class<T>, where: Where, limit: Int): List<T> {
         TODO("Not yet implemented")
     }
 

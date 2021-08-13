@@ -4,10 +4,12 @@ import dev.moru3.compsql.*
 import dev.moru3.compsql.DataHub.setConnection
 import dev.moru3.compsql.annotation.Column
 import dev.moru3.compsql.annotation.IgnoreColumn
+import dev.moru3.compsql.mysql.query.select.MySQLWhere
 import dev.moru3.compsql.mysql.update.insert.MySQLInsert
 import dev.moru3.compsql.mysql.update.insert.MySQLUpsert
 import dev.moru3.compsql.mysql.update.table.MySQLTable
 import dev.moru3.compsql.table.Table
+import java.lang.reflect.Field
 import java.sql.*
 import java.sql.Connection
 
@@ -50,29 +52,44 @@ open class MySQLConnection(private var url: String, private val username: String
     }
 
     override fun add(instance: Any, force: Boolean) {
-        table(p0(instance), force) {
+        table(p0(instance::class.java), force) {
             instance::class.java.declaredFields.forEach { field ->
                 field.isAccessible = true
                 if(field.annotations.filterIsInstance<IgnoreColumn>().isNotEmpty()) { return@forEach }
                 val annotation = field.annotations.filterIsInstance<Column>().getOrNull(0)
                 column(annotation?.name?:field.name, checkNotNull(DataHub.getTypeListByAny(field.get(instance)).getOrNull(0))) {
                     if(annotation==null) { return@column }
-                    it.isZeroFill = annotation.isZeroFill
-                    it.isAutoIncrement = annotation.isAutoIncrement
-                    it.isNotNull = annotation.isNotNull
-                    it.isPrimaryKey = annotation.isPrimaryKey
-                    it.isUniqueIndex = annotation.isUniqueIndex
+                    it.setZeroFill(annotation.isZeroFill)
+                    it.setAutoIncrement(annotation.isAutoIncrement)
+                    it.setNotNull(annotation.isNotNull)
+                    it.setPrimaryKey(annotation.isPrimaryKey)
+                    it.setUniqueIndex(annotation.isUniqueIndex)
                 }
             }
         }
     }
 
-    override fun get(instance: Any, limit: Int) {
-        get(instance, )
+    override fun <T> get(type: Class<T>, limit: Int): List<T> {
+        return get(type, MySQLWhere(), limit)
     }
 
-    override fun get(instance: Any, where: Where, limit: Int) {
-        TODO("Not yet implemented")
+    override fun <T> get(type: Class<T>, where: Where, limit: Int): List<T> {
+        val tableName = p0(type)
+        val columns = mutableMapOf<String, Field>().also { columns -> type::class.java.declaredFields.forEach { field -> field.isAccessible = true;if(field.annotations.filterIsInstance<IgnoreColumn>().isNotEmpty()) { return@forEach } ;val name = field.annotations.filterIsInstance<Column>().getOrNull(0)?.name?:field.name;check(!columns.containsKey(name)) { "The column name is duplicated." };columns[name] = field } }
+        val raw = where.buildAsRaw()
+        val query = safeConnection.prepareStatement("SELECT ${columns.map{it.key}.joinToString(", ")} FROM $tableName${raw.first} LIMIT $limit")
+        raw.second.forEachIndexed { index, it -> it.second.set(query, index+1, it.first) }
+        val result = sendQuery(query)
+        val res = mutableListOf<T>()
+        while(result.next()) {
+            val instance = type.newInstance()
+            columns.forEach {
+                val dataType = DataHub.getTypeListByAny(it.value.type).getOrNull(0)
+                it.value.set(instance, dataType?.get(result, it.key))
+            }
+            res.add(instance)
+        }
+        return res
     }
 
     override fun insert(name: String, force: Boolean, action: Insert.() -> Unit) {
@@ -88,11 +105,11 @@ open class MySQLConnection(private var url: String, private val username: String
     }
 
     override fun put(instance: Any, force: Boolean) {
-        this.insert(p0(instance), force) { p1(instance).forEach { add(it.key, it.value) } }
+        this.insert(p0(instance::class.java), force) { p1(instance).forEach { add(it.key, it.value) } }
     }
 
     override fun putOrUpdate(instance: Any) {
-        this.upsert(p0(instance)) { p1(instance).forEach { add(it.key, it.value) } }
+        this.upsert(p0(instance::class.java)) { p1(instance).forEach { add(it.key, it.value) } }
     }
 
     override fun upsert(upsert: Upsert) {

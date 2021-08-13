@@ -26,23 +26,23 @@ class MySQLTable(val connection: Connection, n: String): Table {
     }
 
     override fun column(column: Column): Table {
-        if(column.isAutoIncrement) { column.isPrimaryKey = true }
+        if(column.isAutoIncrement) { column.setPrimaryKey(true) }
         columns.add(column)
         return this
     }
 
     override fun build(): PreparedStatement = build(false)
 
-    override fun buildAsRaw(): Pair<String, List<Pair<Any, DataType<*, *>>>>  = buildAsRaw(false)
+    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>>  = buildAsRaw(false)
 
-    override fun buildAsRaw(force: Boolean): Pair<String, List<Pair<Any, DataType<*, *>>>> {
-        val valueList = mutableListOf<Pair<Any, DataType<*, *>>>()
+    override fun buildAsRaw(force: Boolean): Pair<String, List<Pair<Any?, DataType<*,*>>>> {
+        val valueList = mutableListOf<Pair<Any?, DataType<*,*>>>()
         val result = buildString {
             append("CREATE TABLE ");if(!force) append("IF NOT EXISTS $name");append(" (")
             val primaryKeys: List<Column> = columns.filter(Column::isPrimaryKey)
             // val autoIncrements: List<Column> = columns.filter(Column::isAutoIncrement)
             val uniqueIndexes: List<Column> = columns.filter(Column::isUniqueIndex)
-            val columnList: MutableMap<String, List<Pair<Any, DataType<*,*>>>> = mutableMapOf()
+            val columnList: MutableMap<String, List<Pair<Any?, DataType<*,*>>>> = mutableMapOf()
             val primaryKeyList: MutableList<String> = mutableListOf()
             columns.map(Column::buildAsRaw).forEach{ columnList[it.first] = it.second }
             columns.filter(Column::isPrimaryKey).map(Column::name).forEach(primaryKeyList::add)

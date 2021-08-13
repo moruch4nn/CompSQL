@@ -2,10 +2,9 @@ package dev.moru3.compsql.datatype.types.original
 
 import dev.moru3.compsql.DataHub.addCustomType
 import dev.moru3.compsql.datatype.DataType
-import java.io.ByteArrayOutputStream
-import java.io.ObjectOutputStream
-import java.io.Serializable
+import java.io.*
 import java.sql.PreparedStatement
+import java.sql.ResultSet
 import java.sql.Types
 
 class INSTANCE: DataType<Serializable, ByteArray> {
@@ -29,9 +28,17 @@ class INSTANCE: DataType<Serializable, ByteArray> {
         bos.toByteArray()
     }
 
-    override fun set(ps: PreparedStatement, index: Int, any: Any) {
+    override fun set(ps: PreparedStatement, index: Int, any: Any?) {
         check(any is Serializable) { "The type of \"any\" is different from \"type\"." }
         action(ps, index, convert(any))
+    }
+
+    /**
+     * 帰ってきたObjectをcastして使用してください。
+     */
+    override fun get(resultSet: ResultSet, id: String): Serializable {
+        val ois = ObjectInputStream(ByteArrayInputStream(resultSet.getBytes(id)))
+        return ois.readObject() as Serializable
     }
 
     init { addCustomType(this) }

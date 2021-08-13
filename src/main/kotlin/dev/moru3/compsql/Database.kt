@@ -38,7 +38,7 @@ abstract class Database: SQL {
         return ps
     }
 
-    fun p0(instance: Any): String = instance::class.java.annotations.filterIsInstance<TableName>().getOrNull(0)?.name?:instance::class.java.simpleName
+    fun p0(instance: Class<*>): String = instance.annotations.filterIsInstance<TableName>().getOrNull(0)?.name?:instance::class.java.simpleName
 
     fun p1(instance: Any): Map<String, Any> {
         return mutableMapOf<String, Any>().also { columns ->

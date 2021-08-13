@@ -4,6 +4,7 @@ import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.DataHub.addCustomType
 import java.math.BigDecimal
 import java.sql.PreparedStatement
+import java.sql.ResultSet
 import java.sql.Types
 
 /**
@@ -32,11 +33,13 @@ open class UBIGINT(val property: Byte): DataType<BigDecimal, BigDecimal> {
     override val action: (PreparedStatement, Int, BigDecimal) -> Unit = { ps, i, a -> ps.setBigDecimal(i, a) }
     override val convert: (value: BigDecimal) -> BigDecimal = { it }
 
-    override fun set(ps: PreparedStatement, index: Int, any: Any) {
+    override fun set(ps: PreparedStatement, index: Int, any: Any?) {
         check(any is BigDecimal) { "The type of \"any\" is different from \"type\"." }
         check(any >= BigDecimal(0) && any <= max) { "Unsigned BigInt can only be stored within the range of 0 to 18446744073709551615." }
         action.invoke(ps, index, any)
     }
+
+    override fun get(resultSet: ResultSet, id: String): BigDecimal? = resultSet.getBigDecimal(id)
 
     init { addCustomType(this) }
 
