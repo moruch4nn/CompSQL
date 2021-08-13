@@ -28,6 +28,18 @@ class PostgreSQLConnection(private var url: String, private val username: String
         return connection
     }
 
+    override fun add(instance: Any, force: Boolean) {
+        TODO("Not yet implemented")
+    }
+
+    override fun put(instance: Any, force: Boolean) {
+        TODO("Not yet implemented")
+    }
+
+    override fun putOrUpdate(instance: Any) {
+        TODO("Not yet implemented")
+    }
+
     override fun table(table: Table, force: Boolean) {
         TODO("Not yet implemented")
     }

@@ -39,6 +39,31 @@ interface SQL: Closeable, Connection {
     fun insert(insert: Insert,  force: Boolean)
 
     /**
+     * Databaseにデータをプットします。
+     */
+    fun put(instance: Any, force: Boolean)
+
+    /**
+     * 重複しないように
+     */
+    fun putOrUpdate(instance: Any)
+
+    /**
+     * テーブルを追加します。
+     */
+    fun add(instance: Any, force: Boolean)
+
+    /**
+     * Whereを元にデータベースからデータを取得します。
+     */
+    fun get(instance: Any, where: Where, limit: Int = 1)
+
+    /**
+     * データベースからデータを取得します。
+     */
+    fun get(instance: Any, limit: Int = 1)
+
+    /**
      * 接続が既に閉じているかを返します。
      */
     val isClosed: Boolean

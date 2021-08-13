@@ -49,7 +49,7 @@ class MySQLInsert(override val table: Table) : Insert {
                 .append(MutableList(values.size){"?"}.joinToString(","))
                 .append(")")
         }
-        val valueList = values.values.map { Pair(it.second, it.first) }
+        val valueList = values.values.map { it.second to it.first }
         return result to valueList
     }
 }

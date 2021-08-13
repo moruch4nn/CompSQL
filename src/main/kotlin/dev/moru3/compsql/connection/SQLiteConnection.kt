@@ -51,5 +51,17 @@ class SQLiteConnection(private val url: String, override val timeout: Int = 10, 
         return connection
     }
 
+    override fun putOrUpdate(instance: Any) {
+        TODO("Not yet implemented")
+    }
+
+    override fun add(instance: Any, force: Boolean) {
+        TODO("Not yet implemented")
+    }
+
+    override fun put(instance: Any, force: Boolean) {
+        TODO("Not yet implemented")
+    }
+
     init { this.apply(action);DataHub.setConnection(this) }
 }

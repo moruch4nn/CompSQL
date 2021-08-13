@@ -1,6 +1,8 @@
 package dev.moru3.compsql
 
-import dev.moru3.compsql.datatype.DataType
+import dev.moru3.compsql.annotation.Column
+import dev.moru3.compsql.annotation.IgnoreColumn
+import dev.moru3.compsql.annotation.TableName
 import java.io.InputStream
 import java.math.BigDecimal
 import java.sql.*
@@ -34,6 +36,20 @@ abstract class Database: SQL {
             }
         }
         return ps
+    }
+
+    fun p0(instance: Any): String = instance::class.java.annotations.filterIsInstance<TableName>().getOrNull(0)?.name?:instance::class.java.simpleName
+
+    fun p1(instance: Any): Map<String, Any> {
+        return mutableMapOf<String, Any>().also { columns ->
+            instance::class.java.declaredFields.forEach { field ->
+                field.isAccessible = true
+                if(field.annotations.filterIsInstance<IgnoreColumn>().isNotEmpty()) { return@forEach }
+                val name = field.annotations.filterIsInstance<Column>().getOrNull(0)?.name?:field.name
+                check(!columns.containsKey(name)) { "The column name is duplicated." }
+                columns[name] = field.get(instance)
+            }
+        }
     }
 
     override fun sendQuery(sql: String, vararg params: Any): ResultSet {

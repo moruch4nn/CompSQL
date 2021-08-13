@@ -1,15 +1,15 @@
 package dev.moru3.compsql.connection
 
+import dev.moru3.compsql.*
 import dev.moru3.compsql.DataHub.setConnection
-import dev.moru3.compsql.Database
-import dev.moru3.compsql.Insert
-import dev.moru3.compsql.Upsert
+import dev.moru3.compsql.annotation.Column
+import dev.moru3.compsql.annotation.IgnoreColumn
 import dev.moru3.compsql.mysql.update.insert.MySQLInsert
 import dev.moru3.compsql.mysql.update.insert.MySQLUpsert
 import dev.moru3.compsql.mysql.update.table.MySQLTable
 import dev.moru3.compsql.table.Table
 import java.sql.*
-import java.util.*
+import java.sql.Connection
 
 /**
  * 新しくMySQLのコネクションを開きます。すでに開いているコネクションがある場合はそのコネクションをcloseします。
@@ -49,6 +49,32 @@ open class MySQLConnection(private var url: String, private val username: String
         table(MySQLTable(this, name).apply(action), force)
     }
 
+    override fun add(instance: Any, force: Boolean) {
+        table(p0(instance), force) {
+            instance::class.java.declaredFields.forEach { field ->
+                field.isAccessible = true
+                if(field.annotations.filterIsInstance<IgnoreColumn>().isNotEmpty()) { return@forEach }
+                val annotation = field.annotations.filterIsInstance<Column>().getOrNull(0)
+                column(annotation?.name?:field.name, checkNotNull(DataHub.getTypeListByAny(field.get(instance)).getOrNull(0))) {
+                    if(annotation==null) { return@column }
+                    it.isZeroFill = annotation.isZeroFill
+                    it.isAutoIncrement = annotation.isAutoIncrement
+                    it.isNotNull = annotation.isNotNull
+                    it.isPrimaryKey = annotation.isPrimaryKey
+                    it.isUniqueIndex = annotation.isUniqueIndex
+                }
+            }
+        }
+    }
+
+    override fun get(instance: Any, limit: Int) {
+        get(instance, )
+    }
+
+    override fun get(instance: Any, where: Where, limit: Int) {
+        TODO("Not yet implemented")
+    }
+
     override fun insert(name: String, force: Boolean, action: Insert.() -> Unit) {
         insert(MySQLInsert(MySQLTable(this, name)).apply(action), force)
     }
@@ -59,6 +85,14 @@ open class MySQLConnection(private var url: String, private val username: String
 
     override fun upsert(name: String, action: Upsert.() -> Unit) {
         upsert(MySQLUpsert(MySQLTable(this, name)).apply(action))
+    }
+
+    override fun put(instance: Any, force: Boolean) {
+        this.insert(p0(instance), force) { p1(instance).forEach { add(it.key, it.value) } }
+    }
+
+    override fun putOrUpdate(instance: Any) {
+        this.upsert(p0(instance)) { p1(instance).forEach { add(it.key, it.value) } }
     }
 
     override fun upsert(upsert: Upsert) {

@@ -29,7 +29,7 @@ class MySQLColumn(override var name: String, override val type: DataType<*, *>):
             if((isNotNull||isPrimaryKey)&&type.allowNotNull) { append(" NOT") }
             append(" NULL")
             if(isAutoIncrement&&type.allowAutoIncrement) { append(" AUTO_INCREMENT") }
-            defaultValue?.takeIf{ type.allowDefault }?.also { append(" DEFAULT ?") }?.also { types.add(Pair(it, type)) }
+            defaultValue?.takeIf{ type.allowDefault }?.also { append(" DEFAULT ?") }?.also { types.add(it to type) }
             // UniqueIndexはMySQLTableで設定します。
         }
         return result to types
