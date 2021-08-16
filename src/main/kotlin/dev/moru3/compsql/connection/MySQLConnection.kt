@@ -17,7 +17,7 @@ import java.sql.Connection
  * 新しくMySQLのコネクションを開きます。すでに開いているコネクションがある場合はそのコネクションをcloseします。
  * @param url jdbc:mysql://host/database
  */
-open class MySQLConnection(private var url: String, private val username: String, private val password: String, private val properties: Map<String, Any>, override val timeout: Int = 5, action: MySQLConnection.()->Unit = {}): Database() {
+open class MySQLConnection(private var url: String, private val username: String, private val password: String, private val properties: Map<String, Any>, override val timeout: Int = 5, action: MySQLConnection.()->Unit = {}): SQL() {
 
     val database: String = url.split("/").last()
 
@@ -75,7 +75,7 @@ open class MySQLConnection(private var url: String, private val username: String
 
     override fun <T> get(type: Class<T>, where: Where, limit: Int): List<T> {
         val tableName = p0(type)
-        val columns = mutableMapOf<String, Field>().also { columns -> type::class.java.declaredFields.forEach { field -> field.isAccessible = true;if(field.annotations.filterIsInstance<IgnoreColumn>().isNotEmpty()) { return@forEach } ;val name = field.annotations.filterIsInstance<Column>().getOrNull(0)?.name?:field.name;check(!columns.containsKey(name)) { "The column name is duplicated." };columns[name] = field } }
+        val columns = mutableMapOf<String, Field>().also { columns -> type.declaredFields.forEach { field -> field.isAccessible = true;if(field.annotations.filterIsInstance<IgnoreColumn>().isNotEmpty()) { return@forEach } ;val name = field.annotations.filterIsInstance<Column>().getOrNull(0)?.name?:field.name;check(!columns.containsKey(name)) { "The column name is duplicated." };columns[name] = field } }
         val raw = where.buildAsRaw()
         val query = safeConnection.prepareStatement("SELECT ${columns.map{it.key}.joinToString(", ")} FROM $tableName${raw.first} LIMIT $limit")
         raw.second.forEachIndexed { index, it -> it.second.set(query, index+1, it.first) }

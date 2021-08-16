@@ -21,14 +21,14 @@ class MySQLTable(val connection: Connection, n: String): Table {
 
     private val columns: MutableList<Column> = mutableListOf()
 
-    override fun column(name: String, type: DataType<*, *>, action: (Column) -> Unit): Table {
+    override fun column(name: String, type: DataType<*, *>, action: (Column) -> Unit): Column {
         return column(MySQLColumn(name, type).apply(action))
     }
 
-    override fun column(column: Column): Table {
+    override fun column(column: Column): Column {
         if(column.isAutoIncrement) { column.setPrimaryKey(true) }
         columns.add(column)
-        return this
+        return column
     }
 
     override fun build(): PreparedStatement = build(false)
