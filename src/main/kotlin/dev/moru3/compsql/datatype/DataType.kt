@@ -42,8 +42,8 @@ interface DataType<F, T> {
     companion object {
         // binary系
         val BINARY = BINARY(255)
-        val LONGBLOB = LONGBLOB(4294967295)
-        val VARBINARY = VARBINARY(65535)
+        val LONGBLOB = LONGBLOB(1023)
+        val VARBINARY = VARBINARY(255)
 
         // boolean系
         val BOOLEAN = BOOLEAN()
@@ -61,8 +61,8 @@ interface DataType<F, T> {
 
         // text系
         val CHAR = CHAR(255)
-        val LONGTEXT = LONGTEXT(2147483647)
-        val TEXT = TEXT(65535)
-        val VARCHAR = VARCHAR(16383)
+        val LONGTEXT = LONGTEXT(10230)
+        val TEXT = TEXT(1023)
+        val VARCHAR = VARCHAR(255)
     }
 }

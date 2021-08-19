@@ -4,12 +4,11 @@ import dev.moru3.compsql.*
 import dev.moru3.compsql.table.Table
 import java.sql.Connection
 import java.sql.DriverManager
-import java.util.*
 
 /**
  * 新しくPostgreSQLのコネクションを開きます。すでに開いているコネクションがある場合はそのコネクションをcloseします。
  */
-class PostgreSQLConnection(private var url: String, private val username: String, private val password: String, private val properties: Map<String, Any>, override val timeout: Int = 5, action: PostgreSQLConnection.()->Unit = {}): Database() {
+class PostgreSQLConnection(private var url: String, private val username: String, private val password: String, private val properties: Map<String, Any>, override val timeout: Int = 5, action: PostgreSQLConnection.()->Unit = {}): SQL() {
     init { url.also{ properties.keys.mapIndexed { index, key -> url+="${if(index==0) '?' else '&'}${key}=${properties[key]}" }.forEach(it::plus) } }
 
     constructor(host: String, database: String, username: String, password: String, properties: Map<String, Any>, timeout: Int = 5, action: PostgreSQLConnection.()->Unit = {}): this("jdbc:postgresql://${host}/${database}", username, password, properties, timeout, action)

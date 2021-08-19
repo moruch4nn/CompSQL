@@ -6,6 +6,8 @@ import dev.moru3.compsql.datatype.types.NULL
 
 class MySQLWhere: Where {
 
+    var limit: Int? = null
+
     val list = mutableListOf<Pair<Any?, DataType<*,*>>>()
 
     var string = ""
@@ -16,6 +18,11 @@ class MySQLWhere: Where {
         this.string+=string
         any.forEach { list += any to checkNotNull(DataHub.getTypeListByAny(it).getOrNull(0)) }
         return MySQLFilteredWhere(this)
+    }
+
+    override fun limit(limit: Int): Where {
+        this.limit = limit
+        return this
     }
 
     override fun key(key: String): KeyedWhere {
@@ -40,6 +47,7 @@ class MySQLWhere: Where {
             order.forEach { orders += " ${it.key} ${it.value}" }
             string += orders.joinToString(", ")
         }
+        if(limit!=null) { string+=" LIMIT $limit" }
         return (if(string.isEmpty()) "" else " WHERE $string") to list
     }
 }
@@ -83,6 +91,11 @@ class MySQLKeyedWhere(private val data: MySQLWhere): KeyedWhere {
 }
 
 class MySQLFilteredWhere(private val data: MySQLWhere): FilteredWhere {
+    override fun limit(limit: Int): FilteredWhere {
+        data.limit = limit
+        return this
+    }
+
     override fun and(key: String): KeyedWhere {
         data.string += " and $key"
         return MySQLKeyedWhere(data)
