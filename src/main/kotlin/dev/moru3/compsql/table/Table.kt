@@ -15,12 +15,12 @@ interface Table: SendSyntax, NonCompleteSyntax {
     /**
      * 新しくColumnを作成し、追加します。
      */
-    fun column(name: String, type: DataType<*, *>, action: (Column)->Unit = {}): Table
+    fun column(name: String, type: DataType<*, *>, action: (Column)->Unit = {}): Column
 
     /**
      * Columnを追加します。
      */
-    fun column(column: Column): Table
+    fun column(column: Column): Column
 
     /**
      * テーブルのAfter関連の関数が入ってます。

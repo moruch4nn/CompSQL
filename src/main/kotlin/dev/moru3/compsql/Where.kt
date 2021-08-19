@@ -10,10 +10,11 @@ interface Where: NonCompleteSyntax {
     fun key(key: String): KeyedWhere
 
     fun add(string: String, vararg any: Any): FilteredWhere
+
+    fun limit(limit: Int): Where
 }
 
 interface FilteredWhere: NonCompleteSyntax {
-
     fun orderBy(table: String, orderType: OrderType): FilteredWhere
 
     fun orderBy(vararg values: Pair<String, OrderType>): FilteredWhere
@@ -23,6 +24,8 @@ interface FilteredWhere: NonCompleteSyntax {
     fun and(key: String): KeyedWhere
 
     fun or(key: String): KeyedWhere
+
+    fun limit(limit: Int): FilteredWhere
 }
 
 interface KeyedWhere {

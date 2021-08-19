@@ -9,7 +9,7 @@ import java.sql.DriverManager
 /**
  * 新しくSQLiteのコネクションを開きます。すでに開いているコネクションがある場合はそのコネクションをcloseします。
  */
-class SQLiteConnection(private val url: String, override val timeout: Int = 10, action: SQLiteConnection.()->Unit = {}): Database() {
+class SQLiteConnection(private val url: String, override val timeout: Int = 10, action: SQLiteConnection.()->Unit = {}): SQL() {
 
     constructor(file: File, timeout: Int = 10): this("jdbc:sqlite:${file.absolutePath}", timeout)
 

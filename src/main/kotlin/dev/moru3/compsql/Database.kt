@@ -1,68 +1,69 @@
 package dev.moru3.compsql
 
-import dev.moru3.compsql.annotation.Column
-import dev.moru3.compsql.annotation.IgnoreColumn
-import dev.moru3.compsql.annotation.TableName
-import java.io.InputStream
-import java.math.BigDecimal
-import java.sql.*
+import dev.moru3.compsql.table.Table
+import java.io.Closeable
 
-abstract class Database: SQL {
+interface Database: Closeable, Connection {
 
-    override val isClosed: Boolean get() = connection.isClosed||!connection.isValid(timeout)
+    val timeout: Int
 
-    override fun close() {
-        connection.close()
-    }
+    /**
+     * テーブルを作成します。
+     */
+    fun table(name: String, force: Boolean = false, action: Table.()->Unit): Table
 
-    private fun setParamsToPrepareStatement(ps: PreparedStatement, vararg params: Any): PreparedStatement {
-        params.forEachIndexed { index, any ->
-            when(any) {
-                is Boolean -> ps.setBoolean(index+1, any)
-                is Byte -> ps.setByte(index+1, any)
-                is Short -> ps.setShort(index+1, any)
-                is Int -> ps.setInt(index+1, any)
-                is Long -> ps.setLong(index+1, any)
-                is Float -> ps.setFloat(index+1, any)
-                is Double -> ps.setDouble(index+1, any)
-                is BigDecimal -> ps.setBigDecimal(index+1, any)
-                is String -> ps.setString(index+1, any)
-                is ByteArray -> ps.setBytes(index+1, any)
-                is Date -> ps.setDate(index+1, any)
-                is Time -> ps.setTime(index+1, any)
-                is Timestamp -> ps.setTimestamp(index+1, any)
-                is InputStream -> ps.setAsciiStream(index+1, any)
-                else -> ps.setObject(index+1, any)
-            }
-        }
-        return ps
-    }
+    /**
+     * テーブルを作成します。
+     */
+    fun table(name: String, force: Boolean = false): Table
 
-    fun p0(instance: Class<*>): String = instance.annotations.filterIsInstance<TableName>().getOrNull(0)?.name?:instance::class.java.simpleName
+    /**
+     * データをinsertします。
+     */
+    fun insert(name: String, force: Boolean, action: Insert.() -> Unit): Insert
 
-    fun p1(instance: Any): Map<String, Any> {
-        return mutableMapOf<String, Any>().also { columns ->
-            instance::class.java.declaredFields.forEach { field ->
-                field.isAccessible = true
-                if(field.annotations.filterIsInstance<IgnoreColumn>().isNotEmpty()) { return@forEach }
-                val name = field.annotations.filterIsInstance<Column>().getOrNull(0)?.name?:field.name
-                check(!columns.containsKey(name)) { "The column name is duplicated." }
-                columns[name] = field.get(instance)
-            }
-        }
-    }
+    /**
+     * データをinsertします。
+     */
+    fun insert(name: String, force: Boolean): Insert
 
-    override fun sendQuery(sql: String, vararg params: Any): ResultSet {
-        safeConnection.prepareStatement(sql).also { ps -> return sendQuery(setParamsToPrepareStatement(ps, params)) }
-    }
+    /**
+     * テーブルを作成します。また、自動的にSQLに変更内容が同期されます。
+     */
+    fun upsert(name: String, action: Upsert.()->Unit): Upsert
 
-    override fun sendQuery(preparedStatement: PreparedStatement): ResultSet = preparedStatement.executeQuery().also { preparedStatement.close() }
+    /**
+     * テーブルを作成します。また、自動的にSQLに変更内容が同期されます。
+     */
+    fun upsert(name: String): Upsert
 
-    override fun sendUpdate(preparedStatement: PreparedStatement) {
-        preparedStatement.also { ps -> ps.executeUpdate();ps.close() }
-    }
+    /**
+     * Databaseにデータをプットします。
+     */
+    fun put(instance: Any, force: Boolean)
 
-    override fun sendUpdate(sql: String, vararg params: Any) {
-        safeConnection.prepareStatement(sql).also { ps -> sendUpdate(setParamsToPrepareStatement(ps, params)) }
-    }
+    /**
+     * 重複しないように
+     */
+    fun putOrUpdate(instance: Any)
+
+    /**
+     * テーブルを追加します。
+     */
+    fun add(instance: Any, force: Boolean)
+
+    /**
+     * Whereを元にデータベースからデータを取得します。
+     */
+    fun <T> get(type: Class<T>, where: Where, limit: Int = Int.MAX_VALUE): List<T>
+
+    /**
+     * データベースからデータを取得します。
+     */
+    fun <T> get(type: Class<T>, limit: Int = Int.MAX_VALUE): List<T>
+
+    /**
+     * 接続が既に閉じているかを返します。
+     */
+    val isClosed: Boolean
 }
