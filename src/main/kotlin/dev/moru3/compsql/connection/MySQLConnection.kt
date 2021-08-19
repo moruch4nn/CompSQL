@@ -22,10 +22,10 @@ open class MySQLConnection(private var url: String, private val username: String
     val database: String = url.split("/").last()
 
     init {
-        val ndburl = url.replaceFirst(Regex("/${database}\$"), "").also{ properties.keys.mapIndexed { index, key -> "${if(index==0) '?' else '&'}${key}=${properties[key]}" }.forEach(it::plus) }
-        val ndbcon = DriverManager.getConnection(ndburl, username, password)
-        ndbcon.prepareStatement("CREATE DATABASE IF NOT EXISTS $database").also { it.executeUpdate() }.close()
-        ndbcon.close()
+        val burl = url.replaceFirst(Regex("/${database}\$"), "").also{ properties.keys.mapIndexed { index, key -> "${if(index==0) '?' else '&'}${key}=${properties[key]}" }.forEach(it::plus) }
+        val bacon = DriverManager.getConnection(burl, username, password)
+        bacon.prepareStatement("CREATE DATABASE IF NOT EXISTS $database").also { it.executeUpdate() }.close()
+        bacon.close()
     }
 
     init { url = url.also{ properties.keys.mapIndexed { index, key -> "${if(index==0) '?' else '&'}${key}=${properties[key]}" }.forEach(it::plus) } }
@@ -41,14 +41,6 @@ open class MySQLConnection(private var url: String, private val username: String
         if(!this.isClosed) if(force) connection.close() else return connection
         connection = DriverManager.getConnection(url, username, password)
         return connection
-    }
-
-    override fun table(table: Table, force: Boolean) {
-        table.also { it.send(force) }
-    }
-
-    override fun table(name: String, force: Boolean, action: Table.() -> Unit) {
-        table(MySQLTable(this, name).apply(action), force)
     }
 
     override fun add(instance: Any, force: Boolean) {
@@ -69,9 +61,7 @@ open class MySQLConnection(private var url: String, private val username: String
         }
     }
 
-    override fun <T> get(type: Class<T>, limit: Int): List<T> {
-        return get(type, MySQLWhere(), limit)
-    }
+    override fun <T> get(type: Class<T>, limit: Int): List<T> = get(type, MySQLWhere(), limit)
 
     override fun <T> get(type: Class<T>, where: Where, limit: Int): List<T> {
         val tableName = p0(type)
@@ -92,17 +82,17 @@ open class MySQLConnection(private var url: String, private val username: String
         return res
     }
 
-    override fun insert(name: String, force: Boolean, action: Insert.() -> Unit) {
-        insert(MySQLInsert(MySQLTable(this, name)).apply(action), force)
-    }
+    override fun insert(name: String, force: Boolean, action: Insert.() -> Unit) = insert(name, force).apply(action)
 
-    override fun insert(insert: Insert, force: Boolean) {
-        insert.also { it.send(force) }
-    }
+    override fun insert(name: String, force: Boolean): Insert = MySQLInsert(MySQLTable(this, name))
 
-    override fun upsert(name: String, action: Upsert.() -> Unit) {
-        upsert(MySQLUpsert(MySQLTable(this, name)).apply(action))
-    }
+    override fun table(name: String, force: Boolean, action: Table.() -> Unit): Table = table(name, force).apply(action)
+
+    override fun table(name: String, force: Boolean): Table = MySQLTable(this, name)
+
+    override fun upsert(name: String): Upsert = MySQLUpsert(MySQLTable(this, name))
+
+    override fun upsert(name: String, action: Upsert.() -> Unit): Upsert = upsert(name).apply(action)
 
     override fun put(instance: Any, force: Boolean) {
         this.insert(p0(instance::class.java), force) { p1(instance).forEach { add(it.key, it.value) } }
@@ -110,10 +100,6 @@ open class MySQLConnection(private var url: String, private val username: String
 
     override fun putOrUpdate(instance: Any) {
         this.upsert(p0(instance::class.java)) { p1(instance).forEach { add(it.key, it.value) } }
-    }
-
-    override fun upsert(upsert: Upsert) {
-        upsert.also { it.send() }
     }
 
     init { setConnection(this);this.apply(action) }

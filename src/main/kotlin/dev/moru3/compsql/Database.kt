@@ -7,36 +7,35 @@ interface Database: Closeable, Connection {
 
     val timeout: Int
 
+    /**
+     * テーブルを作成します。
+     */
+    fun table(name: String, force: Boolean = false, action: Table.()->Unit): Table
 
     /**
-     * テーブルを作成します。また、自動的にSQLに変更内容が同期されます。
+     * テーブルを作成します。
      */
-    fun table(table: Table, force: Boolean = false)
-
-    /**
-     * テーブルを作成します。また、自動的にSQLに変更内容が同期されます。
-     */
-    fun table(name: String, force: Boolean = false, action: Table.()->Unit = {})
-
-    /**
-     * データをinsertします。
-     */
-    fun insert(name: String, force: Boolean, action: Insert.() -> Unit = {})
-
-    /**
-     * テーブルを作成します。また、自動的にSQLに変更内容が同期されます。
-     */
-    fun upsert(name: String, action: Upsert.()->Unit = {})
+    fun table(name: String, force: Boolean = false): Table
 
     /**
      * データをinsertします。
      */
-    fun upsert(upsert: Upsert)
+    fun insert(name: String, force: Boolean, action: Insert.() -> Unit): Insert
 
     /**
      * データをinsertします。
      */
-    fun insert(insert: Insert,  force: Boolean)
+    fun insert(name: String, force: Boolean): Insert
+
+    /**
+     * テーブルを作成します。また、自動的にSQLに変更内容が同期されます。
+     */
+    fun upsert(name: String, action: Upsert.()->Unit): Upsert
+
+    /**
+     * テーブルを作成します。また、自動的にSQLに変更内容が同期されます。
+     */
+    fun upsert(name: String): Upsert
 
     /**
      * Databaseにデータをプットします。
