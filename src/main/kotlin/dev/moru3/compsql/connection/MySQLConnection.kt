@@ -62,6 +62,10 @@ open class MySQLConnection(private var url: String, private val username: String
         }
     }
 
+    override fun select(table: String, vararg columns: String): Select = MySQLSelect(MySQLTable(this, table), *columns)
+
+    override fun select(table: String, vararg columns: String, action: Select.() -> Unit): Select  = MySQLSelect(MySQLTable(this, table), *columns).apply(action)
+
     override fun <T> get(type: Class<T>, limit: Int): List<T> = get(type, MySQLWhere(), limit)
 
     override fun <T> get(type: Class<T>, where: Where, limit: Int): List<T> {

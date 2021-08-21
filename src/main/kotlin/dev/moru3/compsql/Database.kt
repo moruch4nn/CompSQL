@@ -28,14 +28,18 @@ interface Database: Closeable, Connection {
     fun insert(name: String, force: Boolean): Insert
 
     /**
-     * テーブルを作成します。また、自動的にSQLに変更内容が同期されます。
+     * TODO 説明文書いといて
      */
     fun upsert(name: String, action: Upsert.()->Unit): Upsert
 
     /**
-     * テーブルを作成します。また、自動的にSQLに変更内容が同期されます。
+     * TODO 説明文書いといて
      */
     fun upsert(name: String): Upsert
+
+    fun select(table: String, vararg columns: String): Select
+
+    fun select(table: String, vararg columns: String, action: Select.()->Unit): Select
 
     /**
      * Databaseにデータをプットします。

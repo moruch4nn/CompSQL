@@ -36,27 +36,35 @@ class PostgreSQLConnection(private var url: String, private val username: String
         TODO("Not yet implemented")
     }
 
-    override fun table(table: Table, force: Boolean) {
+    override fun select(table: String, vararg columns: String, action: Select.() -> Unit): Select {
         TODO("Not yet implemented")
     }
 
-    override fun table(name: String, force: Boolean, action: Table.() -> Unit) {
+    override fun select(table: String, vararg columns: String): Select {
         TODO("Not yet implemented")
     }
 
-    override fun insert(name: String, force: Boolean, action: Insert.() -> Unit) {
+    override fun upsert(name: String): Upsert {
         TODO("Not yet implemented")
     }
 
-    override fun insert(insert: Insert, force: Boolean) {
+    override fun upsert(name: String, action: Upsert.() -> Unit): Upsert {
         TODO("Not yet implemented")
     }
 
-    override fun upsert(upsert: Upsert) {
+    override fun insert(name: String, force: Boolean): Insert {
         TODO("Not yet implemented")
     }
 
-    override fun upsert(name: String, action: Upsert.() -> Unit) {
+    override fun insert(name: String, force: Boolean, action: Insert.() -> Unit): Insert {
+        TODO("Not yet implemented")
+    }
+
+    override fun table(name: String, force: Boolean): Table {
+        TODO("Not yet implemented")
+    }
+
+    override fun table(name: String, force: Boolean, action: Table.() -> Unit): Table {
         TODO("Not yet implemented")
     }
 

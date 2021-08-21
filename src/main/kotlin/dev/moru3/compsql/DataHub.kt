@@ -5,11 +5,12 @@ import dev.moru3.compsql.datatype.DataType
 object DataHub {
     private var connection1: Database? = null
 
-    fun setConnection(connection: Database) {
+    private val typeCache = mutableMapOf<Class<*>, List<DataType<*, *>>>()
 
+    fun setConnection(connection: Database) {
         // load companion objects.
         DataType.VARCHAR
-
+        this.connection1?.close()
         this.connection1 = connection
     }
 
@@ -21,11 +22,7 @@ object DataHub {
 
     fun getDataTypeList(): List<DataType<*, *>> = dataTypeList.toMutableList()
 
-    fun getTypeListByAny(any: Any): List<DataType<*, *>> {
-        return dataTypeList.filter { it.from.isInstance(any) }.sortedBy { it.priority }
-    }
+    fun getTypeListByAny(any: Any): List<DataType<*, *>> = getTypeListByClass(any::class.java)
 
-    fun getTypeListByClass(type: Class<*>): List<DataType<*, *>> {
-        return dataTypeList.filter { it.from == type }.sortedBy { it.priority }
-    }
+    fun getTypeListByClass(type: Class<*>): List<DataType<*, *>> = typeCache[type]?:dataTypeList.filter { it.from == type }.sortedBy { it.priority }.also { typeCache[type]=it }
 }
