@@ -14,6 +14,10 @@ class MySQLSelect(val table: Table, vararg columns: String): Select {
 
     private var where: Where = MySQLWhere()
 
+    constructor(table: Table, where: Where, vararg columns: String): this(table, *columns) {
+        this.where = where
+    }
+
     private val columns = columns.toList()
 
     override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*, *>>>> {

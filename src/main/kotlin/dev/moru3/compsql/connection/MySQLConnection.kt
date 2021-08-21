@@ -4,6 +4,7 @@ import dev.moru3.compsql.*
 import dev.moru3.compsql.DataHub.setConnection
 import dev.moru3.compsql.annotation.Column
 import dev.moru3.compsql.annotation.IgnoreColumn
+import dev.moru3.compsql.mysql.query.select.MySQLSelect
 import dev.moru3.compsql.mysql.query.select.MySQLWhere
 import dev.moru3.compsql.mysql.update.insert.MySQLInsert
 import dev.moru3.compsql.mysql.update.insert.MySQLUpsert
@@ -64,12 +65,8 @@ open class MySQLConnection(private var url: String, private val username: String
     override fun <T> get(type: Class<T>, limit: Int): List<T> = get(type, MySQLWhere(), limit)
 
     override fun <T> get(type: Class<T>, where: Where, limit: Int): List<T> {
-        val tableName = p0(type)
         val columns = mutableMapOf<String, Field>().also { columns -> type.declaredFields.forEach { field -> field.isAccessible = true;if(field.annotations.filterIsInstance<IgnoreColumn>().isNotEmpty()) { return@forEach } ;val name = field.annotations.filterIsInstance<Column>().getOrNull(0)?.name?:field.name;check(!columns.containsKey(name)) { "The column name is duplicated." };columns[name] = field } }
-        val raw = where.buildAsRaw()
-        val query = safeConnection.prepareStatement("SELECT ${columns.map{it.key}.joinToString(", ")} FROM $tableName${raw.first} LIMIT $limit")
-        raw.second.forEachIndexed { index, it -> it.second.set(query, index+1, it.first) }
-        val result = sendQuery(query)
+        val result = MySQLSelect(MySQLTable(this, p0(type)), where, *columns.keys.toTypedArray()).send()
         val res = mutableListOf<T>()
         while(result.next()) {
             val instance = type.newInstance()
