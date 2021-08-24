@@ -1,6 +1,8 @@
 package dev.moru3.compsql.datatype
 import dev.moru3.compsql.datatype.types.binary.*
 import dev.moru3.compsql.datatype.types.bool.*
+import dev.moru3.compsql.datatype.types.date.Date
+import dev.moru3.compsql.datatype.types.date.Datetime
 import dev.moru3.compsql.datatype.types.text.*
 import dev.moru3.compsql.datatype.types.numeric.*
 import dev.moru3.compsql.datatype.types.numeric.unsigned.*
@@ -64,5 +66,9 @@ interface DataType<F, T> {
         val LONGTEXT = LONGTEXT(10230)
         val TEXT = TEXT(1023)
         val VARCHAR = VARCHAR(255)
+
+        // date型
+        val DATE = Date(null)
+        val DATETIME = Datetime(null)
     }
 }

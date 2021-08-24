@@ -13,6 +13,58 @@ class PostgreSQLConnection(private var url: String, private val username: String
 
     constructor(host: String, database: String, username: String, password: String, properties: Map<String, Any>, timeout: Int = 5, action: PostgreSQLConnection.()->Unit = {}): this("jdbc:postgresql://${host}/${database}", username, password, properties, timeout, action)
 
+    override fun table(name: String, action: Table.() -> Unit): Table {
+        TODO("Not yet implemented")
+    }
+
+    override fun table(name: String): Table {
+        TODO("Not yet implemented")
+    }
+
+    override fun insert(name: String, action: Insert.() -> Unit): Insert {
+        TODO("Not yet implemented")
+    }
+
+    override fun insert(name: String): Insert {
+        TODO("Not yet implemented")
+    }
+
+    override fun upsert(name: String, action: Upsert.() -> Unit): Upsert {
+        TODO("Not yet implemented")
+    }
+
+    override fun upsert(name: String): Upsert {
+        TODO("Not yet implemented")
+    }
+
+    override fun select(table: String, vararg columns: String): Select {
+        TODO("Not yet implemented")
+    }
+
+    override fun select(table: String, vararg columns: String, action: Select.() -> Unit): Select {
+        TODO("Not yet implemented")
+    }
+
+    override fun put(instance: Any): Insert {
+        TODO("Not yet implemented")
+    }
+
+    override fun putOrUpdate(instance: Any): Upsert {
+        TODO("Not yet implemented")
+    }
+
+    override fun add(instance: Any): Table {
+        TODO("Not yet implemented")
+    }
+
+    override fun <T> get(type: Class<T>, where: Where, limit: Int): List<T> {
+        TODO("Not yet implemented")
+    }
+
+    override fun <T> get(type: Class<T>, limit: Int): List<T> {
+        TODO("Not yet implemented")
+    }
+
     override var connection: Connection = DriverManager.getConnection(url, username, password)
         private set
 
@@ -23,58 +75,5 @@ class PostgreSQLConnection(private var url: String, private val username: String
         connection = DriverManager.getConnection(url, username, password)
         return connection
     }
-
-    override fun add(instance: Any, force: Boolean) {
-        TODO("Not yet implemented")
-    }
-
-    override fun put(instance: Any, force: Boolean) {
-        TODO("Not yet implemented")
-    }
-
-    override fun putOrUpdate(instance: Any) {
-        TODO("Not yet implemented")
-    }
-
-    override fun select(table: String, vararg columns: String, action: Select.() -> Unit): Select {
-        TODO("Not yet implemented")
-    }
-
-    override fun select(table: String, vararg columns: String): Select {
-        TODO("Not yet implemented")
-    }
-
-    override fun upsert(name: String): Upsert {
-        TODO("Not yet implemented")
-    }
-
-    override fun upsert(name: String, action: Upsert.() -> Unit): Upsert {
-        TODO("Not yet implemented")
-    }
-
-    override fun insert(name: String, force: Boolean): Insert {
-        TODO("Not yet implemented")
-    }
-
-    override fun insert(name: String, force: Boolean, action: Insert.() -> Unit): Insert {
-        TODO("Not yet implemented")
-    }
-
-    override fun table(name: String, force: Boolean): Table {
-        TODO("Not yet implemented")
-    }
-
-    override fun table(name: String, force: Boolean, action: Table.() -> Unit): Table {
-        TODO("Not yet implemented")
-    }
-
-    override fun <T> get(type: Class<T>, limit: Int): List<T> {
-        TODO("Not yet implemented")
-    }
-
-    override fun <T> get(type: Class<T>, where: Where, limit: Int): List<T> {
-        TODO("Not yet implemented")
-    }
-
     init { this.apply(action);DataHub.setConnection(this) }
 }

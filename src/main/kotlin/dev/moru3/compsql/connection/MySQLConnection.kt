@@ -44,8 +44,8 @@ open class MySQLConnection(private var url: String, private val username: String
         return connection
     }
 
-    override fun add(instance: Any, force: Boolean) {
-        table(p0(instance::class.java), force) {
+    override fun add(instance: Any): Table {
+        return table(p0(instance::class.java)) {
             instance::class.java.declaredFields.forEach { field ->
                 field.isAccessible = true
                 if(field.annotations.filterIsInstance<IgnoreColumn>().isNotEmpty()) { return@forEach }
@@ -83,25 +83,21 @@ open class MySQLConnection(private var url: String, private val username: String
         return res
     }
 
-    override fun insert(name: String, force: Boolean, action: Insert.() -> Unit) = insert(name, force).apply(action)
+    override fun insert(name: String, action: Insert.() -> Unit) = insert(name).apply(action)
 
-    override fun insert(name: String, force: Boolean): Insert = MySQLInsert(MySQLTable(this, name))
+    override fun insert(name: String): Insert = MySQLInsert(MySQLTable(this, name))
 
-    override fun table(name: String, force: Boolean, action: Table.() -> Unit): Table = table(name, force).apply(action)
+    override fun table(name: String, action: Table.() -> Unit): Table = table(name).apply(action)
 
-    override fun table(name: String, force: Boolean): Table = MySQLTable(this, name)
+    override fun table(name: String): Table = MySQLTable(this, name)
 
     override fun upsert(name: String): Upsert = MySQLUpsert(MySQLTable(this, name))
 
     override fun upsert(name: String, action: Upsert.() -> Unit): Upsert = upsert(name).apply(action)
 
-    override fun put(instance: Any, force: Boolean) {
-        this.insert(p0(instance::class.java), force) { p1(instance).forEach { add(it.key, it.value) } }
-    }
+    override fun put(instance: Any): Insert = this.insert(p0(instance::class.java)) { p1(instance).forEach { add(it.key, it.value) } }
 
-    override fun putOrUpdate(instance: Any) {
-        this.upsert(p0(instance::class.java)) { p1(instance).forEach { add(it.key, it.value) } }
-    }
+    override fun putOrUpdate(instance: Any): Upsert = this.upsert(p0(instance::class.java)) { p1(instance).forEach { add(it.key, it.value) } }
 
     init { setConnection(this);this.apply(action) }
 }

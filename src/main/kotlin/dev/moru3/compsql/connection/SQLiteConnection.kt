@@ -13,20 +13,19 @@ class SQLiteConnection(private val url: String, override val timeout: Int = 10, 
 
     constructor(file: File, timeout: Int = 10): this("jdbc:sqlite:${file.absolutePath}", timeout)
 
-    override var connection: Connection = DriverManager.getConnection(url)
-        private set
-
-    override val safeConnection: Connection get() = reconnect(false)
-
-    override fun upsert(name: String): Upsert {
+    override fun table(name: String, action: Table.() -> Unit): Table {
         TODO("Not yet implemented")
     }
 
-    override fun table(name: String, force: Boolean, action: Table.() -> Unit): Table {
+    override fun table(name: String): Table {
         TODO("Not yet implemented")
     }
 
-    override fun insert(name: String, force: Boolean): Insert {
+    override fun insert(name: String, action: Insert.() -> Unit): Insert {
+        TODO("Not yet implemented")
+    }
+
+    override fun insert(name: String): Insert {
         TODO("Not yet implemented")
     }
 
@@ -34,7 +33,7 @@ class SQLiteConnection(private val url: String, override val timeout: Int = 10, 
         TODO("Not yet implemented")
     }
 
-    override fun insert(name: String, force: Boolean, action: Insert.() -> Unit): Insert {
+    override fun upsert(name: String): Upsert {
         TODO("Not yet implemented")
     }
 
@@ -46,25 +45,19 @@ class SQLiteConnection(private val url: String, override val timeout: Int = 10, 
         TODO("Not yet implemented")
     }
 
-    override fun table(name: String, force: Boolean): Table {
+    override fun put(instance: Any): Insert {
         TODO("Not yet implemented")
     }
 
-    override fun reconnect(force: Boolean): Connection {
-        if(!this.isClosed) if(force) connection.close() else return connection
-        connection = DriverManager.getConnection(url)
-        return connection
-    }
-
-    override fun putOrUpdate(instance: Any) {
+    override fun putOrUpdate(instance: Any): Upsert {
         TODO("Not yet implemented")
     }
 
-    override fun add(instance: Any, force: Boolean) {
+    override fun add(instance: Any): Table {
         TODO("Not yet implemented")
     }
 
-    override fun put(instance: Any, force: Boolean) {
+    override fun <T> get(type: Class<T>, where: Where, limit: Int): List<T> {
         TODO("Not yet implemented")
     }
 
@@ -72,8 +65,15 @@ class SQLiteConnection(private val url: String, override val timeout: Int = 10, 
         TODO("Not yet implemented")
     }
 
-    override fun <T> get(type: Class<T>, where: Where, limit: Int): List<T> {
-        TODO("Not yet implemented")
+    override var connection: Connection = DriverManager.getConnection(url)
+        private set
+
+    override val safeConnection: Connection get() = reconnect(false)
+
+    override fun reconnect(force: Boolean): Connection {
+        if(!this.isClosed) if(force) connection.close() else return connection
+        connection = DriverManager.getConnection(url)
+        return connection
     }
 
     init { this.apply(action);DataHub.setConnection(this) }

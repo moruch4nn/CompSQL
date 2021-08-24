@@ -10,22 +10,22 @@ interface Database: Closeable, Connection {
     /**
      * テーブルを作成します。
      */
-    fun table(name: String, force: Boolean = false, action: Table.()->Unit): Table
+    fun table(name: String, action: Table.()->Unit): Table
 
     /**
      * テーブルを作成します。
      */
-    fun table(name: String, force: Boolean = false): Table
+    fun table(name: String): Table
 
     /**
      * データをinsertします。
      */
-    fun insert(name: String, force: Boolean, action: Insert.() -> Unit): Insert
+    fun insert(name: String, action: Insert.() -> Unit): Insert
 
     /**
      * データをinsertします。
      */
-    fun insert(name: String, force: Boolean): Insert
+    fun insert(name: String): Insert
 
     /**
      * TODO 説明文書いといて
@@ -44,17 +44,17 @@ interface Database: Closeable, Connection {
     /**
      * Databaseにデータをプットします。
      */
-    fun put(instance: Any, force: Boolean)
+    fun put(instance: Any): Insert
 
     /**
      * 重複しないように
      */
-    fun putOrUpdate(instance: Any)
+    fun putOrUpdate(instance: Any): Upsert
 
     /**
      * テーブルを追加します。
      */
-    fun add(instance: Any, force: Boolean)
+    fun add(instance: Any): Table
 
     /**
      * Whereを元にデータベースからデータを取得します。
