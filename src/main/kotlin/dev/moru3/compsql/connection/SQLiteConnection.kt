@@ -57,7 +57,7 @@ class SQLiteConnection(private val url: String, override val timeout: Int = 10, 
         TODO("Not yet implemented")
     }
 
-    override fun <T> get(type: Class<T>, where: SelectWhere, limit: Int): List<T> {
+    override fun <T> get(type: Class<T>, limit: Int, action: Select.() -> Unit): List<T> {
         TODO("Not yet implemented")
     }
 

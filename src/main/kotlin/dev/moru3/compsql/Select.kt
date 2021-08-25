@@ -2,6 +2,7 @@ package dev.moru3.compsql
 
 import dev.moru3.compsql.interfaces.NonCompleteSyntax
 import dev.moru3.compsql.interfaces.Syntax
+import java.sql.Date
 import java.sql.ResultSet
 
 // TODO.

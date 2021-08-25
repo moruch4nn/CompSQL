@@ -83,11 +83,11 @@ open class MySQLConnection(private var url: String, private val username: String
         }
     }
 
-    override fun <T> get(type: Class<T>, limit: Int): List<T> = get(type, MySQLSelectWhere(), limit)
+    override fun <T> get(type: Class<T>, limit: Int): List<T> = get(type, limit)
 
-    override fun <T> get(type: Class<T>, where: SelectWhere, limit: Int): List<T> {
+    override fun <T> get(type: Class<T>, limit: Int, action: Select.() -> Unit): List<T> {
         val columns = mutableMapOf<String, Field>().also { columns -> type.declaredFields.forEach { field -> field.isAccessible = true;if(field.annotations.filterIsInstance<IgnoreColumn>().isNotEmpty()) { return@forEach } ;val name = field.annotations.filterIsInstance<Column>().getOrNull(0)?.name?:field.name;check(!columns.containsKey(name)) { "The column name is duplicated." };columns[name] = field } }
-        val result = MySQLSelect(MySQLTable(this, p0(type)), where, *columns.keys.toTypedArray()).send()
+        val result = MySQLSelect(MySQLTable(this, p0(type)), *columns.keys.toTypedArray()).apply(action).send()
         val res = mutableListOf<T>()
         while(result.next()) {
             val instance = type.newInstance()

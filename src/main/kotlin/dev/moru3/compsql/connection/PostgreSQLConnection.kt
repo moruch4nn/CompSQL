@@ -57,7 +57,7 @@ class PostgreSQLConnection(private var url: String, private val username: String
         TODO("Not yet implemented")
     }
 
-    override fun <T> get(type: Class<T>, where: SelectWhere, limit: Int): List<T> {
+    override fun <T> get(type: Class<T>, limit: Int, action: Select.() -> Unit): List<T> {
         TODO("Not yet implemented")
     }
 

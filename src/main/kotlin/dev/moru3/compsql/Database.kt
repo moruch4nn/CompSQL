@@ -65,12 +65,12 @@ interface Database: Closeable, Connection {
     /**
      * Whereを元にデータベースからデータを取得します。
      */
-    fun <T> get(type: Class<T>, where: SelectWhere, limit: Int = Int.MAX_VALUE): List<T>
+    fun <T> get(type: Class<T>, limit: Int = Int.MAX_VALUE): List<T>
 
     /**
      * データベースからデータを取得します。
      */
-    fun <T> get(type: Class<T>, limit: Int = Int.MAX_VALUE): List<T>
+    fun <T> get(type: Class<T>, limit: Int = Int.MAX_VALUE, action: Select.() -> Unit): List<T>
 
     /**
      * 接続が既に閉じているかを返します。
