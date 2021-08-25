@@ -5,7 +5,8 @@ import dev.moru3.compsql.DataHub.setConnection
 import dev.moru3.compsql.annotation.Column
 import dev.moru3.compsql.annotation.IgnoreColumn
 import dev.moru3.compsql.mysql.query.select.MySQLSelect
-import dev.moru3.compsql.mysql.query.select.MySQLWhere
+import dev.moru3.compsql.mysql.query.select.MySQLSelectWhere
+import dev.moru3.compsql.mysql.update.delete.MySQLDelete
 import dev.moru3.compsql.mysql.update.insert.MySQLInsert
 import dev.moru3.compsql.mysql.update.insert.MySQLUpsert
 import dev.moru3.compsql.mysql.update.table.MySQLTable
@@ -66,9 +67,25 @@ open class MySQLConnection(private var url: String, private val username: String
 
     override fun select(table: String, vararg columns: String, action: Select.() -> Unit): Select  = MySQLSelect(MySQLTable(this, table), *columns).apply(action)
 
-    override fun <T> get(type: Class<T>, limit: Int): List<T> = get(type, MySQLWhere(), limit)
+    override fun delete(table: String): Delete = MySQLDelete(MySQLTable(this, table))
 
-    override fun <T> get(type: Class<T>, where: Where, limit: Int): List<T> {
+    override fun delete(table: String, action: Delete.() -> Unit): Delete = delete(table).apply(action)
+
+    override fun remove(instance: Any): Delete {
+        return delete(p0(instance::class.java)) {
+            var filteredWhere: FilteredWhere? = null
+            instance::class.java.declaredFields.forEach { field ->
+                field.isAccessible = true
+                if(field.annotations.filterIsInstance<IgnoreColumn>().isNotEmpty()) { return@forEach }
+                val annotation = field.annotations.filterIsInstance<Column>().getOrNull(0)
+                filteredWhere = filteredWhere?.and(annotation?.name?:field.name)?.equal(field.get(instance))?:this.where.key(annotation?.name?:field.name).equal(field.get(instance))
+            }
+        }
+    }
+
+    override fun <T> get(type: Class<T>, limit: Int): List<T> = get(type, MySQLSelectWhere(), limit)
+
+    override fun <T> get(type: Class<T>, where: SelectWhere, limit: Int): List<T> {
         val columns = mutableMapOf<String, Field>().also { columns -> type.declaredFields.forEach { field -> field.isAccessible = true;if(field.annotations.filterIsInstance<IgnoreColumn>().isNotEmpty()) { return@forEach } ;val name = field.annotations.filterIsInstance<Column>().getOrNull(0)?.name?:field.name;check(!columns.containsKey(name)) { "The column name is duplicated." };columns[name] = field } }
         val result = MySQLSelect(MySQLTable(this, p0(type)), where, *columns.keys.toTypedArray()).send()
         val res = mutableListOf<T>()

@@ -41,6 +41,10 @@ interface Database: Closeable, Connection {
 
     fun select(table: String, vararg columns: String, action: Select.()->Unit): Select
 
+    fun delete(table: String): Delete
+
+    fun delete(table: String, action: Delete.()->Unit): Delete
+
     /**
      * Databaseにデータをプットします。
      */
@@ -56,10 +60,12 @@ interface Database: Closeable, Connection {
      */
     fun add(instance: Any): Table
 
+    fun remove(instance: Any): Delete
+
     /**
      * Whereを元にデータベースからデータを取得します。
      */
-    fun <T> get(type: Class<T>, where: Where, limit: Int = Int.MAX_VALUE): List<T>
+    fun <T> get(type: Class<T>, where: SelectWhere, limit: Int = Int.MAX_VALUE): List<T>
 
     /**
      * データベースからデータを取得します。

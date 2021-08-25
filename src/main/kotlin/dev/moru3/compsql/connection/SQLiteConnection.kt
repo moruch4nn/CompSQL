@@ -57,11 +57,23 @@ class SQLiteConnection(private val url: String, override val timeout: Int = 10, 
         TODO("Not yet implemented")
     }
 
-    override fun <T> get(type: Class<T>, where: Where, limit: Int): List<T> {
+    override fun <T> get(type: Class<T>, where: SelectWhere, limit: Int): List<T> {
+        TODO("Not yet implemented")
+    }
+
+    override fun delete(table: String): Delete {
+        TODO("Not yet implemented")
+    }
+
+    override fun delete(table: String, action: Delete.() -> Unit): Delete {
         TODO("Not yet implemented")
     }
 
     override fun <T> get(type: Class<T>, limit: Int): List<T> {
+        TODO("Not yet implemented")
+    }
+
+    override fun remove(instance: Any): Delete {
         TODO("Not yet implemented")
     }
 

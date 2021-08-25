@@ -1,10 +1,7 @@
 package dev.moru3.compsql.mysql.query.select
 
+import dev.moru3.compsql.*
 import dev.moru3.compsql.DataHub.connection
-import dev.moru3.compsql.KeyedWhere
-import dev.moru3.compsql.OrderType
-import dev.moru3.compsql.Select
-import dev.moru3.compsql.Where
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.table.Table
 import java.sql.PreparedStatement
@@ -12,9 +9,9 @@ import java.sql.ResultSet
 
 class MySQLSelect(val table: Table, vararg columns: String): Select {
 
-    private var where: Where = MySQLWhere()
+    override var where: SelectWhere = MySQLSelectWhere()
 
-    constructor(table: Table, where: Where, vararg columns: String): this(table, *columns) {
+    constructor(table: Table, where: SelectWhere, vararg columns: String): this(table, *columns) {
         this.where = where
     }
 
@@ -36,11 +33,11 @@ class MySQLSelect(val table: Table, vararg columns: String): Select {
         return preparedStatement
     }
 
-    override fun where(key: String): KeyedWhere = MySQLWhere().also { this.where = it }.key(key)
+    override fun where(key: String): SelectKeyedWhere = MySQLSelectWhere().also { this.where = it }.key(key)
 
-    override fun orderBy(table: String, orderType: OrderType): Where = MySQLWhere().orderBy(table, orderType).also { this.where = it }
+    override fun orderBy(table: String, orderType: OrderType): SelectWhere = MySQLSelectWhere().orderBy(table, orderType).also { this.where = it }
 
-    override fun orderBy(vararg values: Pair<String, OrderType>): Where = MySQLWhere().orderBy(*values).also { this.where = it }
+    override fun orderBy(vararg values: Pair<String, OrderType>): SelectWhere = MySQLSelectWhere().orderBy(*values).also { this.where = it }
 
     override fun send(): ResultSet = connection.sendQuery(build())
 }

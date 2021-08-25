@@ -3,10 +3,6 @@ package dev.moru3.compsql
 import dev.moru3.compsql.interfaces.NonCompleteSyntax
 
 interface Where: NonCompleteSyntax {
-    fun orderBy(table: String, orderType: OrderType): Where
-
-    fun orderBy(vararg values: Pair<String, OrderType>): Where
-
     fun key(key: String): KeyedWhere
 
     fun add(string: String, vararg any: Any): FilteredWhere
@@ -15,10 +11,6 @@ interface Where: NonCompleteSyntax {
 }
 
 interface FilteredWhere: NonCompleteSyntax {
-    fun orderBy(table: String, orderType: OrderType): FilteredWhere
-
-    fun orderBy(vararg values: Pair<String, OrderType>): FilteredWhere
-
     fun add(string: String, vararg any: Any): FilteredWhere
 
     fun and(key: String): KeyedWhere
@@ -58,9 +50,4 @@ interface KeyedWhere {
      * 小なり(<=)
      */
     fun lessOrEquals(value: Any?): FilteredWhere
-}
-
-enum class OrderType {
-    ASC,
-    DESC
 }

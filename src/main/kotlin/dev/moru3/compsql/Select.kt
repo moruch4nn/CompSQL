@@ -4,12 +4,15 @@ import dev.moru3.compsql.interfaces.NonCompleteSyntax
 import dev.moru3.compsql.interfaces.Syntax
 import java.sql.ResultSet
 
+// TODO.
 interface Select: NonCompleteSyntax, Syntax {
-    fun where(key: String): KeyedWhere
+    val where: SelectWhere
 
-    fun orderBy(table: String, orderType: OrderType): Where
+    fun where(key: String): SelectKeyedWhere
 
-    fun orderBy(vararg values: Pair<String, OrderType>): Where
+    fun orderBy(table: String, orderType: OrderType): SelectWhere
+
+    fun orderBy(vararg values: Pair<String, OrderType>): SelectWhere
 
     fun send(): ResultSet
 }
