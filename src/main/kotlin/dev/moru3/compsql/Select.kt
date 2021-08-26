@@ -7,7 +7,7 @@ import java.sql.ResultSet
 
 // TODO.
 interface Select: NonCompleteSyntax, Syntax {
-    val where: SelectWhere
+    var where: SelectWhere
 
     fun where(key: String): SelectKeyedWhere
 

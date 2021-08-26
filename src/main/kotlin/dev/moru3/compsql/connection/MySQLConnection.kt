@@ -116,5 +116,9 @@ open class MySQLConnection(private var url: String, private val username: String
 
     override fun putOrUpdate(instance: Any): Upsert = this.upsert(p0(instance::class.java)) { p1(instance).forEach { add(it.key, it.value) } }
 
+    override fun where(key: String): SelectKeyedWhere = MySQLSelectWhere().key(key)
+
+    override fun <T> get(type: Class<T>, selectWhere: SelectWhere, limit: Int): List<T> = get(type, limit) { where = selectWhere }
+
     init { setConnection(this);this.apply(action) }
 }
