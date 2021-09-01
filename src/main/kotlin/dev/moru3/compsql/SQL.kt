@@ -4,6 +4,7 @@ import dev.moru3.compsql.annotation.Column
 import dev.moru3.compsql.annotation.IgnoreColumn
 import dev.moru3.compsql.annotation.TableName
 import java.io.InputStream
+import java.lang.reflect.Modifier
 import java.math.BigDecimal
 import java.sql.*
 
@@ -44,6 +45,7 @@ abstract class SQL: Database {
         return mutableMapOf<String, Any>().also { columns ->
             instance::class.java.declaredFields.forEach { field ->
                 field.isAccessible = true
+                if(Modifier.isStatic(field.modifiers)) { return@forEach }
                 if(field.annotations.filterIsInstance<IgnoreColumn>().isNotEmpty()) { return@forEach }
                 val name = field.annotations.filterIsInstance<Column>().getOrNull(0)?.name?:field.name
                 check(!columns.containsKey(name)) { "The column name is duplicated." }

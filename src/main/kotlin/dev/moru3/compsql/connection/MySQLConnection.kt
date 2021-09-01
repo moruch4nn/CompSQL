@@ -12,6 +12,7 @@ import dev.moru3.compsql.mysql.update.insert.MySQLUpsert
 import dev.moru3.compsql.mysql.update.table.MySQLTable
 import dev.moru3.compsql.table.Table
 import java.lang.reflect.Field
+import java.lang.reflect.Modifier
 import java.sql.*
 import java.sql.Connection
 
@@ -49,6 +50,7 @@ open class MySQLConnection(private var url: String, private val username: String
         return table(p0(instance::class.java)) {
             instance::class.java.declaredFields.forEach { field ->
                 field.isAccessible = true
+                if(Modifier.isStatic(field.modifiers)) { return@forEach }
                 if(field.annotations.filterIsInstance<IgnoreColumn>().isNotEmpty()) { return@forEach }
                 val annotation = field.annotations.filterIsInstance<Column>().getOrNull(0)
                 column(annotation?.name?:field.name, checkNotNull(DataHub.getTypeListByAny(field.get(instance)).getOrNull(0))) {
@@ -83,17 +85,27 @@ open class MySQLConnection(private var url: String, private val username: String
         }
     }
 
-    override fun <T> get(type: Class<T>, limit: Int): List<T> = get(type, limit)
+    override fun <T> get(type: Class<T>, limit: Int): List<T> = get(type, limit) { }
 
     override fun <T> get(type: Class<T>, limit: Int, action: Select.() -> Unit): List<T> {
-        val columns = mutableMapOf<String, Field>().also { columns -> type.declaredFields.forEach { field -> field.isAccessible = true;if(field.annotations.filterIsInstance<IgnoreColumn>().isNotEmpty()) { return@forEach } ;val name = field.annotations.filterIsInstance<Column>().getOrNull(0)?.name?:field.name;check(!columns.containsKey(name)) { "The column name is duplicated." };columns[name] = field } }
+        val columns = mutableMapOf<String, Field>().also { columns ->
+            type.declaredFields.forEach { field ->
+                field.isAccessible = true
+                if(Modifier.isStatic(field.modifiers)) { return@forEach }
+                val annotations = field.annotations.filterIsInstance<IgnoreColumn>()
+                if(annotations.isNotEmpty()&&annotations[0].ignoreGet) { return@forEach }
+                val name = field.annotations.filterIsInstance<Column>().getOrNull(0)?.name?:field.name
+                check(!columns.containsKey(name)) { "The column name is duplicated." }
+                columns[name] = field
+            }
+        }
         val result = MySQLSelect(MySQLTable(this, p0(type)), *columns.keys.toTypedArray()).apply(action).send()
         val res = mutableListOf<T>()
         while(result.next()) {
-            val instance = type.newInstance()
-            columns.forEach {
-                val dataType = DataHub.getTypeListByAny(it.value.type).getOrNull(0)
-                it.value.set(instance, dataType?.get(result, it.key))
+            val instance = type.getConstructor().newInstance()?:throw Exception()
+            columns.forEach { entry ->
+                val dataType = DataHub.getTypeListByClass(entry.value.type).getOrNull(0)
+                entry.value.set(instance, dataType?.get(result, entry.key))
             }
             res.add(instance)
         }
