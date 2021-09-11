@@ -18,9 +18,9 @@ interface Table: SendSyntax, NonCompleteSyntax {
     fun column(name: String, type: DataType<*, *>, action: (Column)->Unit = {}): Column
 
     /**
-     * Columnを追加します。
+     * 新しくColumnを作成し、追加します。
      */
-    fun column(column: Column): Column
+    fun column(name: String, type: DataType<*, *>): Column
 
     /**
      * テーブルのAfter関連の関数が入ってます。

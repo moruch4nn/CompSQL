@@ -63,8 +63,8 @@ interface DataType<F, T> {
 
         // text系
         val CHAR = CHAR(255)
-        val LONGTEXT = LONGTEXT(10230)
-        val TEXT = TEXT(1023)
+        val LONGTEXT = LONGTEXT(1023)
+        val TEXT = TEXT(511)
         val VARCHAR = VARCHAR(255)
 
         // date型

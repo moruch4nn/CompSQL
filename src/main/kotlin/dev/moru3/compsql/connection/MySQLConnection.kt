@@ -33,7 +33,7 @@ open class MySQLConnection(private var url: String, private val username: String
 
     init { url = url.also{ properties.keys.mapIndexed { index, key -> "${if(index==0) '?' else '&'}${key}=${properties[key]}" }.forEach(it::plus) } }
 
-    constructor(host: String, database: String, username: String, password: String, properties: Map<String, Any>, timeout: Int = 5, action: MySQLConnection.()->Unit = {}): this("jdbc:mysql://${host}/${database}", username, password, properties, timeout, action)
+    constructor(host: String, database: String, username: String, password: String, properties: Map<String, Any>? = null, timeout: Int = 5, action: MySQLConnection.()->Unit = {}): this("jdbc:mysql://${host}/${database}", username, password, properties?: mapOf(), timeout, action)
 
     override val safeConnection: Connection get() = reconnect(false)
 

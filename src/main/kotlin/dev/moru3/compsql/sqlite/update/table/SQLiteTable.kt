@@ -18,7 +18,7 @@ class SQLiteTable(val connection: Connection, n: String): Table {
         TODO("Not yet implemented")
     }
 
-    override fun column(column: Column): Column {
+    override fun column(name: String, type: DataType<*, *>): Column {
         TODO("Not yet implemented")
     }
 

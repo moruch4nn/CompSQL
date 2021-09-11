@@ -3,7 +3,7 @@ package dev.moru3.compsql.interfaces
 import dev.moru3.compsql.datatype.DataType
 import java.sql.PreparedStatement
 
-interface Syntax {
+interface Syntax: NonCompleteSyntax {
     fun build(): PreparedStatement
 }
 

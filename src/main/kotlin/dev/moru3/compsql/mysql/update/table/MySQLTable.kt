@@ -22,11 +22,11 @@ class MySQLTable(val connection: Connection, n: String): Table {
     private val columns: MutableList<Column> = mutableListOf()
 
     override fun column(name: String, type: DataType<*, *>, action: (Column) -> Unit): Column {
-        return column(MySQLColumn(name, type).apply(action))
+        return column(name, type).apply(action)
     }
 
-    override fun column(column: Column): Column {
-        if(column.isAutoIncrement) { column.setPrimaryKey(true) }
+    override fun column(name: String, type: DataType<*, *>): Column {
+        val column =  MySQLColumn(name, type)
         columns.add(column)
         return column
     }

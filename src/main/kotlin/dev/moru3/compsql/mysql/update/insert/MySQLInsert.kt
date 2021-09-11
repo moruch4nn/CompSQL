@@ -18,7 +18,7 @@ class MySQLInsert(override val table: Table) : Insert {
     }
 
     /**
-     * valueから型を推論します。推論できない場合はVARCHARに変換されます。
+     * valueから型を推論します。推論できない場合はIllegalStateExceptionが発生します。
      */
     override fun add(key: String, value: Any): Insert {
         return add(checkNotNull(getTypeListByAny(value).getOrNull(0)) { "`${value::class.java.name}`に対応する型が見つかりません。" }, key, value)
