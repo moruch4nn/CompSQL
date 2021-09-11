@@ -4,8 +4,8 @@ import dev.moru3.compsql.DataHub.connection
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.interfaces.NonForceSyntax
 import dev.moru3.compsql.mysql.update.table.column.MySQLColumn
-import dev.moru3.compsql.table.AfterTable
-import dev.moru3.compsql.table.column.Column
+import dev.moru3.compsql.syntax.table.AfterTable
+import dev.moru3.compsql.syntax.table.column.Column
 import java.sql.PreparedStatement
 
 class MySQLAfterTable(override val name: String): AfterTable {

@@ -1,8 +1,8 @@
-package dev.moru3.compsql.table
+package dev.moru3.compsql.syntax.table
 
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.interfaces.NonForceSyntax
-import dev.moru3.compsql.table.column.Column
+import dev.moru3.compsql.syntax.table.column.Column
 
 interface AfterTable {
 

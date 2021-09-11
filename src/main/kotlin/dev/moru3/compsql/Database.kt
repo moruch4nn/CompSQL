@@ -1,6 +1,7 @@
 package dev.moru3.compsql
 
-import dev.moru3.compsql.table.Table
+import dev.moru3.compsql.syntax.*
+import dev.moru3.compsql.syntax.table.Table
 import java.io.Closeable
 
 interface Database: Closeable, Connection {

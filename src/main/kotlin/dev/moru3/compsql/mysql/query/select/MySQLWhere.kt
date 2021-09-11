@@ -3,6 +3,9 @@ package dev.moru3.compsql.mysql.query.select
 import dev.moru3.compsql.*
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.datatype.types.NULL
+import dev.moru3.compsql.syntax.FilteredWhere
+import dev.moru3.compsql.syntax.KeyedWhere
+import dev.moru3.compsql.syntax.Where
 
 open class MySQLWhere: Where {
 

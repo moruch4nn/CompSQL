@@ -1,9 +1,9 @@
-package dev.moru3.compsql
+package dev.moru3.compsql.syntax
 
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.interfaces.NonCompleteSyntax
 import dev.moru3.compsql.interfaces.SendSyntax
-import dev.moru3.compsql.table.Table
+import dev.moru3.compsql.syntax.table.Table
 import java.sql.PreparedStatement
 
 interface Insert: SendSyntax, NonCompleteSyntax {

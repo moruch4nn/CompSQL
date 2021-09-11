@@ -3,6 +3,10 @@ package dev.moru3.compsql.mysql.query.select
 import dev.moru3.compsql.*
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.datatype.types.NULL
+import dev.moru3.compsql.syntax.OrderType
+import dev.moru3.compsql.syntax.SelectFilteredWhere
+import dev.moru3.compsql.syntax.SelectKeyedWhere
+import dev.moru3.compsql.syntax.SelectWhere
 
 class MySQLSelectWhere: SelectWhere {
     var order: MutableMap<String, OrderType> = mutableMapOf()

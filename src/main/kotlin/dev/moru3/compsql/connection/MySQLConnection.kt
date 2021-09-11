@@ -10,7 +10,8 @@ import dev.moru3.compsql.mysql.update.delete.MySQLDelete
 import dev.moru3.compsql.mysql.update.insert.MySQLInsert
 import dev.moru3.compsql.mysql.update.insert.MySQLUpsert
 import dev.moru3.compsql.mysql.update.table.MySQLTable
-import dev.moru3.compsql.table.Table
+import dev.moru3.compsql.syntax.*
+import dev.moru3.compsql.syntax.table.Table
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
 import java.sql.*
@@ -67,7 +68,7 @@ open class MySQLConnection(private var url: String, private val username: String
 
     override fun select(table: String, vararg columns: String): Select = MySQLSelect(MySQLTable(this, table), *columns)
 
-    override fun select(table: String, vararg columns: String, action: Select.() -> Unit): Select  = MySQLSelect(MySQLTable(this, table), *columns).apply(action)
+    override fun select(table: String, vararg columns: String, action: Select.() -> Unit): Select = MySQLSelect(MySQLTable(this, table), *columns).apply(action)
 
     override fun delete(table: String): Delete = MySQLDelete(MySQLTable(this, table))
 

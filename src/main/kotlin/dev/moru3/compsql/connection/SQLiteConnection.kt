@@ -1,7 +1,8 @@
 package dev.moru3.compsql.connection
 
 import dev.moru3.compsql.*
-import dev.moru3.compsql.table.Table
+import dev.moru3.compsql.syntax.*
+import dev.moru3.compsql.syntax.table.Table
 import java.io.File
 import java.sql.Connection
 import java.sql.DriverManager

@@ -2,9 +2,9 @@ package dev.moru3.compsql.sqlite.update.table
 
 import dev.moru3.compsql.Connection
 import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.table.AfterTable
-import dev.moru3.compsql.table.Table
-import dev.moru3.compsql.table.column.Column
+import dev.moru3.compsql.syntax.table.AfterTable
+import dev.moru3.compsql.syntax.table.Table
+import dev.moru3.compsql.syntax.table.column.Column
 import java.sql.PreparedStatement
 
 class SQLiteTable(val connection: Connection, n: String): Table {
