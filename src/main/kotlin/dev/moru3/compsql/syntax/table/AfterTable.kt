@@ -11,7 +11,7 @@ interface AfterTable {
     /**
      * テーブルにColumnを追加します。
      */
-    fun add(name: String, type: DataType<*, *>, action: (Column)->Unit): NonForceSyntax
+    fun add(name: String, type: DataType<*>, action: (Column)->Unit): NonForceSyntax
 
     /**
      * テーブルにColumnを追加します。

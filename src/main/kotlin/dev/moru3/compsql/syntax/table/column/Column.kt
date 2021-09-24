@@ -7,7 +7,7 @@ interface Column: NonCompleteSyntax {
     /**
      *
      */
-    val type: DataType<*, *>
+    val type: DataType<*>
 
     val name: String
 

@@ -12,30 +12,29 @@ import java.sql.Types
  * Unsigned: USMALLINT, Non-Unsigned: SMALLINT
  * 注意: numeric系のプロパティは"最大数"ではなく"最大桁数"なのでお間違えなく。
  */
-open class SMALLINT(val property: Byte): DataType<Short, Short> {
+open class SMALLINT(val property: Byte): DataType<Short> {
 
-    override val typeName: String = "SMALLINT"
-    override val from: Class<Short> = Short::class.javaObjectType
-    override val type: Class<Short> = Short::class.javaObjectType
-    override val sqlType: Int = Types.SMALLINT
-    override val allowPrimaryKey: Boolean = true
-    override val allowNotNull: Boolean = true
-    override val allowUnique: Boolean = true
-    override val isUnsigned: Boolean = false
-    override val allowZeroFill: Boolean = true
-    override val allowAutoIncrement: Boolean = true
+    final override val typeName: String = "SMALLINT"
+    override val from: Class<*> = Short::class.javaObjectType
+    final override val type: Class<Short> = Short::class.javaObjectType
+    final override val sqlType: Int = Types.SMALLINT
+    final override val allowPrimaryKey: Boolean = true
+    final override val allowNotNull: Boolean = true
+    final override val allowUnique: Boolean = true
+    final override val isUnsigned: Boolean = false
+    final override val allowZeroFill: Boolean = true
+    final override val allowAutoIncrement: Boolean = true
     override val allowDefault: Boolean = true
     override val defaultProperty: String = "$property"
     override val priority: Int = 10
-    override val action: (PreparedStatement, Int, Short) -> Unit = { ps, i, a -> ps.setShort(i, a) }
-    override val convert: (value: Short) -> Short = { it }
+    final override val action: (PreparedStatement, Int, Short) -> Unit = { ps, i, a -> ps.setShort(i, a) }
 
     override fun set(ps: PreparedStatement, index: Int, any: Any?) {
-        check(any is Short) { "The type of \"any\" is different from \"type\"." }
-        action.invoke(ps, index, any)
+        check(any is Number) { "The type of \"any\" is different from \"type\"." }
+        action.invoke(ps, index, any.toShort())
     }
 
-    override fun get(resultSet: ResultSet, id: String): Short? = resultSet.getShort(id)
+    override fun get(resultSet: ResultSet, id: String): Any? = resultSet.getShort(id)
 
     init { addCustomType(this) }
 }

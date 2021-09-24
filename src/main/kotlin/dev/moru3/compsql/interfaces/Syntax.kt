@@ -9,10 +9,10 @@ interface Syntax: NonCompleteSyntax {
 
 interface NonCompleteSyntax {
     /**
-     * Pair<String1, List<Pair<Any1, DataType<*, *>>>>
+     * Pair<String1, List<Pair<Any1, DataType<*>>>>
      * String: ビルドした構文です。インジェクション対策のためvalueは?に置換されています。
      * Any1: ?を置換するオブジェクトです。
      * DataType: Any1のデータタイプです。
      */
-    fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>>
+    fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*>>>>
 }

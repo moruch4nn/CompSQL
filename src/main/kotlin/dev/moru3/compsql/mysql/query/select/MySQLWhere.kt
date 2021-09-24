@@ -11,7 +11,7 @@ open class MySQLWhere: Where {
 
     var limit: Int? = null
 
-    val list = mutableListOf<Pair<Any?, DataType<*,*>>>()
+    val list = mutableListOf<Pair<Any?, DataType<*>>>()
 
     var string = ""
 
@@ -31,7 +31,7 @@ open class MySQLWhere: Where {
         return MySQLKeyedWhere(this)
     }
 
-    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>> {
+    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*>>>> {
         if(limit!=null) { string+=" LIMIT $limit" }
         return (if(string.isEmpty()) "" else " WHERE $string") to list
     }
@@ -97,5 +97,5 @@ class MySQLFilteredWhere(private val data: MySQLWhere): FilteredWhere {
         return this
     }
 
-    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>> = data.buildAsRaw()
+    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*>>>> = data.buildAsRaw()
 }

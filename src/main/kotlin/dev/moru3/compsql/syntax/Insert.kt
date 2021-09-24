@@ -13,11 +13,11 @@ interface Insert: SendSyntax, NonCompleteSyntax {
      */
     val table: Table
 
-    fun add(type: DataType<*, *>, key: String, value: Any): Insert
+    fun add(type: DataType<*>, key: String, value: Any): Insert
 
     fun add(key: String, value: Any): Insert
 
     fun build(force: Boolean): PreparedStatement
 
-    fun buildAsRaw(force: Boolean): Pair<String, List<Pair<Any, DataType<*,*>>>>
+    fun buildAsRaw(force: Boolean): Pair<String, List<Pair<Any, DataType<*>>>>
 }

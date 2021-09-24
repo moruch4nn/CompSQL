@@ -1,4 +1,4 @@
-package dev.moru3.compsql.abstract
+package dev.moru3.compsql.abstracts
 
 import dev.moru3.compsql.Connection
 import dev.moru3.compsql.datatype.DataType
@@ -21,17 +21,17 @@ abstract class AbstractTable(val connection: Connection, n: String): Table {
 
     protected val columns: MutableList<Column> = mutableListOf()
 
-    override fun column(name: String, type: DataType<*, *>, action: (Column) -> Unit): Column {
+    override fun column(name: String, type: DataType<*>, action: (Column) -> Unit): Column {
         return column(name, type).apply(action)
     }
 
-    override fun column(name: String, type: DataType<*, *>): Column {
+    override fun column(name: String, type: DataType<*>): Column {
         val column =  MySQLColumn(name, type)
         columns.add(column)
         return column
     }
 
-    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>>  = buildAsRaw(false)
+    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*>>>>  = buildAsRaw(false)
 
     override fun build(): PreparedStatement = build(false)
 

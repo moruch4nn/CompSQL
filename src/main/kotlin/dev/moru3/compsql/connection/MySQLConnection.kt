@@ -21,19 +21,25 @@ import java.sql.Connection
  * 新しくMySQLのコネクションを開きます。すでに開いているコネクションがある場合はそのコネクションをcloseします。
  * @param url jdbc:mysql://host/database
  */
-open class MySQLConnection(private var url: String, private val username: String, private val password: String, private val properties: Map<String, Any>, override val timeout: Int = 5, action: MySQLConnection.()->Unit = {}): SQL() {
+open class MySQLConnection(protected var url: String, protected val username: String, protected val password: String, protected val properties: Map<String, Any>, override val timeout: Int = 5, protected val action: MySQLConnection.()->Unit = {}): SQL() {
 
     val database: String = url.split("/").last()
-
-    init {
+    
+    override fun init() {
+        try { Class.forName("com.mysql.jdbc.Driver") } catch (_: Exception) { }
         val burl = url.replaceFirst(Regex("/${database}\$"), "").also{ properties.keys.mapIndexed { index, key -> "${if(index==0) '?' else '&'}${key}=${properties[key]}" }.forEach(it::plus) }
         val bacon = DriverManager.getConnection(burl, username, password)
         bacon.prepareStatement("CREATE DATABASE IF NOT EXISTS $database").also { it.executeUpdate() }.close()
         bacon.close()
+        url = url.also{ properties.keys.mapIndexed { index, key -> "${if(index==0) '?' else '&'}${key}=${properties[key]}" }.forEach(it::plus) }
+    }
+    
+    override fun after() {
+        setConnection(this);this.apply(action)
     }
 
-    init { url = url.also{ properties.keys.mapIndexed { index, key -> "${if(index==0) '?' else '&'}${key}=${properties[key]}" }.forEach(it::plus) } }
-
+    init { init() }
+    
     constructor(host: String, database: String, username: String, password: String, properties: Map<String, Any>? = null, timeout: Int = 5, action: MySQLConnection.()->Unit = {}): this("jdbc:mysql://${host}/${database}", username, password, properties?: mapOf(), timeout, action)
 
     override val safeConnection: Connection get() = reconnect(false)
@@ -105,7 +111,7 @@ open class MySQLConnection(private var url: String, private val username: String
         while(result.next()) {
             val instance = type.getConstructor().newInstance()?:throw Exception()
             columns.forEach { entry ->
-                val dataType = DataHub.getTypeListByClass(entry.value.type).getOrNull(0)
+                val dataType = DataHub.getTypeListByFromClass(entry.value.type).getOrNull(0)
                 entry.value.set(instance, dataType?.get(result, entry.key))
             }
             res.add(instance)
@@ -133,5 +139,5 @@ open class MySQLConnection(private var url: String, private val username: String
 
     override fun <T> get(type: Class<T>, selectWhere: SelectWhere, limit: Int): List<T> = get(type, limit) { where = selectWhere }
 
-    init { setConnection(this);this.apply(action) }
+    init { after() }
 }

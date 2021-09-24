@@ -15,12 +15,12 @@ interface Table: SendSyntax, NonCompleteSyntax {
     /**
      * 新しくColumnを作成し、追加します。
      */
-    fun column(name: String, type: DataType<*, *>, action: (Column)->Unit = {}): Column
+    fun column(name: String, type: DataType<*>, action: (Column)->Unit = {}): Column
 
     /**
      * 新しくColumnを作成し、追加します。
      */
-    fun column(name: String, type: DataType<*, *>): Column
+    fun column(name: String, type: DataType<*>): Column
 
     /**
      * テーブルのAfter関連の関数が入ってます。
@@ -29,5 +29,5 @@ interface Table: SendSyntax, NonCompleteSyntax {
 
     fun build(force: Boolean): PreparedStatement
 
-    fun buildAsRaw(force: Boolean): Pair<String, List<Pair<Any?, DataType<*,*>>>>
+    fun buildAsRaw(force: Boolean): Pair<String, List<Pair<Any?, DataType<*>>>>
 }

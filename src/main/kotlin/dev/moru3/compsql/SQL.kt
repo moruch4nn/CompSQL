@@ -58,7 +58,7 @@ abstract class SQL: Database {
         safeConnection.prepareStatement(sql).also { ps -> return sendQuery(setParamsToPrepareStatement(ps, params)) }
     }
 
-    override fun sendQuery(preparedStatement: PreparedStatement): ResultSet = preparedStatement.executeQuery().also { preparedStatement.close() }
+    override fun sendQuery(preparedStatement: PreparedStatement): ResultSet = ResultSet(preparedStatement.executeQuery())
 
     override fun sendUpdate(preparedStatement: PreparedStatement) {
         preparedStatement.also { ps -> ps.executeUpdate();ps.close() }
@@ -67,4 +67,8 @@ abstract class SQL: Database {
     override fun sendUpdate(sql: String, vararg params: Any) {
         safeConnection.prepareStatement(sql).also { ps -> sendUpdate(setParamsToPrepareStatement(ps, params)) }
     }
+
+    protected open fun init() { }
+
+    protected open fun after() { }
 }

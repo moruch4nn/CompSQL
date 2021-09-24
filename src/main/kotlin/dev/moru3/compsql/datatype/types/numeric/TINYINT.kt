@@ -12,30 +12,29 @@ import java.sql.Types
  * Unsigned: UTINYINT, Non-Unsigned: TINYINT
  * 注意: numeric系のプロパティは"最大数"ではなく"最大桁数"なのでお間違えなく。
  */
-open class TINYINT(val property: Byte): DataType<Byte, Byte> {
+open class TINYINT(val property: Byte): DataType<Byte> {
 
-    override val typeName: String = "TINYINT"
-    override val from: Class<Byte> = Byte::class.javaObjectType
-    override val type: Class<Byte> = Byte::class.javaObjectType
-    override val sqlType: Int = Types.TINYINT
-    override val allowPrimaryKey: Boolean = true
-    override val allowNotNull: Boolean = true
-    override val allowUnique: Boolean = true
-    override val isUnsigned: Boolean = false
-    override val allowZeroFill: Boolean = true
-    override val allowAutoIncrement: Boolean = true
+    final override val typeName: String = "TINYINT"
+    override val from: Class<*> = Byte::class.javaObjectType
+    final override val type: Class<Byte> = Byte::class.javaObjectType
+    final override val sqlType: Int = Types.TINYINT
+    final override val allowPrimaryKey: Boolean = true
+    final override val allowNotNull: Boolean = true
+    final override val allowUnique: Boolean = true
+    final override val isUnsigned: Boolean = false
+    final override val allowZeroFill: Boolean = true
+    final override val allowAutoIncrement: Boolean = true
     override val allowDefault: Boolean = true
     override val defaultProperty: String = "$property"
     override val priority: Int = 10
-    override val action: (PreparedStatement, Int, Byte) -> Unit = { ps, i, a -> ps.setByte(i, a) }
-    override val convert: (value: Byte) -> Byte = { it }
+    final override val action: (PreparedStatement, Int, Byte) -> Unit = { ps, i, a -> ps.setByte(i, a) }
 
     override fun set(ps: PreparedStatement, index: Int, any: Any?) {
         check(any is Byte) { "The type of \"any\" is different from \"type\"." }
         action.invoke(ps, index, any)
     }
 
-    override fun get(resultSet: ResultSet, id: String): Byte? = resultSet.getByte(id)
+    override fun get(resultSet: ResultSet, id: String): Any? = resultSet.getByte(id)
 
     init { addCustomType(this) }
 }

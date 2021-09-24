@@ -1,4 +1,4 @@
-package dev.moru3.compsql.abstract
+package dev.moru3.compsql.abstracts
 
 import dev.moru3.compsql.DataHub
 import dev.moru3.compsql.mysql.query.select.MySQLWhere
