@@ -1,7 +1,6 @@
 package dev.moru3.compsql.connection
 
 import dev.moru3.compsql.*
-import dev.moru3.compsql.DataHub.setConnection
 import dev.moru3.compsql.annotation.Column
 import dev.moru3.compsql.annotation.IgnoreColumn
 import dev.moru3.compsql.mysql.query.select.MySQLSelect
@@ -33,9 +32,9 @@ open class MySQLConnection(protected var url: String, protected val username: St
         bacon.close()
         url = url.also{ properties.keys.mapIndexed { index, key -> "${if(index==0) '?' else '&'}${key}=${properties[key]}" }.forEach(it::plus) }
     }
-    
+
     override fun after() {
-        setConnection(this);this.apply(action)
+        this.apply(action)
     }
 
     init { init() }

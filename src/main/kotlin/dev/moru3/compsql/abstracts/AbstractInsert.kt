@@ -1,13 +1,16 @@
 package dev.moru3.compsql.abstracts
 
+import dev.moru3.compsql.Connection
 import dev.moru3.compsql.DataHub
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.syntax.Insert
 import dev.moru3.compsql.syntax.table.Table
 import java.sql.PreparedStatement
 
-abstract class AbstractInsert(override val table: Table): Insert {
+abstract class AbstractInsert(final override val table: Table): Insert {
     val values = mutableMapOf<String, Pair<DataType<*>, Any>>()
+
+    override val connection: Connection = table.connection
 
     override fun add(type: DataType<*>, key: String, value: Any): Insert {
         check(type.type.isInstance(value)) { "The type of the specified value does not match the `type` in DataType." }
@@ -24,7 +27,7 @@ abstract class AbstractInsert(override val table: Table): Insert {
 
     override fun build(force: Boolean): PreparedStatement {
         val result = buildAsRaw(force)
-        val preparedStatement = DataHub.connection.safeConnection.prepareStatement(result.first)
+        val preparedStatement = connection.safeConnection.prepareStatement(result.first)
         val keys = result.second
         keys.forEachIndexed { index, pair -> pair.second.set(preparedStatement, index+1, pair.first) }
         return preparedStatement
@@ -33,7 +36,7 @@ abstract class AbstractInsert(override val table: Table): Insert {
     override fun build(): PreparedStatement = build(false)
 
     override fun send(force: Boolean) {
-        DataHub.connection.sendUpdate(build(force))
+        connection.sendUpdate(build(force))
     }
 
     override fun buildAsRaw(): Pair<String, List<Pair<Any, DataType<*>>>> = buildAsRaw(false)

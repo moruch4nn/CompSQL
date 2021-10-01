@@ -3,12 +3,18 @@ package dev.moru3.compsql
 import dev.moru3.compsql.annotation.Column
 import dev.moru3.compsql.annotation.IgnoreColumn
 import dev.moru3.compsql.annotation.TableName
+import dev.moru3.compsql.datatype.DataType
 import java.io.InputStream
 import java.lang.reflect.Modifier
 import java.math.BigDecimal
 import java.sql.*
 
 abstract class SQL: Database {
+
+    init {
+        // load companion objects.
+        DataType.VARCHAR
+    }
 
     override val isClosed: Boolean get() = connection.isClosed||!connection.isValid(timeout)
 

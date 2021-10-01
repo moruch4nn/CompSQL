@@ -1,6 +1,7 @@
 package dev.moru3.compsql.abstracts
 
-import dev.moru3.compsql.DataHub
+import dev.moru3.compsql.Connection
+import dev.moru3.compsql.ResultSet
 import dev.moru3.compsql.mysql.query.select.MySQLSelectWhere
 import dev.moru3.compsql.syntax.OrderType
 import dev.moru3.compsql.syntax.Select
@@ -8,14 +9,15 @@ import dev.moru3.compsql.syntax.SelectKeyedWhere
 import dev.moru3.compsql.syntax.SelectWhere
 import dev.moru3.compsql.syntax.table.Table
 import java.sql.PreparedStatement
-import java.sql.ResultSet
 
 abstract class AbstractSelect(val table: Table, vararg columns: String): Select {
     protected val columns = columns.toList()
 
+    override val connection: Connection = table.connection
+
     override fun build(): PreparedStatement {
         val result = buildAsRaw()
-        val preparedStatement = DataHub.connection.safeConnection.prepareStatement(result.first)
+        val preparedStatement = connection.safeConnection.prepareStatement(result.first)
         val keys = result.second
         keys.forEachIndexed { index, pair -> pair.second.set(preparedStatement, index+1, pair.first) }
         return preparedStatement
@@ -27,5 +29,5 @@ abstract class AbstractSelect(val table: Table, vararg columns: String): Select 
 
     override fun orderBy(vararg values: Pair<String, OrderType>): SelectWhere = MySQLSelectWhere().orderBy(*values).also { this.where = it }
 
-    override fun send(): ResultSet = DataHub.connection.sendQuery(build())
+    override fun send(): ResultSet = ResultSet(connection.sendQuery(build()))
 }

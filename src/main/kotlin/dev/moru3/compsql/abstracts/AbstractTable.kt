@@ -9,7 +9,7 @@ import dev.moru3.compsql.syntax.table.Table
 import dev.moru3.compsql.syntax.table.column.Column
 import java.sql.PreparedStatement
 
-abstract class AbstractTable(val connection: Connection, n: String): Table {
+abstract class AbstractTable(override val connection: Connection, n: String): Table {
 
     final override var name: String = n
         set(value) {

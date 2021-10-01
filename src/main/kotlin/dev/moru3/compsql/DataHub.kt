@@ -3,18 +3,7 @@ package dev.moru3.compsql
 import dev.moru3.compsql.datatype.DataType
 
 object DataHub {
-    private var connection1: Database? = null
-
     private val typeCache = mutableMapOf<Class<*>, List<DataType<*>>>()
-
-    fun setConnection(connection: Database) {
-        // load companion objects.
-        DataType.VARCHAR
-        this.connection1?.close()
-        this.connection1 = connection
-    }
-
-    val connection: Database get() = checkNotNull(connection1) { "No connection has been created." }
 
     private var dataTypeList = mutableSetOf<DataType<*>>()
 

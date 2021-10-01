@@ -1,11 +1,9 @@
 package dev.moru3.compsql.syntax
 
-import dev.moru3.compsql.interfaces.NonCompleteSyntax
-import dev.moru3.compsql.interfaces.Syntax
-import java.sql.ResultSet
+import dev.moru3.compsql.interfaces.QuerySendable
 
 // TODO.
-interface Select: NonCompleteSyntax, Syntax {
+interface Select: QuerySendable {
     var where: SelectWhere
 
     fun where(key: String): SelectKeyedWhere
@@ -13,6 +11,4 @@ interface Select: NonCompleteSyntax, Syntax {
     fun orderBy(table: String, orderType: OrderType): SelectWhere
 
     fun orderBy(vararg values: Pair<String, OrderType>): SelectWhere
-
-    fun send(): ResultSet
 }

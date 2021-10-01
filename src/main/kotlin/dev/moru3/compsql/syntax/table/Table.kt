@@ -1,12 +1,11 @@
 package dev.moru3.compsql.syntax.table
 
 import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.interfaces.NonCompleteSyntax
-import dev.moru3.compsql.interfaces.SendSyntax
+import dev.moru3.compsql.interfaces.ForceUpdateSendable
 import dev.moru3.compsql.syntax.table.column.Column
 import java.sql.PreparedStatement
 
-interface Table: SendSyntax, NonCompleteSyntax {
+interface Table: ForceUpdateSendable {
     /**
      * テーブル名。setするとRENAMEされます。
      */

@@ -9,13 +9,23 @@ import java.sql.DriverManager
 /**
  * 新しくPostgreSQLのコネクションを開きます。すでに開いているコネクションがある場合はそのコネクションをcloseします。
  */
-class PostgreSQLConnection(private var url: String, private val username: String, private val password: String, private val properties: Map<String, Any>, override val timeout: Int = 5, action: PostgreSQLConnection.()->Unit = {}): SQL() {
-    init { url.also{ properties.keys.mapIndexed { index, key -> url+="${if(index==0) '?' else '&'}${key}=${properties[key]}" }.forEach(it::plus) } }
+class PostgreSQLConnection(private var url: String, private val username: String, private val password: String, private val properties: Map<String, Any>, override val timeout: Int = 5, val action: PostgreSQLConnection.()->Unit = {}): SQL() {
+    override fun init() {
+        try { Class.forName("org.postgresql.Driver") } catch (_: Exception) { }
+        // create database
+        url.also{ properties.keys.mapIndexed { index, key -> url+="${if(index==0) '?' else '&'}${key}=${properties[key]}" }.forEach(it::plus) }
+    }
+
+    init { init() }
 
     constructor(host: String, database: String, username: String, password: String, properties: Map<String, Any>, timeout: Int = 5, action: PostgreSQLConnection.()->Unit = {}): this("jdbc:postgresql://${host}/${database}", username, password, properties, timeout, action)
 
     override fun table(name: String, action: Table.() -> Unit): Table {
         TODO("Not yet implemented")
+    }
+
+    override fun after() {
+        this.apply(action)
     }
 
     override fun table(name: String): Table {
@@ -96,5 +106,5 @@ class PostgreSQLConnection(private var url: String, private val username: String
         connection = DriverManager.getConnection(url, username, password)
         return connection
     }
-    init { this.apply(action);DataHub.setConnection(this) }
+    init { after() }
 }

@@ -10,9 +10,13 @@ import java.sql.DriverManager
 /**
  * 新しくSQLiteのコネクションを開きます。すでに開いているコネクションがある場合はそのコネクションをcloseします。
  */
-class SQLiteConnection(private val url: String, override val timeout: Int = 10, action: SQLiteConnection.()->Unit = {}): SQL() {
+class SQLiteConnection(private val url: String, override val timeout: Int = 10, val action: SQLiteConnection.()->Unit = {}): SQL() {
 
     constructor(file: File, timeout: Int = 10): this("jdbc:sqlite:${file.absolutePath}", timeout)
+
+    override fun init() {
+        TODO()
+    }
 
     override fun table(name: String, action: Table.() -> Unit): Table {
         TODO("Not yet implemented")
@@ -97,5 +101,9 @@ class SQLiteConnection(private val url: String, override val timeout: Int = 10, 
         return connection
     }
 
-    init { this.apply(action);DataHub.setConnection(this) }
+    override fun after() {
+        this.apply(action)
+    }
+
+    init { after() }
 }

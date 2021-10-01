@@ -1,12 +1,16 @@
 package dev.moru3.compsql.abstracts
 
+import dev.moru3.compsql.Connection
 import dev.moru3.compsql.DataHub
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.syntax.Upsert
 import dev.moru3.compsql.syntax.table.Table
 import java.sql.PreparedStatement
 
-abstract class AbstractUpsert(override val table: Table): Upsert {
+abstract class AbstractUpsert(final override val table: Table): Upsert {
+
+    override val connection: Connection = table.connection
+
     val values = mutableMapOf<String, Pair<DataType<*>, Any>>()
 
     override fun add(type: DataType<*>, key: String, value: Any): Upsert {
@@ -24,11 +28,11 @@ abstract class AbstractUpsert(override val table: Table): Upsert {
 
     override fun build(): PreparedStatement {
         val result = buildAsRaw()
-        val preparedStatement = DataHub.connection.safeConnection.prepareStatement(result.first)
+        val preparedStatement = connection.safeConnection.prepareStatement(result.first)
         val keys = result.second
         keys.forEachIndexed { index, pair -> pair.second.set(preparedStatement, index+1, pair.first) }
         return preparedStatement
     }
 
-    override fun send() { DataHub.connection.sendUpdate(build()) }
+    override fun send() = connection.sendUpdate(build())
 }
