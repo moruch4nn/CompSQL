@@ -3,11 +3,20 @@ package dev.moru3.compsql
 import dev.moru3.compsql.annotation.Column
 import dev.moru3.compsql.annotation.IgnoreColumn
 import dev.moru3.compsql.annotation.TableName
+import dev.moru3.compsql.datatype.DataType
 import java.io.InputStream
+import java.lang.reflect.Modifier
 import java.math.BigDecimal
 import java.sql.*
+import kotlin.concurrent.thread
 
 abstract class SQL: Database {
+
+    init {
+        // load companion objects.
+        DataType.VARCHAR
+        Runtime.getRuntime().addShutdownHook(thread(start=false) { if(!isClosed) { close() } } )
+    }
 
     override val isClosed: Boolean get() = connection.isClosed||!connection.isValid(timeout)
 
@@ -44,6 +53,7 @@ abstract class SQL: Database {
         return mutableMapOf<String, Any>().also { columns ->
             instance::class.java.declaredFields.forEach { field ->
                 field.isAccessible = true
+                if(Modifier.isStatic(field.modifiers)) { return@forEach }
                 if(field.annotations.filterIsInstance<IgnoreColumn>().isNotEmpty()) { return@forEach }
                 val name = field.annotations.filterIsInstance<Column>().getOrNull(0)?.name?:field.name
                 check(!columns.containsKey(name)) { "The column name is duplicated." }
@@ -56,7 +66,7 @@ abstract class SQL: Database {
         safeConnection.prepareStatement(sql).also { ps -> return sendQuery(setParamsToPrepareStatement(ps, params)) }
     }
 
-    override fun sendQuery(preparedStatement: PreparedStatement): ResultSet = preparedStatement.executeQuery().also { preparedStatement.close() }
+    override fun sendQuery(preparedStatement: PreparedStatement): ResultSet = ResultSet(preparedStatement.executeQuery())
 
     override fun sendUpdate(preparedStatement: PreparedStatement) {
         preparedStatement.also { ps -> ps.executeUpdate();ps.close() }
@@ -65,4 +75,8 @@ abstract class SQL: Database {
     override fun sendUpdate(sql: String, vararg params: Any) {
         safeConnection.prepareStatement(sql).also { ps -> sendUpdate(setParamsToPrepareStatement(ps, params)) }
     }
+
+    protected open fun init() { }
+
+    protected open fun after() { }
 }

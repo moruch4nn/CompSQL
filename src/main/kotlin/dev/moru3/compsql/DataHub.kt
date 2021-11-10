@@ -3,29 +3,17 @@ package dev.moru3.compsql
 import dev.moru3.compsql.datatype.DataType
 
 object DataHub {
-    private var connection1: Database? = null
+    private val typeCache = mutableMapOf<Class<*>, List<DataType<*>>>()
 
-    fun setConnection(connection: Database) {
+    private var dataTypeList = mutableSetOf<DataType<*>>()
 
-        // load companion objects.
-        DataType.VARCHAR
+    fun addCustomType(dataType: DataType<*>) { if(!dataTypeList.map { it::class.java }.any { it == dataType::class.java }) { dataTypeList.add(dataType) } }
 
-        this.connection1 = connection
-    }
+    fun getDataTypeList(): List<DataType<*>> = dataTypeList.toMutableList()
 
-    val connection: Database get() = checkNotNull(connection1) { "No connection has been created." }
+    fun getTypeListByAny(any: Any): List<DataType<*>> = getTypeListByFromClass(any::class.java)
 
-    private var dataTypeList = mutableSetOf<DataType<*, *>>()
+    fun getTypeListByFromClass(type: Class<*>): List<DataType<*>> = typeCache[type]?:dataTypeList.filter { it.from == type }.sortedBy { it.priority }.also { typeCache[type]=it }
 
-    fun addCustomType(dataType: DataType<*, *>) { if(!dataTypeList.map { it::class.java }.any { it == dataType::class.java }) { dataTypeList.add(dataType) } }
-
-    fun getDataTypeList(): List<DataType<*, *>> = dataTypeList.toMutableList()
-
-    fun getTypeListByAny(any: Any): List<DataType<*, *>> {
-        return dataTypeList.filter { it.from.isInstance(any) }.sortedBy { it.priority }
-    }
-
-    fun getTypeListByClass(type: Class<*>): List<DataType<*, *>> {
-        return dataTypeList.filter { it.from == type }.sortedBy { it.priority }
-    }
+    fun getTypeListByTypeClass(type: Class<*>): List<DataType<*>> = typeCache[type]?:dataTypeList.filter { it.type == type }.sortedBy { it.priority }.also { typeCache[type]=it }
 }

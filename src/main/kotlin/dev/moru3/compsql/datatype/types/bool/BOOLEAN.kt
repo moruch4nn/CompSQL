@@ -9,30 +9,29 @@ import java.sql.Types
 /**
  * BOOLEANとはtrue、falseの1bitを格納できるSQLの型です。
  */
-open class BOOLEAN: DataType<Boolean, Boolean> {
+open class BOOLEAN: DataType<Boolean> {
 
-    override val typeName: String = "BIT"
-    override val from: Class<Boolean> = Boolean::class.java
-    override val type: Class<Boolean> = Boolean::class.java
-    override val sqlType: Int = Types.BOOLEAN
-    override val allowPrimaryKey: Boolean = true
-    override val allowNotNull: Boolean = true
-    override val allowUnique: Boolean = true
-    override val isUnsigned: Boolean = false
-    override val allowZeroFill: Boolean = false
-    override val allowAutoIncrement: Boolean = false
+    final override val typeName: String = "BIT"
+    override val from: Class<*> = Boolean::class.java
+    final override val type: Class<Boolean> = Boolean::class.java
+    final override val sqlType: Int = Types.BOOLEAN
+    final override val allowPrimaryKey: Boolean = true
+    final override val allowNotNull: Boolean = true
+    final override val allowUnique: Boolean = true
+    final override val isUnsigned: Boolean = false
+    final override val allowZeroFill: Boolean = false
+    final override val allowAutoIncrement: Boolean = false
     override val allowDefault: Boolean = true
     override val defaultProperty: String = "1"
     override val priority: Int = 10
-    override val action: (PreparedStatement, Int, Boolean) -> Unit = { ps, i, a -> ps.setBoolean(i, a) }
-    override val convert: (value: Boolean) -> Boolean = { it }
+    final override val action: (PreparedStatement, Int, Boolean) -> Unit = { ps, i, a -> ps.setBoolean(i, a) }
 
     override fun set(ps: PreparedStatement, index: Int, any: Any?) {
         check(any is Boolean) { "The type of \"any\" is different from \"type\"." }
         action.invoke(ps, index, any)
     }
 
-    override fun get(resultSet: ResultSet, id: String): Boolean? = resultSet.getBoolean(id)
+    override fun get(resultSet: ResultSet, id: String): Any? = resultSet.getBoolean(id)
 
     init { addCustomType(this) }
 }

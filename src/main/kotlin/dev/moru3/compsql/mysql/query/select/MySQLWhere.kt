@@ -3,16 +3,17 @@ package dev.moru3.compsql.mysql.query.select
 import dev.moru3.compsql.*
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.datatype.types.NULL
+import dev.moru3.compsql.syntax.FilteredWhere
+import dev.moru3.compsql.syntax.KeyedWhere
+import dev.moru3.compsql.syntax.Where
 
-class MySQLWhere: Where {
+open class MySQLWhere: Where {
 
     var limit: Int? = null
 
-    val list = mutableListOf<Pair<Any?, DataType<*,*>>>()
+    val list = mutableListOf<Pair<Any?, DataType<*>>>()
 
     var string = ""
-
-    var order: MutableMap<String, OrderType> = mutableMapOf()
 
     override fun add(string: String, vararg any: Any): FilteredWhere {
         this.string+=string
@@ -30,23 +31,7 @@ class MySQLWhere: Where {
         return MySQLKeyedWhere(this)
     }
 
-    override fun orderBy(vararg values: Pair<String, OrderType>): Where {
-        values.forEach { order[it.first] = it.second }
-        return this
-    }
-
-    override fun orderBy(table: String, orderType: OrderType): Where {
-        order[table] = orderType
-        return this
-    }
-
-    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>> {
-        if(order.isNotEmpty()) {
-            string += " ORDER BY"
-            val orders = mutableListOf<String>()
-            order.forEach { orders += " ${it.key} ${it.value}" }
-            string += orders.joinToString(", ")
-        }
+    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*>>>> {
         if(limit!=null) { string+=" LIMIT $limit" }
         return (if(string.isEmpty()) "" else " WHERE $string") to list
     }
@@ -106,21 +91,11 @@ class MySQLFilteredWhere(private val data: MySQLWhere): FilteredWhere {
         return MySQLKeyedWhere(data)
     }
 
-    override fun orderBy(vararg values: Pair<String, OrderType>): FilteredWhere {
-        values.forEach { data.order[it.first] = it.second }
-        return this
-    }
-
-    override fun orderBy(table: String, orderType: OrderType): FilteredWhere {
-        data.order[table] = orderType
-        return this
-    }
-
     override fun add(string: String, vararg any: Any): FilteredWhere {
         data.string+=string
         any.forEach { data.list += any to checkNotNull(DataHub.getTypeListByAny(it).getOrNull(0)) }
         return this
     }
 
-    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>> = data.buildAsRaw()
+    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*>>>> = data.buildAsRaw()
 }

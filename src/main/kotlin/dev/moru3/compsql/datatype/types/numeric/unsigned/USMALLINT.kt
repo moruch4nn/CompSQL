@@ -12,30 +12,29 @@ import java.sql.Types
  * Unsigned: USMALLINT, Non-Unsigned: SMALLINT
  * 注意: numeric系のプロパティは"最大数"ではなく"最大桁数"なのでお間違えなく。
  */
-open class USMALLINT(val property: Byte): DataType<Int, Int> {
+open class USMALLINT(val property: Byte): DataType<Int> {
 
-    override val typeName: String = "SMALLINT"
-    override val from: Class<Int> = Int::class.javaObjectType
-    override val type: Class<Int> = Int::class.javaObjectType
-    override val sqlType: Int = Types.SMALLINT
-    override val allowPrimaryKey: Boolean = true
-    override val allowNotNull: Boolean = true
-    override val allowUnique: Boolean = true
-    override val isUnsigned: Boolean = true
-    override val allowZeroFill: Boolean = true
-    override val allowAutoIncrement: Boolean = true
+    final override val typeName: String = "SMALLINT"
+    override val from: Class<*> = Int::class.javaObjectType
+    final override val type: Class<Int> = Int::class.javaObjectType
+    final override val sqlType: Int = Types.SMALLINT
+    final override val allowPrimaryKey: Boolean = true
+    final override val allowNotNull: Boolean = true
+    final override val allowUnique: Boolean = true
+    final override val isUnsigned: Boolean = true
+    final override val allowZeroFill: Boolean = true
+    final override val allowAutoIncrement: Boolean = true
     override val allowDefault: Boolean = true
     override val defaultProperty: String = "$property"
     override val priority: Int = 10
-    override val action: (PreparedStatement, Int, Int) -> Unit = { ps, i, a -> ps.setInt(i, a) }
-    override val convert: (value: Int) -> Int = { it }
+    final override val action: (PreparedStatement, Int, Int) -> Unit = { ps, i, a -> ps.setInt(i, a) }
 
     override fun set(ps: PreparedStatement, index: Int, any: Any?) {
-        check(any is Int) { "The type of \"any\" is different from \"type\"." }
-        action.invoke(ps, index, any)
+        check(any is Number) { "The type of \"any\" is different from \"type\"." }
+        action.invoke(ps, index, any.toInt())
     }
 
-    override fun get(resultSet: ResultSet, id: String): Int? = resultSet.getInt(id)
+    override fun get(resultSet: ResultSet, id: String): Any? = resultSet.getInt(id)
 
     init { addCustomType(this) }
 }

@@ -10,30 +10,33 @@ import java.sql.Types
  * BINARYとは0から255までの固定長のバイナリを格納できます。
  * 256以上のサイズを格納する場合あ￥はVARBINARYを使用します。
  */
-open class VARBINARY(val property: Int): DataType<ByteArray, ByteArray> {
+open class VARBINARY(val property: Int): DataType<ByteArray> {
 
-    override val typeName: String = "VARBINARY"
-    override val from: Class<ByteArray> = ByteArray::class.java
-    override val type: Class<ByteArray> = ByteArray::class.java
-    override val sqlType: Int = Types.BINARY
-    override val allowPrimaryKey: Boolean = true
-    override val allowNotNull: Boolean = true
-    override val allowUnique: Boolean = true
-    override val isUnsigned: Boolean = false
-    override val allowZeroFill: Boolean = false
-    override val allowAutoIncrement: Boolean = true
+    final override val typeName: String = "VARBINARY"
+    override val from: Class<*> = ByteArray::class.java
+    final override val type: Class<ByteArray> = ByteArray::class.java
+    final override val sqlType: Int = Types.BINARY
+    final override val allowPrimaryKey: Boolean = true
+    final override val allowNotNull: Boolean = true
+    final override val allowUnique: Boolean = true
+    final override val isUnsigned: Boolean = false
+    final override val allowZeroFill: Boolean = false
+    final override val allowAutoIncrement: Boolean = true
     override val allowDefault: Boolean = true
     override val defaultProperty: String = "$property"
     override val priority: Int = 10
-    override val action: (PreparedStatement, Int, ByteArray) -> Unit = { ps, i, a -> ps.setBytes(i, a) }
-    override val convert: (value: ByteArray) -> ByteArray = { it }
+    final override val action: (PreparedStatement, Int, ByteArray) -> Unit = { ps, i, a -> ps.setBytes(i, a) }
 
     override fun set(ps: PreparedStatement, index: Int, any: Any?) {
-        check(any is ByteArray) { "The type of \"any\" is different from \"type\"." }
-        action.invoke(ps, index, any)
+        if(any is String) {
+            action.invoke(ps, index, any.toByteArray())
+        } else {
+            check(any is ByteArray) { "The type of \"any\" is different from \"type\"." }
+            action.invoke(ps, index, any)
+        }
     }
 
-    override fun get(resultSet: ResultSet, id: String): ByteArray? { return resultSet.getBytes(id) }
+    override fun get(resultSet: ResultSet, id: String): Any? { return resultSet.getBytes(id) }
 
     init { addCustomType(this) }
 }

@@ -1,6 +1,8 @@
 package dev.moru3.compsql.datatype
 import dev.moru3.compsql.datatype.types.binary.*
 import dev.moru3.compsql.datatype.types.bool.*
+import dev.moru3.compsql.datatype.types.date.DATE
+import dev.moru3.compsql.datatype.types.date.DATETIME
 import dev.moru3.compsql.datatype.types.text.*
 import dev.moru3.compsql.datatype.types.numeric.*
 import dev.moru3.compsql.datatype.types.numeric.unsigned.*
@@ -15,10 +17,10 @@ class Range(val a: Int, val b: Int) {
 /**
  * 新しいSQLTypeを作成するにはこれを使用してください。
  */
-interface DataType<F, T> {
+interface DataType<T> {
 
     val typeName: String
-    val from: Class<F>
+    val from: Class<*>
     val type: Class<T>
     val sqlType: Int
     val allowPrimaryKey: Boolean
@@ -33,11 +35,9 @@ interface DataType<F, T> {
 
     val action: (PreparedStatement, Int, T)->Unit
 
-    val convert: (value: F)->T
-
     fun set(ps: PreparedStatement, index: Int, any: Any?)
 
-    fun get(resultSet: ResultSet, id: String): F?
+    fun get(resultSet: ResultSet, id: String): Any?
 
     companion object {
         // binary系
@@ -61,8 +61,12 @@ interface DataType<F, T> {
 
         // text系
         val CHAR = CHAR(255)
-        val LONGTEXT = LONGTEXT(10230)
-        val TEXT = TEXT(1023)
+        val LONGTEXT = LONGTEXT(1023)
+        val TEXT = TEXT(511)
         val VARCHAR = VARCHAR(255)
+
+        // date型
+        val DATE = DATE(null)
+        val DATETIME = DATETIME(null)
     }
 }

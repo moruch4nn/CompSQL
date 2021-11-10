@@ -11,35 +11,33 @@ import java.sql.Types
  * 256文字以上を格納する場合はVARCHAR、TEXT型を使用してください。
  * TEXTやLONGTEXTと違いPrimaryKeyとして利用可能です。
  */
-open class NULL(): DataType<Any?, Any?> {
+open class NULL : DataType<Any?> {
 
-    override val typeName: String
+    final override val typeName: String
         get() = throw Exception("NULL is not a type.")
-    override val from: Class<Any?>
+    override val from: Class<*>
         get() = throw Exception("NULL is not a type.")
-    override val type: Class<Any?>
+    final override val type: Class<Any?>
         get() = throw Exception("NULL is not a type.")
-    override val sqlType: Int = Types.NULL
-    override val allowPrimaryKey: Boolean
+    final override val sqlType: Int = Types.NULL
+    final override val allowPrimaryKey: Boolean
         get() = throw Exception("NULL is not a type.")
-    override val allowNotNull: Boolean
+    final override val allowNotNull: Boolean
         get() = throw Exception("NULL is not a type.")
-    override val allowUnique: Boolean
+    final override val allowUnique: Boolean
         get() = throw Exception("NULL is not a type.")
-    override val isUnsigned: Boolean
+    final override val isUnsigned: Boolean
         get() = throw Exception("NULL is not a type.")
-    override val allowZeroFill: Boolean
+    final override val allowZeroFill: Boolean
         get() = throw Exception("NULL is not a type.")
-    override val allowAutoIncrement: Boolean
+    final override val allowAutoIncrement: Boolean
         get() = throw Exception("NULL is not a type.")
     override val allowDefault: Boolean
         get() = throw Exception("NULL is not a type.")
     override val defaultProperty: String
         get() = throw Exception("NULL is not a type.")
     override val priority: Int = 0
-    override val action: (PreparedStatement, Int, Any?) -> Unit = { ps, i, _ -> ps.setNull(i, 0) }
-    override val convert: (value: Any?) -> Any?
-        get() = throw Exception("NULL is not a type.")
+    final override val action: (PreparedStatement, Int, Any?) -> Unit = { ps, i, _ -> ps.setNull(i, 0) }
 
 
     override fun get(resultSet: ResultSet, id: String): Any? = null

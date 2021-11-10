@@ -21,10 +21,11 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-native-mt")
-    implementation(kotlin("stdlib"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1-native-mt")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.21")
+    implementation("org.junit.jupiter:junit-jupiter:5.7.0")
     testCompile("junit", "junit", "4.12")
-    implementation("mysql:mysql-connector-java:5.1.6")
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 }
 
 apply(plugin = "com.github.johnrengelman.shadow")

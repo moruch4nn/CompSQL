@@ -11,30 +11,29 @@ import java.sql.Types
  * 文字数ではないためUTF8を使用する場合は一文字に3KB使用します。
  * CharやVarcharとは違い、PrimaryKeyとしては利用できません。
  */
-open class LONGTEXT(property: Int): DataType<String, String> {
+open class LONGTEXT(property: Int): DataType<String> {
 
-    override val typeName: String = "LONGTEXT"
-    override val from: Class<String> = String::class.java
-    override val type: Class<String> = String::class.java
-    override val sqlType: Int = Types.LONGVARCHAR
-    override val allowPrimaryKey: Boolean = false
-    override val allowNotNull: Boolean = true
-    override val allowUnique: Boolean = true
-    override val isUnsigned: Boolean = false
-    override val allowZeroFill: Boolean = false
-    override val allowAutoIncrement: Boolean = false
+    final override val typeName: String = "LONGTEXT"
+    override val from: Class<*> = String::class.java
+    final override val type: Class<String> = String::class.java
+    final override val sqlType: Int = Types.LONGVARCHAR
+    final override val allowPrimaryKey: Boolean = false
+    final override val allowNotNull: Boolean = true
+    final override val allowUnique: Boolean = true
+    final override val isUnsigned: Boolean = false
+    final override val allowZeroFill: Boolean = false
+    final override val allowAutoIncrement: Boolean = false
     override val allowDefault: Boolean = true
     override val defaultProperty: String = "$property"
     override val priority: Int = 13
-    override val action: (PreparedStatement, Int, String) -> Unit = { ps, i, a -> ps.setString(i, a) }
-    override val convert: (value: String) -> String = { it }
+    final override val action: (PreparedStatement, Int, String) -> Unit = { ps, i, a -> ps.setString(i, a) }
 
     override fun set(ps: PreparedStatement, index: Int, any: Any?) {
         check(any is String) { "The type of \"any\" is different from \"type\"." }
         action.invoke(ps, index, any)
     }
 
-    override fun get(resultSet: ResultSet, id: String): String? = resultSet.getNString(id)
+    override fun get(resultSet: ResultSet, id: String): Any? = resultSet.getNString(id)
 
     init { addCustomType(this) }
 }
