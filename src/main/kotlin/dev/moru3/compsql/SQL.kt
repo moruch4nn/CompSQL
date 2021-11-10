@@ -8,12 +8,14 @@ import java.io.InputStream
 import java.lang.reflect.Modifier
 import java.math.BigDecimal
 import java.sql.*
+import kotlin.concurrent.thread
 
 abstract class SQL: Database {
 
     init {
         // load companion objects.
         DataType.VARCHAR
+        Runtime.getRuntime().addShutdownHook(thread(start=false) { if(!isClosed) { close() } } )
     }
 
     override val isClosed: Boolean get() = connection.isClosed||!connection.isValid(timeout)

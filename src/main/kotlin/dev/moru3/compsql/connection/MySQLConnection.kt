@@ -52,6 +52,9 @@ open class MySQLConnection(protected var url: String, protected val username: St
         return connection
     }
 
+    /**
+     * 渡されたインスタンスに対応するテーブルを作成します。
+     */
     override fun add(instance: Any): Table {
         return table(p0(instance::class.java)) {
             instance::class.java.declaredFields.forEach { field ->

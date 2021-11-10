@@ -17,7 +17,7 @@ abstract class AbstractTable(override val connection: Connection, n: String): Ta
             field = value
         }
 
-    override val after: AfterTable = MySQLAfterTable(name)
+    override val after: AfterTable = MySQLAfterTable(name, connection)
 
     protected val columns: MutableList<Column> = mutableListOf()
 
