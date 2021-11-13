@@ -1,7 +1,7 @@
 package dev.moru3.compsql.datatype.types
 
 import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.DataHub.addCustomType
+import dev.moru3.compsql.TypeHub.add
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.Types
@@ -43,5 +43,5 @@ open class NULL : DataType<Any?> {
     override fun get(resultSet: ResultSet, id: String): Any? = null
     override fun set(ps: PreparedStatement, index: Int, any: Any?) { action.invoke(ps, index, any) }
 
-    init { addCustomType(this) }
+    init { add(this) }
 }

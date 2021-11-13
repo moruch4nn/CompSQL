@@ -9,6 +9,7 @@ class MariaDBConnection(url: String, username: String, password: String, propert
     constructor(host: String, database: String, username: String, password: String, properties: Map<String, Any>? = null, timeout: Int = 5, action: MySQLConnection.()->Unit = {}): this("jdbc:mariadb://${host}/${database}", username, password, properties?: mapOf(), timeout, action)
 
     override fun init() {
+        try { Class.forName("org.mariadb.jdbc.Driver") } catch (_: Exception) { }
         val burl = url.replaceFirst(Regex("/${database}\$"), "").also{ properties.keys.mapIndexed { index, key -> "${if(index==0) '?' else '&'}${key}=${properties[key]}" }.forEach(it::plus) }
         val bacon = DriverManager.getConnection(burl, username, password)
         bacon.prepareStatement("CREATE DATABASE IF NOT EXISTS $database").also { it.executeUpdate() }.close()

@@ -1,7 +1,7 @@
 package dev.moru3.compsql.datatype.types.numeric.unsigned
 
 import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.DataHub.addCustomType
+import dev.moru3.compsql.TypeHub.add
 import java.math.BigDecimal
 import java.sql.PreparedStatement
 import java.sql.ResultSet
@@ -44,7 +44,7 @@ open class UBIGINT(val property: Byte): DataType<BigDecimal> {
 
     override fun get(resultSet: ResultSet, id: String): Any? = resultSet.getBigDecimal(id)
 
-    init { addCustomType(this) }
+    init { add(this) }
 
     companion object { private val max = BigDecimal("18446744073709551615") }
 }

@@ -6,6 +6,8 @@ import java.io.Closeable
 
 interface Database: Closeable, Connection {
 
+    val url: String
+
     val timeout: Int
 
     /**
@@ -29,12 +31,12 @@ interface Database: Closeable, Connection {
     fun insert(name: String): Insert
 
     /**
-     * TODO 説明文書いといて
+     * PK、UIをキーに、データが存在する場合update、存在しない場合insertします。
      */
     fun upsert(name: String, action: Upsert.()->Unit): Upsert
 
     /**
-     * TODO 説明文書いといて
+     * PK、UIをキーに、データが存在する場合update、存在しない場合insertします。
      */
     fun upsert(name: String): Upsert
 
@@ -61,19 +63,21 @@ interface Database: Closeable, Connection {
      */
     fun add(instance: Any): Table
 
+    fun add(cls: Class<*>): Table
+
     fun remove(instance: Any): Delete
 
     /**
      * Whereを元にデータベースからデータを取得します。
      */
-    fun <T> get(type: Class<T>, limit: Int = Int.MAX_VALUE): List<T>
+    fun <T> get(type: Class<T>): List<T>
 
-    fun <T> get(type: Class<T>, selectWhere: SelectWhere, limit: Int = Int.MAX_VALUE): List<T>
+    fun <T> get(type: Class<T>, selectWhere: SelectWhere): List<T>
 
     /**
      * データベースからデータを取得します。
      */
-    fun <T> get(type: Class<T>, limit: Int = Int.MAX_VALUE, action: Select.() -> Unit): List<T>
+    fun <T> get(type: Class<T>, action: Select.() -> Unit): List<T>
 
     fun where(key: String): SelectKeyedWhere
 

@@ -2,18 +2,23 @@ package dev.moru3.compsql
 
 import dev.moru3.compsql.datatype.DataType
 
-object DataHub {
+object TypeHub: Set<DataType<*>> {
     private val typeCache = mutableMapOf<Class<*>, List<DataType<*>>>()
 
     private var dataTypeList = mutableSetOf<DataType<*>>()
 
-    fun addCustomType(dataType: DataType<*>) { if(!dataTypeList.map { it::class.java }.any { it == dataType::class.java }) { dataTypeList.add(dataType) } }
+    fun add(dataType: DataType<*>) { if(!dataTypeList.map { it::class.java }.any { it == dataType::class.java }) { dataTypeList.add(dataType) } }
 
-    fun getDataTypeList(): List<DataType<*>> = dataTypeList.toMutableList()
+    operator fun get(type: Class<*>): List<DataType<*>> = typeCache[type]?:dataTypeList.filter { it.type == type }.sortedBy { it.priority }.also { typeCache[type]=it }
 
-    fun getTypeListByAny(any: Any): List<DataType<*>> = getTypeListByFromClass(any::class.java)
+    override val size: Int
+        get() = typeCache.size
 
-    fun getTypeListByFromClass(type: Class<*>): List<DataType<*>> = typeCache[type]?:dataTypeList.filter { it.from == type }.sortedBy { it.priority }.also { typeCache[type]=it }
+    override fun contains(element: DataType<*>): Boolean = dataTypeList.contains(element)
 
-    fun getTypeListByTypeClass(type: Class<*>): List<DataType<*>> = typeCache[type]?:dataTypeList.filter { it.type == type }.sortedBy { it.priority }.also { typeCache[type]=it }
+    override fun containsAll(elements: Collection<DataType<*>>): Boolean = dataTypeList.containsAll(elements)
+
+    override fun isEmpty(): Boolean = dataTypeList.isEmpty()
+
+    override fun iterator(): Iterator<DataType<*>> = dataTypeList.iterator()
 }

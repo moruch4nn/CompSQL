@@ -1,6 +1,6 @@
 package dev.moru3.compsql.datatype.types.date
 
-import dev.moru3.compsql.DataHub
+import dev.moru3.compsql.TypeHub
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.datatype.types.date.property.DateDefaultProperty
 import java.sql.Date
@@ -8,7 +8,7 @@ import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.Types
 
-class DATE(property: DateDefaultProperty?): DataType<Date> {
+class DATE(val property: DateDefaultProperty?): DataType<Date> {
 
     final override val typeName: String = "DATE"
     override val from: Class<*> = Date::class.javaObjectType
@@ -33,6 +33,6 @@ class DATE(property: DateDefaultProperty?): DataType<Date> {
     override fun get(resultSet: ResultSet, id: String): Any? = resultSet.getDate(id)
 
     init {
-        DataHub.addCustomType(this)
+        TypeHub.add(this)
     }
 }

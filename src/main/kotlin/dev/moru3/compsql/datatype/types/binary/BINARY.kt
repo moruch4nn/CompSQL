@@ -1,7 +1,7 @@
 package dev.moru3.compsql.datatype.types.binary
 
 import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.DataHub.addCustomType
+import dev.moru3.compsql.TypeHub.add
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.Types
@@ -38,5 +38,5 @@ open class BINARY(val property: Int): DataType<ByteArray> {
 
     override fun get(resultSet: ResultSet, id: String): Any? { return resultSet.getBytes(id) }
 
-    init { addCustomType(this) }
+    init { add(this) }
 }

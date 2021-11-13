@@ -1,7 +1,7 @@
 package dev.moru3.compsql.datatype.types.text
 
 import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.DataHub.addCustomType
+import dev.moru3.compsql.TypeHub.add
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.Types
@@ -11,7 +11,7 @@ import java.sql.Types
  * 65535文字以上を格納する場合はTEXT型を使用してください。
  * TEXTやLONGTEXTと違いPrimaryKeyとして利用可能です。
  */
-open class VARCHAR(property: Int): DataType<String> {
+open class VARCHAR(val property: Int): DataType<String> {
 
     final override val typeName: String = "VARCHAR"
     override val from: Class<*> = String::class.java
@@ -35,5 +35,5 @@ open class VARCHAR(property: Int): DataType<String> {
 
     override fun get(resultSet: ResultSet, id: String): Any? = resultSet.getNString(id)
 
-    init { addCustomType(this) }
+    init { add(this) }
 }

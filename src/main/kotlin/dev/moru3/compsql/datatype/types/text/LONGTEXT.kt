@@ -1,7 +1,7 @@
 package dev.moru3.compsql.datatype.types.text
 
 import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.DataHub.addCustomType
+import dev.moru3.compsql.TypeHub.add
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.Types
@@ -11,7 +11,7 @@ import java.sql.Types
  * 文字数ではないためUTF8を使用する場合は一文字に3KB使用します。
  * CharやVarcharとは違い、PrimaryKeyとしては利用できません。
  */
-open class LONGTEXT(property: Int): DataType<String> {
+open class LONGTEXT(val property: Int): DataType<String> {
 
     final override val typeName: String = "LONGTEXT"
     override val from: Class<*> = String::class.java
@@ -35,5 +35,5 @@ open class LONGTEXT(property: Int): DataType<String> {
 
     override fun get(resultSet: ResultSet, id: String): Any? = resultSet.getNString(id)
 
-    init { addCustomType(this) }
+    init { add(this) }
 }

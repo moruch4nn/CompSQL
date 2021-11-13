@@ -1,7 +1,7 @@
 package dev.moru3.compsql.abstracts
 
 import dev.moru3.compsql.Connection
-import dev.moru3.compsql.DataHub
+import dev.moru3.compsql.TypeHub
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.syntax.Upsert
 import dev.moru3.compsql.syntax.table.Table
@@ -23,7 +23,7 @@ abstract class AbstractUpsert(final override val table: Table): Upsert {
      * valueから型を推論します。推論できない場合はVARCHARに変換されます。
      */
     override fun add(key: String, value: Any): Upsert {
-        return add(checkNotNull(DataHub.getTypeListByAny(value).getOrNull(0)) { "`${value}`に対応する型が見つかりません。" }, key, value)
+        return add(checkNotNull(TypeHub[value::class.java].getOrNull(0)) { "`${value}`に対応する型が見つかりません。" }, key, value)
     }
 
     override fun build(): PreparedStatement {

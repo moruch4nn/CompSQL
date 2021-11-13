@@ -1,6 +1,6 @@
 package dev.moru3.compsql.datatype.types.numeric
 
-import dev.moru3.compsql.DataHub.addCustomType
+import dev.moru3.compsql.TypeHub.add
 import dev.moru3.compsql.datatype.DataType
 import java.sql.PreparedStatement
 import java.sql.ResultSet
@@ -17,7 +17,7 @@ import java.sql.Types
  */
 open class INTEGER(val property: Byte): DataType<Int> {
 
-    final override val typeName: String = "INT"
+    final override val typeName: String = "INTEGER"
     override val from: Class<*> = Int::class.javaObjectType
     final override val type: Class<Int> = Int::class.javaObjectType
     final override val sqlType: Int = Types.INTEGER
@@ -39,5 +39,5 @@ open class INTEGER(val property: Byte): DataType<Int> {
 
     override fun get(resultSet: ResultSet, id: String): Any? = resultSet.getInt(id)
 
-    init { addCustomType(this) }
+    init { add(this) }
 }

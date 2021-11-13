@@ -19,7 +19,7 @@ class MySQLSelectWhere: SelectWhere {
 
     override fun add(string: String, vararg any: Any): SelectFilteredWhere {
         this.string+=string
-        any.forEach { list += any to checkNotNull(DataHub.getTypeListByAny(it).getOrNull(0)) }
+        any.forEach { list += any to checkNotNull(TypeHub[it::class.java].getOrNull(0)) }
         return MySQLSelectFilteredWhere(this)
     }
 
@@ -58,37 +58,37 @@ class MySQLSelectWhere: SelectWhere {
 class MySQLSelectKeyedWhere(private val data: MySQLSelectWhere): SelectKeyedWhere {
     override fun equal(value: Any?): SelectFilteredWhere {
         data.string += " = ?"
-        data.list.add((value to (value?.run { checkNotNull(DataHub.getTypeListByAny(value).getOrNull(0)) }?: NULL())))
+        data.list.add((value to (value?.run { checkNotNull(TypeHub[value::class.java].getOrNull(0)) }?: NULL())))
         return MySQLSelectFilteredWhere(data)
     }
 
     override fun notEquals(value: Any?): SelectFilteredWhere {
         data.string += " != ?"
-        data.list.add((value to (value?.run { checkNotNull(DataHub.getTypeListByAny(value).getOrNull(0)) }?: NULL())))
+        data.list.add((value to (value?.run { checkNotNull(TypeHub[value::class.java].getOrNull(0)) }?: NULL())))
         return MySQLSelectFilteredWhere(data)
     }
 
     override fun greater(value: Any?): SelectFilteredWhere {
         data.string += " > ?"
-        data.list.add((value to (value?.run { checkNotNull(DataHub.getTypeListByAny(value).getOrNull(0)) }?: NULL())))
+        data.list.add((value to (value?.run { checkNotNull(TypeHub[value::class.java].getOrNull(0)) }?: NULL())))
         return MySQLSelectFilteredWhere(data)
     }
 
     override fun less(value: Any?): SelectFilteredWhere {
         data.string += " < ?"
-        data.list.add((value to (value?.run { checkNotNull(DataHub.getTypeListByAny(value).getOrNull(0)) }?: NULL())))
+        data.list.add((value to (value?.run { checkNotNull(TypeHub[value::class.java].getOrNull(0)) }?: NULL())))
         return MySQLSelectFilteredWhere(data)
     }
 
     override fun greaterOrEquals(value: Any?): SelectFilteredWhere {
         data.string += " >= ?"
-        data.list.add((value to (value?.run { checkNotNull(DataHub.getTypeListByAny(value).getOrNull(0)) }?: NULL())))
+        data.list.add((value to (value?.run { checkNotNull(TypeHub[value::class.java].getOrNull(0)) }?: NULL())))
         return MySQLSelectFilteredWhere(data)
     }
 
     override fun lessOrEquals(value: Any?): SelectFilteredWhere {
         data.string += " <= ?"
-        data.list.add((value to (value?.run { checkNotNull(DataHub.getTypeListByAny(value).getOrNull(0)) }?: NULL())))
+        data.list.add((value to (value?.run { checkNotNull(TypeHub[value::class.java].getOrNull(0)) }?: NULL())))
         return MySQLSelectFilteredWhere(data)
     }
 }
@@ -121,7 +121,7 @@ class MySQLSelectFilteredWhere(private val data: MySQLSelectWhere): SelectFilter
 
     override fun add(string: String, vararg any: Any): SelectFilteredWhere {
         data.string+=string
-        any.forEach { data.list += any to checkNotNull(DataHub.getTypeListByAny(it).getOrNull(0)) }
+        any.forEach { data.list += any to checkNotNull(TypeHub[it::class.java].getOrNull(0)) }
         return this
     }
 

@@ -2,7 +2,6 @@ package dev.moru3.compsql.abstracts
 
 import dev.moru3.compsql.Connection
 import dev.moru3.compsql.ResultSet
-import dev.moru3.compsql.mysql.query.select.MySQLSelectWhere
 import dev.moru3.compsql.syntax.OrderType
 import dev.moru3.compsql.syntax.Select
 import dev.moru3.compsql.syntax.SelectKeyedWhere
@@ -22,12 +21,7 @@ abstract class AbstractSelect(val table: Table, vararg columns: String): Select 
         keys.forEachIndexed { index, pair -> pair.second.set(preparedStatement, index+1, pair.first) }
         return preparedStatement
     }
-
-    override fun where(key: String): SelectKeyedWhere = MySQLSelectWhere().also { this.where = it }.key(key)
-
-    override fun orderBy(table: String, orderType: OrderType): SelectWhere = MySQLSelectWhere().orderBy(table, orderType).also { this.where = it }
-
-    override fun orderBy(vararg values: Pair<String, OrderType>): SelectWhere = MySQLSelectWhere().orderBy(*values).also { this.where = it }
-
     override fun send(): ResultSet = ResultSet(connection.sendQuery(build()))
+
+    override fun isExists(): Boolean = send().isExistsAndClose()
 }

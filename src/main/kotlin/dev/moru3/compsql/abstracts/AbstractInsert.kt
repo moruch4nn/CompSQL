@@ -1,7 +1,7 @@
 package dev.moru3.compsql.abstracts
 
 import dev.moru3.compsql.Connection
-import dev.moru3.compsql.DataHub
+import dev.moru3.compsql.TypeHub
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.syntax.Insert
 import dev.moru3.compsql.syntax.table.Table
@@ -22,7 +22,7 @@ abstract class AbstractInsert(final override val table: Table): Insert {
      * valueから型を推論します。推論できない場合はIllegalStateExceptionが発生します。
      */
     override fun add(key: String, value: Any): Insert {
-        return add(checkNotNull(DataHub.getTypeListByAny(value).getOrNull(0)) { "`${value::class.java.name}`に対応する型が見つかりません。" }, key, value)
+        return add(checkNotNull(TypeHub[value::class.java].getOrNull(0)) { "`${value::class.java.name}`に対応する型が見つかりません。" }, key, value)
     }
 
     override fun build(force: Boolean): PreparedStatement {

@@ -11,4 +11,8 @@ interface Select: QuerySendable {
     fun orderBy(table: String, orderType: OrderType): SelectWhere
 
     fun orderBy(vararg values: Pair<String, OrderType>): SelectWhere
+
+    fun limit(limit: Int): SelectWhere
+
+    fun isExists(): Boolean
 }
