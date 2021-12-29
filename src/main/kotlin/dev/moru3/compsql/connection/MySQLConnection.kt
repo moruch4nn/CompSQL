@@ -32,7 +32,7 @@ open class MySQLConnection(url: String, properties: Properties, protected val ac
     override fun init(url: String, properties: Properties) {
         database = url.split("/").last()
         try { Class.forName("com.mysql.jdbc.Driver") } catch (_: Exception) { }
-        val bacon = DriverManager.getConnection(url, properties)
+        val bacon = DriverManager.getConnection(url.replace("/${database}", ""), properties)
         bacon.prepareStatement("CREATE DATABASE IF NOT EXISTS $database").also { it.executeUpdate() }.close()
         bacon.close()
     }
