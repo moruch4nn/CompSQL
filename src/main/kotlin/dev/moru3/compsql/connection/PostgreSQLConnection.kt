@@ -6,17 +6,16 @@ import dev.moru3.compsql.syntax.table.Table
 import java.io.File
 import java.sql.Connection
 import java.sql.DriverManager
+import java.util.*
 
 /**
  * 新しくSQLiteのコネクションを開きます。すでに開いているコネクションがある場合はそのコネクションをcloseします。
  */
-class PostgreSQLConnection(url: String, override val timeout: Int = 10, val action: PostgreSQLConnection.()->Unit = {}): SQL(url) {
-    override fun init() {
+class PostgreSQLConnection(url: String, override val timeout: Int = 10, val action: PostgreSQLConnection.()->Unit = {}): SQL(url, Properties()) {
+    override fun init(url: String, properties: Properties) {
         try { Class.forName("org.postgresql.Driver") } catch (_: Exception) { }
         // TODO
     }
-
-    init { init() }
 
     constructor(file: File, timeout: Int = 10, action: PostgreSQLConnection.()->Unit = {}): this("jdbc:postgresql:${file.absolutePath}", timeout, action)
 

@@ -9,12 +9,13 @@ import dev.moru3.compsql.syntax.table.Table
 import java.io.File
 import java.sql.Connection
 import java.sql.DriverManager
+import java.util.*
 
 /**
  * 新しくSQLiteのコネクションを開きます。すでに開いているコネクションがある場合はそのコネクションをcloseします。
  */
-class SQLiteConnection(path: String, override val timeout: Int = 10, val action: SQLiteConnection.()->Unit = {}): SQL(path) {
-    override fun init() {
+class SQLiteConnection(path: String, override val timeout: Int = 10, val action: SQLiteConnection.()->Unit = {}): SQL(path, Properties()) {
+    override fun init(url: String, properties: Properties) {
         try { Class.forName("org.sqlite.JDBC") } catch (_: Exception) { }
         // TODO
     }

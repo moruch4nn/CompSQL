@@ -5,57 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a3782d09-d696-42a3-8357-27707278b596" name="変更" comment="変更">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/ObjectSerializer.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/binary/BLOB.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/sqlite/update/insert/SQLiteInsert.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/Database.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/Database.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/ResultSet.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/ResultSet.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/SQL.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/SQL.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/TypeHub.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/TypeHub.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/abstracts/AbstractDelete.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/abstracts/AbstractDelete.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/abstracts/AbstractInsert.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/abstracts/AbstractInsert.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/abstracts/AbstractSelect.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/abstracts/AbstractSelect.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/abstracts/AbstractTable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/abstracts/AbstractTable.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/abstracts/AbstractUpsert.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/abstracts/AbstractUpsert.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/connection/MariaDBConnection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/connection/MariaDBConnection.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/connection/MariaDBConnectionTest.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/connection/MySQLConnection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/connection/MySQLConnection.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/connection/PostgreSQLConnection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/connection/PostgreSQLConnection.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/connection/SQLiteConnection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/connection/SQLiteConnection.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/NULL.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/NULL.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/binary/BINARY.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/binary/BINARY.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/binary/LONGBLOB.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/binary/LONGBLOB.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/binary/VARBINARY.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/binary/VARBINARY.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/bool/BOOLEAN.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/bool/BOOLEAN.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/date/DATE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/date/DATE.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/date/DATETIME.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/date/DATETIME.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/BIGINT.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/BIGINT.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/INTEGER.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/INTEGER.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/SMALLINT.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/SMALLINT.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/TINYINT.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/TINYINT.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/unsigned/UBIGINT.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/unsigned/UBIGINT.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/unsigned/UINTEGER.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/unsigned/UINTEGER.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/unsigned/USMALLINT.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/unsigned/USMALLINT.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/unsigned/UTINYINT.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/numeric/unsigned/UTINYINT.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/original/INSTANCE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/original/INSTANCE.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/CHAR.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/CHAR.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/LONGTEXT.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/LONGTEXT.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/TEXT.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/TEXT.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/VARCHAR.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/datatype/types/text/VARCHAR.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/interfaces/SQLProperties.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/interfaces/SQLProperties.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/MySQLProperties.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/MySQLProperties.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/query/select/MySQLSelect.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/query/select/MySQLSelect.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/query/select/MySQLSelectWhere.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/query/select/MySQLSelectWhere.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/query/select/MySQLWhere.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/query/select/MySQLWhere.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/delete/MySQLDelete.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/delete/MySQLDelete.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/table/MySQLTable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/table/MySQLTable.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/sqlite/SQLiteProperties.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/sqlite/SQLiteProperties.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/sqlite/update/insert/SQLiteColumn.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/sqlite/update/table/column/SQLiteColumn.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/sqlite/update/table/SQLiteTable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/sqlite/update/table/SQLiteTable.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/syntax/Select.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/syntax/Select.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,12 +32,7 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="CompSQL" type="f1a62948:ProjectNode" />
-              </path>
-            </expand>
+            <expand />
             <select />
           </tree_state>
         </projects_view>
@@ -142,6 +94,9 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedIndex" value="2" />
   </component>
@@ -163,9 +118,9 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="project.structure.last.edited" value="モジュール" />
+    <property name="project.structure.last.edited" value="プロジェクト" />
     <property name="project.structure.proportion" value="0.17" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
@@ -197,7 +152,7 @@
       <command value="ls" />
     </option>
   </component>
-  <component name="RunManager" selected="Kotlin.SQLiteConnectionKt">
+  <component name="RunManager" selected="Gradle.CompSQL">
     <configuration name="CompSQL" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -278,6 +233,7 @@
       <workItem from="1636680520826" duration="13595000" />
       <workItem from="1636793232467" duration="77000" />
       <workItem from="1636793322165" duration="2570000" />
+      <workItem from="1640806722268" duration="3602000" />
     </task>
     <task id="LOCAL-00001" summary="変更">
       <created>1628672927225</created>
@@ -398,7 +354,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Deleteの追加" />

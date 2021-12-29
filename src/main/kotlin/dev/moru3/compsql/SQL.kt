@@ -14,14 +14,16 @@ import java.lang.reflect.Modifier
 import java.math.BigDecimal
 import java.sql.*
 import java.sql.Connection
+import java.sql.Date
+import java.util.*
 import java.util.logging.Logger
 import kotlin.concurrent.thread
 
-abstract class SQL(final override var url: String): Database {
+abstract class SQL(final override var url: String, val properties: Properties): Database {
 
-    init { init() }
+    init { init(url, properties) }
 
-    override var connection: Connection = DriverManager.getConnection(url)
+    override var connection: Connection = DriverManager.getConnection(url, properties)
         protected set
 
     val logger = Logger.getLogger(this::class.java.name)
@@ -46,7 +48,7 @@ abstract class SQL(final override var url: String): Database {
 
     override val safeConnection: Connection get() = reconnect(false)
 
-    protected open fun init() { }
+    protected open fun init(url: String, properties: Properties) { }
 
 
     private fun setParamsToPrepareStatement(ps: PreparedStatement, vararg params: Any): PreparedStatement {
