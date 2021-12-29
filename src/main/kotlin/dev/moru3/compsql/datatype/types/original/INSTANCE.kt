@@ -15,15 +15,15 @@ class INSTANCE: LONGBLOB(Int.MAX_VALUE) {
         check(any is Serializable) { "The type of \"any\" is different from \"type\"." }
         val bos = ByteArrayOutputStream()
         ObjectOutputStream(bos).also { out -> out.writeObject(any) }.flush()
-        action(ps, index, bos.toByteArray())
+        super.set(ps, index, bos.toByteArray())
     }
 
     /**
      * 帰ってきたObjectをcastして使用してください。
      */
-    override fun get(resultSet: ResultSet, id: String): Any {
-        val ois = ObjectInputStream(ByteArrayInputStream(resultSet.getBytes(id)))
-        return ois.readObject() as Serializable
+    override fun get(resultSet: ResultSet, id: String): Any? {
+        val ois = ObjectInputStream(ByteArrayInputStream(resultSet.getBytes(id)?:return null))
+        return ois.readObject() as Serializable?
     }
 
     init { add(this) }

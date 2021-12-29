@@ -27,14 +27,13 @@ open class UTINYINT(val property: Byte): DataType<Short> {
     override val allowDefault: Boolean = true
     override val defaultProperty: String = "$property"
     override val priority: Int = 10
-    final override val action: (PreparedStatement, Int, Short) -> Unit = { ps, i, a -> ps.setShort(i, a) }
 
     override fun set(ps: PreparedStatement, index: Int, any: Any?) {
-        check(any is Number) { "The type of \"any\" is different from \"type\"." }
-        action.invoke(ps, index, any.toShort())
+        check(any is Number?) { "The type of \"${if(any!=null) any::class.java.simpleName else "null"}\" is different from \"Number\"." }
+        super.set(ps, index, any?.toShort())
     }
 
-    override fun get(resultSet: ResultSet, id: String): Any? = resultSet.getShort(id)
+    override fun get(resultSet: ResultSet, id: String): Short? = resultSet.getShort(id)
 
     init { add(this) }
 }

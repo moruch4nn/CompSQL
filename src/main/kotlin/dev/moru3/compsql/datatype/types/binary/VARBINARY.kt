@@ -25,18 +25,12 @@ open class VARBINARY(val property: Int): DataType<ByteArray> {
     override val allowDefault: Boolean = true
     override val defaultProperty: String = "$property"
     override val priority: Int = 10
-    final override val action: (PreparedStatement, Int, ByteArray) -> Unit = { ps, i, a -> ps.setBytes(i, a) }
 
     override fun set(ps: PreparedStatement, index: Int, any: Any?) {
-        if(any is String) {
-            action.invoke(ps, index, any.toByteArray())
-        } else {
-            check(any is ByteArray) { "The type of \"any\" is different from \"type\"." }
-            action.invoke(ps, index, any)
-        }
+        super.set(ps, index, if(any is String) any.toByteArray() else any)
     }
 
-    override fun get(resultSet: ResultSet, id: String): Any? { return resultSet.getBytes(id) }
+    override fun get(resultSet: ResultSet, id: String): ByteArray? { return resultSet.getBytes(id) }
 
     init { add(this) }
 }

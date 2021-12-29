@@ -6,6 +6,7 @@ import dev.moru3.compsql.datatype.types.date.DATETIME
 import dev.moru3.compsql.datatype.types.text.*
 import dev.moru3.compsql.datatype.types.numeric.*
 import dev.moru3.compsql.datatype.types.numeric.unsigned.*
+import org.jetbrains.annotations.Contract
 import java.sql.*
 
 class Range(val a: Int, val b: Int) {
@@ -33,11 +34,22 @@ interface DataType<T> {
     val defaultProperty: String?
     val priority: Int
 
-    val action: (PreparedStatement, Int, T)->Unit
+    /**
+     * PreparedStatementの指定されたindexに対してanyをsetします。
+     * anyがDataTypeのtypeと異なる場合はIllegalStateExceptionをthrowします。
+     * @param ps setするPreparedStatement
+     * @param index setする変数のindex
+     * @param any setするオブジェクト。
+     */
+    @Contract("_, _, null -> !null")
+    fun set(ps: PreparedStatement, index: Int, any: Any?) {
+        check(from.isInstance(any)) { "The type of \"${if(any!=null) any::class.java.simpleName else "null"}\" is different from \"${type::class.java.simpleName}\"." }
+    }
 
-    fun set(ps: PreparedStatement, index: Int, any: Any?)
-
-    fun get(resultSet: ResultSet, id: String): Any?
+    /**
+     * ResultSetからidに対応した値を変換して返します。
+     */
+    fun get(resultSet: ResultSet, id: String): T?
 
     companion object {
         // binary系

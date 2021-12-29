@@ -2,7 +2,6 @@ package dev.moru3.compsql.mysql.query.select
 
 import dev.moru3.compsql.*
 import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.datatype.types.NULL
 import dev.moru3.compsql.syntax.OrderType
 import dev.moru3.compsql.syntax.SelectFilteredWhere
 import dev.moru3.compsql.syntax.SelectKeyedWhere
@@ -56,56 +55,86 @@ class MySQLSelectWhere: SelectWhere {
 }
 
 class MySQLSelectKeyedWhere(private val data: MySQLSelectWhere): SelectKeyedWhere {
-    override fun equal(value: Any?): SelectFilteredWhere {
-        data.string += " = ?"
-        data.list.add((value to (value?.run { checkNotNull(TypeHub[value::class.java].getOrNull(0)) }?: NULL())))
+
+    fun end(string: String, value: Any): SelectFilteredWhere {
+        data.string += " $string ?"
+        data.list.add((value to checkNotNull(TypeHub[value::class.java].getOrNull(0))))
         return MySQLSelectFilteredWhere(data)
     }
 
-    override fun notEquals(value: Any?): SelectFilteredWhere {
-        data.string += " != ?"
-        data.list.add((value to (value?.run { checkNotNull(TypeHub[value::class.java].getOrNull(0)) }?: NULL())))
+    fun end(string: String): SelectFilteredWhere {
+        data.string += " $string"
         return MySQLSelectFilteredWhere(data)
     }
 
-    override fun greater(value: Any?): SelectFilteredWhere {
-        data.string += " > ?"
-        data.list.add((value to (value?.run { checkNotNull(TypeHub[value::class.java].getOrNull(0)) }?: NULL())))
+    override fun equal(value: Any): SelectFilteredWhere = end("<=>", value)
+
+    override fun notEquals(value: Any): SelectFilteredWhere = end("<>", value)
+
+    override fun greater(value: Any): SelectFilteredWhere = end(">", value)
+
+    override fun less(value: Any): SelectFilteredWhere = end("<", value)
+
+    override fun greaterOrEquals(value: Any): SelectFilteredWhere = end(">=", value)
+
+    override fun lessOrEquals(value: Any): SelectFilteredWhere = end("<=", value)
+    override fun isNull(): SelectFilteredWhere = end("IS NULL")
+
+    override fun isNotNull(): SelectFilteredWhere = end("IS NOT NULL")
+
+    override fun isTrue(): SelectFilteredWhere = end("IS TRUE")
+
+    override fun isFalse(): SelectFilteredWhere = end("IS FALSE")
+
+    override fun isUnknown(): SelectFilteredWhere = end("IS UNKNOWN")
+
+    override fun between(from: Any, to: Any): SelectFilteredWhere {
+        data.string += " BETWEEN ? AND ?"
+        data.list.add((from to checkNotNull(TypeHub[from::class.java].getOrNull(0))))
+        data.list.add((to to checkNotNull(TypeHub[to::class.java].getOrNull(0))))
         return MySQLSelectFilteredWhere(data)
     }
 
-    override fun less(value: Any?): SelectFilteredWhere {
-        data.string += " < ?"
-        data.list.add((value to (value?.run { checkNotNull(TypeHub[value::class.java].getOrNull(0)) }?: NULL())))
+    override fun notBetween(from: Any, to: Any): SelectFilteredWhere {
+        data.string += " NOT"
+        return between(from, to)
+    }
+
+    override fun isIn(vararg values: Any): SelectFilteredWhere {
+        data.string += " IN (${MutableList(values.size) { "?" }.joinToString(", ")})"
+        values.forEach { data.list.add((it to checkNotNull(TypeHub[it::class.java].getOrNull(0)))) }
         return MySQLSelectFilteredWhere(data)
     }
 
-    override fun greaterOrEquals(value: Any?): SelectFilteredWhere {
-        data.string += " >= ?"
-        data.list.add((value to (value?.run { checkNotNull(TypeHub[value::class.java].getOrNull(0)) }?: NULL())))
-        return MySQLSelectFilteredWhere(data)
+    override fun isNotIn(vararg values: Any): SelectFilteredWhere {
+        data.string += " NOT"
+        return isIn(values)
     }
 
-    override fun lessOrEquals(value: Any?): SelectFilteredWhere {
-        data.string += " <= ?"
-        data.list.add((value to (value?.run { checkNotNull(TypeHub[value::class.java].getOrNull(0)) }?: NULL())))
-        return MySQLSelectFilteredWhere(data)
+    override fun like(regex: String): SelectFilteredWhere {
+        return end("LIKE", regex)
+    }
+
+    override fun notLike(regex: String): SelectFilteredWhere {
+        data.string += " NOT"
+        return like(regex)
     }
 }
 
 class MySQLSelectFilteredWhere(private val data: MySQLSelectWhere): SelectFilteredWhere {
+
     override fun limit(limit: Int): SelectFilteredWhere {
         data.limit = limit
         return this
     }
 
-    override fun and(key: String): SelectKeyedWhere {
-        data.string += " and $key"
+    override fun and(column: String): SelectKeyedWhere {
+        data.string += " and $column"
         return MySQLSelectKeyedWhere(data)
     }
 
-    override fun or(key: String): SelectKeyedWhere {
-        data.string += " or $key"
+    override fun or(column: String): SelectKeyedWhere {
+        data.string += " or $column"
         return MySQLSelectKeyedWhere(data)
     }
 

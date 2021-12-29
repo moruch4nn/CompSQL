@@ -12,15 +12,18 @@ import java.sql.DriverManager
 import java.util.*
 
 /**
- * 新しくSQLiteのコネクションを開きます。すでに開いているコネクションがある場合はそのコネクションをcloseします。
+ * 新しくMariaDBのコネクションを開きます。すでに開いているコネクションがある場合はそのコネクションをcloseします。
+ * @param url JDBCのURL。 例:jdbc:sqlite:
+ * @param properties 接続する際に使用するプロパティ。
+ * @param action Kotlin向けの高階関数。使用しない場合はnullを指定してください。
  */
-class SQLiteConnection(path: String, override val timeout: Int = 10, val action: SQLiteConnection.()->Unit = {}): SQL(path, Properties()) {
+class SQLiteConnection(path: String, properties: Properties, val action: SQLiteConnection.()->Unit = {}): SQL(path, properties) {
     override fun init(url: String, properties: Properties) {
         try { Class.forName("org.sqlite.JDBC") } catch (_: Exception) { }
         // TODO
     }
 
-    constructor(file: File, timeout: Int = 10, action: SQLiteConnection.()->Unit = {}): this("jdbc:sqlite:${file.absolutePath}", timeout, action)
+    constructor(file: File, properties: Properties?, action: SQLiteConnection.()->Unit = {}): this("jdbc:sqlite:${file.absolutePath}", properties?:Properties(), action)
 
     override fun select(table: String, vararg columns: String): Select = TODO()
 
@@ -38,7 +41,7 @@ class SQLiteConnection(path: String, override val timeout: Int = 10, val action:
 }
 
 fun main(args: Array<String>) {
-    SQLiteConnection(File("database.db")) {
+    SQLiteConnection(File("database.db"), null) {
         table("test") {
             column("id", DataType.INTEGER).setPrimaryKey(true).setAutoIncrement(true).setNotNull(true).setZeroFill(true)
             column("name", DataType.TEXT).setNotNull(true).setDefaultValue("Non name")

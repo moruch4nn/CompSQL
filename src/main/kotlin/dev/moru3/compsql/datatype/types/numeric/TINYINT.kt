@@ -27,14 +27,13 @@ open class TINYINT(val property: Byte): DataType<Byte> {
     override val allowDefault: Boolean = true
     override val defaultProperty: String = "$property"
     override val priority: Int = 10
-    final override val action: (PreparedStatement, Int, Byte) -> Unit = { ps, i, a -> ps.setByte(i, a) }
 
     override fun set(ps: PreparedStatement, index: Int, any: Any?) {
-        check(any is Byte) { "The type of \"any\" is different from \"type\"." }
-        action.invoke(ps, index, any)
+        check(any is Number?) { "The type of \"${if(any!=null) any::class.java.simpleName else "null"}\" is different from \"Number\"." }
+        super.set(ps, index, any?.toByte())
     }
 
-    override fun get(resultSet: ResultSet, id: String): Any? = resultSet.getByte(id)
+    override fun get(resultSet: ResultSet, id: String): Byte? = resultSet.getByte(id)
 
     init { add(this) }
 }

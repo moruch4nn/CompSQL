@@ -23,14 +23,8 @@ class DATETIME(val property: DateDefaultProperty?): DataType<Date> {
     override val allowDefault: Boolean = true
     override val defaultProperty: String? = property?.toString()
     override val priority: Int = 10
-    final override val action: (PreparedStatement, Int, Date) -> Unit = { ps, i, a -> ps.setDate(i, a) }
 
-    override fun set(ps: PreparedStatement, index: Int, any: Any?) {
-        check(any is Date) { "The type of \"any\" is different from \"type\"." }
-        action.invoke(ps, index, any)
-    }
-
-    override fun get(resultSet: ResultSet, id: String): Any? = resultSet.getDate(id)
+    override fun get(resultSet: ResultSet, id: String): Date? = resultSet.getDate(id)
 
     init {
         TypeHub.add(this)

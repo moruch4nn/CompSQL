@@ -27,14 +27,13 @@ open class USMALLINT(val property: Byte): DataType<Int> {
     override val allowDefault: Boolean = true
     override val defaultProperty: String = "$property"
     override val priority: Int = 10
-    final override val action: (PreparedStatement, Int, Int) -> Unit = { ps, i, a -> ps.setInt(i, a) }
 
     override fun set(ps: PreparedStatement, index: Int, any: Any?) {
-        check(any is Number) { "The type of \"any\" is different from \"type\"." }
-        action.invoke(ps, index, any.toInt())
+        check(any is Number?) { "The type of \"${if(any!=null) any::class.java.simpleName else "null"}\" is different from \"Number\"." }
+        super.set(ps, index, any?.toInt())
     }
 
-    override fun get(resultSet: ResultSet, id: String): Any? = resultSet.getInt(id)
+    override fun get(resultSet: ResultSet, id: String): Int? = resultSet.getInt(id)
 
     init { add(this) }
 }

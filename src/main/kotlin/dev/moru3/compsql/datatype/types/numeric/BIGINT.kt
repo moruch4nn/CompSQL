@@ -31,14 +31,13 @@ open class BIGINT(val property: Byte): DataType<Long> {
     override val allowDefault: Boolean = true
     override val defaultProperty: String = "$property"
     override val priority: Int = 10
-    final override val action: (PreparedStatement, Int, Long) -> Unit = { ps, i, a -> ps.setLong(i, a) }
 
     override fun set(ps: PreparedStatement, index: Int, any: Any?) {
-        check(any is Number) { "The type of \"any\" is different from \"type\"." }
-        action.invoke(ps, index, any.toLong())
+        check(any is Number?) { "The type of \"${if(any!=null) any::class.java.simpleName else "null"}\" is different from \"Number\"." }
+        super.set(ps, index, any?.toLong())
     }
 
-    override fun get(resultSet: ResultSet, id: String): Any? = resultSet.getLong(id)
+    override fun get(resultSet: ResultSet, id: String): Long? = resultSet.getLong(id)
 
     init { add(this) }
 }

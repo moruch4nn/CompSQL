@@ -30,19 +30,14 @@ open class UBIGINT(val property: Byte): DataType<BigDecimal> {
     override val allowDefault: Boolean = true
     override val defaultProperty: String = "$property"
     override val priority: Int = 10
-    final override val action: (PreparedStatement, Int, BigDecimal) -> Unit = { ps, i, a -> ps.setBigDecimal(i, a) }
 
     override fun set(ps: PreparedStatement, index: Int, any: Any?) {
-        if(any is Number) {
-            action.invoke(ps, index, BigDecimal(any.toString()))
-        } else {
-            check(any is BigDecimal) { "The type of \"any\" is different from \"type\"." }
-            check(any >= BigDecimal(0) && any <= max) { "Unsigned BigInt can only be stored within the range of 0 to 18446744073709551615." }
-            action.invoke(ps, index, any)
+        if(any is Number?) {
+            super.set(ps, index, BigDecimal(any.toString()))
         }
     }
 
-    override fun get(resultSet: ResultSet, id: String): Any? = resultSet.getBigDecimal(id)
+    override fun get(resultSet: ResultSet, id: String): BigDecimal? = resultSet.getBigDecimal(id)
 
     init { add(this) }
 

@@ -24,14 +24,8 @@ open class BOOLEAN: DataType<Boolean> {
     override val allowDefault: Boolean = true
     override val defaultProperty: String = "1"
     override val priority: Int = 10
-    final override val action: (PreparedStatement, Int, Boolean) -> Unit = { ps, i, a -> ps.setBoolean(i, a) }
 
-    override fun set(ps: PreparedStatement, index: Int, any: Any?) {
-        check(any is Boolean) { "The type of \"any\" is different from \"type\"." }
-        action.invoke(ps, index, any)
-    }
-
-    override fun get(resultSet: ResultSet, id: String): Any? = resultSet.getBoolean(id)
+    override fun get(resultSet: ResultSet, id: String): Boolean? = resultSet.getBoolean(id)
 
     init { add(this) }
 }
