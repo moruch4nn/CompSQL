@@ -39,18 +39,3 @@ class SQLiteConnection(path: String, properties: Properties, val action: SQLiteC
 
     init {  this.apply(action) }
 }
-
-fun main(args: Array<String>) {
-    SQLiteConnection(File("database.db"), null) {
-        table("test") {
-            column("id", DataType.INTEGER).setPrimaryKey(true).setAutoIncrement(true).setNotNull(true).setZeroFill(true)
-            column("name", DataType.TEXT).setNotNull(true).setDefaultValue("Non name")
-            column("is_admin", DataType.BOOLEAN).setNotNull(true).setDefaultValue(false)
-            column("passport_id", DataType.INTEGER).setNotNull(true).setDefaultValue(3480)
-        }.send(false)
-
-        insert("test") {
-            add("name", "moru3_48")
-        }.send(true)
-    }
-}

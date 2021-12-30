@@ -11,12 +11,6 @@ import java.sql.ResultSet
 import java.util.*
 
 class ResultSet(val rawResultSet: ResultSet): ResultSet {
-    /**
-     * もうやだ...
-     */
-
-
-
     override fun <T : Any?> unwrap(iface: Class<T>?): T = rawResultSet.unwrap(iface)
     override fun isWrapperFor(iface: Class<*>?): Boolean = rawResultSet.isWrapperFor(iface)
     override fun close() = rawResultSet.close()

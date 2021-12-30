@@ -12,10 +12,14 @@ import java.sql.Types
  * Unsigned: UTINYINT, Non-Unsigned: TINYINT
  * 注意: numeric系のプロパティは"最大数"ではなく"最大桁数"なのでお間違えなく。
  */
-open class UTINYINT(val property: Byte): DataType<Short> {
+class UTINYINT(property: Byte): UTinyIntBase<Short>(property) {
+    override val from: Class<Short> = Short::class.javaObjectType
+    override fun get(resultSet: ResultSet, id: String): Short? = resultSet.getShort(id)
+}
+
+abstract class UTinyIntBase<F>(val property: Byte): DataType<F,Short> {
 
     final override val typeName: String = "TINYINT"
-    override val from: Class<*> = Short::class.javaObjectType
     final override val type: Class<Short> = Short::class.javaObjectType
     final override val sqlType: Int = Types.TINYINT
     final override val allowPrimaryKey: Boolean = true
@@ -32,8 +36,6 @@ open class UTINYINT(val property: Byte): DataType<Short> {
         check(any is Number?) { "The type of \"${if(any!=null) any::class.java.simpleName else "null"}\" is different from \"Number\"." }
         super.set(ps, index, any?.toShort())
     }
-
-    override fun get(resultSet: ResultSet, id: String): Short? = resultSet.getShort(id)
 
     init { add(this) }
 }

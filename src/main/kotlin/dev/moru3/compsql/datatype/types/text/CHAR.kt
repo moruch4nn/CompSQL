@@ -12,10 +12,13 @@ import java.sql.Types
  * 256文字以上を格納する場合はVARCHAR、TEXT型を使用してください。
  * TEXTやLONGTEXTと違いPrimaryKeyとして利用可能です。
  */
-open class CHAR(val property: Int): DataType<String> {
+open class CHAR(property: Int): CharBase<String>(property) {
+    override val from: Class<String> = String::class.java
+    override fun get(resultSet: ResultSet, id: String): String? = resultSet.getNString(id)
+}
 
+abstract class CharBase<F>(val property: Int): DataType<F, String> {
     final override val typeName: String = "CHAR"
-    override val from: Class<*> = String::class.java
     final override val type: Class<String> = String::class.java
     final override val sqlType: Int = Types.CHAR
     final override val allowPrimaryKey: Boolean = true
@@ -27,8 +30,6 @@ open class CHAR(val property: Int): DataType<String> {
     override val allowDefault: Boolean = true
     override val defaultProperty: String = "$property"
     override val priority: Int = 10
-
-    override fun get(resultSet: ResultSet, id: String): String? = resultSet.getNString(id)
 
     init { add(this) }
 }

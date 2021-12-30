@@ -17,11 +17,11 @@ abstract class AbstractTable(override val connection: Connection, n: String): Ta
 
     protected val columns: MutableList<Column> = mutableListOf()
 
-    override fun column(name: String, type: DataType<*>, action: (Column) -> Unit): Column {
+    override fun column(name: String, type: DataType<*,*>, action: (Column) -> Unit): Column {
         return column(name, type).apply(action)
     }
 
-    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*>>>>  = buildAsRaw(false)
+    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>>  = buildAsRaw(false)
 
     override fun build(): PreparedStatement = build(false)
 

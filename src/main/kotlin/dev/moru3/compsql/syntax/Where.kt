@@ -24,30 +24,30 @@ interface KeyedWhere {
     /**
      * イコール(=)
      */
-    fun equal(value: Any?): FilteredWhere
+    fun equal(value: Any): FilteredWhere
 
     /**
      * 等しくない(!=)
      */
-    fun notEquals(value: Any?): FilteredWhere
+    fun notEquals(value: Any): FilteredWhere
 
     /**
      * 大なり(>)
      */
-    fun greater(value: Any?): FilteredWhere
+    fun greater(value: Any): FilteredWhere
 
     /**
      * 小なり(<)
      */
-    fun less(value: Any?): FilteredWhere
+    fun less(value: Any): FilteredWhere
 
     /**
      * 大なり(>=)
      */
-    fun greaterOrEquals(value: Any?): FilteredWhere
+    fun greaterOrEquals(value: Any): FilteredWhere
 
     /**
      * 小なり(<=)
      */
-    fun lessOrEquals(value: Any?): FilteredWhere
+    fun lessOrEquals(value: Any): FilteredWhere
 }

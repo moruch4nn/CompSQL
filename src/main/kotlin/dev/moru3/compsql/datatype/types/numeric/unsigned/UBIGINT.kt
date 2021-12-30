@@ -15,10 +15,14 @@ import java.sql.Types
  *
  * 18446744073709551615 = 1844京6744兆737億955万1615
  */
-open class UBIGINT(val property: Byte): DataType<BigDecimal> {
+open class UBIGINT(property: Byte): UBigIntBase<BigDecimal>(property) {
+    override val from: Class<BigDecimal> = BigDecimal::class.java
+    override fun get(resultSet: ResultSet, id: String): BigDecimal? = resultSet.getBigDecimal(id)
+}
+
+abstract class UBigIntBase<F>(val property: Byte): DataType<F,BigDecimal> {
 
     final override val typeName: String = "BIGINT"
-    override val from: Class<*> = BigDecimal::class.java
     final override val type: Class<BigDecimal> = BigDecimal::class.java
     final override val sqlType: Int = Types.BIGINT
     final override val allowPrimaryKey: Boolean = true
@@ -36,8 +40,6 @@ open class UBIGINT(val property: Byte): DataType<BigDecimal> {
             super.set(ps, index, BigDecimal(any.toString()))
         }
     }
-
-    override fun get(resultSet: ResultSet, id: String): BigDecimal? = resultSet.getBigDecimal(id)
 
     init { add(this) }
 

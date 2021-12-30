@@ -5,7 +5,7 @@ import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.syntax.table.Table
 
 class SQLiteInsert(table: Table) : AbstractInsert(table) {
-    override fun buildAsRaw(force: Boolean): Pair<String, List<Pair<Any, DataType<*>>>> {
+    override fun buildAsRaw(force: Boolean): Pair<String, List<Pair<Any, DataType<*,*>>>> {
         if(values.isEmpty()) { throw IllegalStateException("values is empty.") }
         val result = buildString {
             append("INSERT")

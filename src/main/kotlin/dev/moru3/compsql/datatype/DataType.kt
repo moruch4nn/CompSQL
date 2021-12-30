@@ -18,10 +18,10 @@ class Range(val a: Int, val b: Int) {
 /**
  * 新しいSQLTypeを作成するにはこれを使用してください。
  */
-interface DataType<T> {
+interface DataType<F, T> {
 
     val typeName: String
-    val from: Class<*>
+    val from: Class<F>
     val type: Class<T>
     val sqlType: Int
     val allowPrimaryKey: Boolean
@@ -49,7 +49,7 @@ interface DataType<T> {
     /**
      * ResultSetからidに対応した値を変換して返します。
      */
-    fun get(resultSet: ResultSet, id: String): T?
+    fun get(resultSet: ResultSet, id: String): F?
 
     companion object {
         // binary系

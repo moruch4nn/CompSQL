@@ -4,14 +4,17 @@ import dev.moru3.compsql.TypeHub
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.datatype.types.date.property.DateDefaultProperty
 import java.sql.Date
-import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.Types
 
-class DATE(val property: DateDefaultProperty?): DataType<Date> {
+class DATE(property: DateDefaultProperty?): DateBase<Date>(property) {
+    override val from: Class<Date> = Date::class.javaObjectType
+    override fun get(resultSet: ResultSet, id: String): Date? = resultSet.getDate(id)
+}
+
+abstract class DateBase<F>(val property: DateDefaultProperty?): DataType<F,Date> {
 
     final override val typeName: String = "DATE"
-    override val from: Class<*> = Date::class.javaObjectType
     final override val type: Class<Date> = Date::class.javaObjectType
     final override val sqlType: Int = Types.DATE
     final override val allowPrimaryKey: Boolean = false
@@ -23,8 +26,6 @@ class DATE(val property: DateDefaultProperty?): DataType<Date> {
     override val allowDefault: Boolean = true
     override val defaultProperty: String? = property?.toString()
     override val priority: Int = 10
-
-    override fun get(resultSet: ResultSet, id: String): Date? = resultSet.getDate(id)
 
     init {
         TypeHub.add(this)

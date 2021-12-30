@@ -8,10 +8,14 @@ import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.Types
 
-class DATETIME(val property: DateDefaultProperty?): DataType<Date> {
+class DATETIME(property: DateDefaultProperty?): DateTimeBase<Date>(property) {
+    override val from: Class<Date> = Date::class.javaObjectType
+    override fun get(resultSet: ResultSet, id: String): Date? = resultSet.getDate(id)
+}
+
+abstract class DateTimeBase<F>(val property: DateDefaultProperty?): DataType<F,Date> {
 
     final override val typeName: String = "DATETIME"
-    override val from: Class<*> = Date::class.javaObjectType
     final override val type: Class<Date> = Date::class.javaObjectType
     final override val sqlType: Int = Types.DATE
     final override val allowPrimaryKey: Boolean = false
@@ -23,8 +27,6 @@ class DATETIME(val property: DateDefaultProperty?): DataType<Date> {
     override val allowDefault: Boolean = true
     override val defaultProperty: String? = property?.toString()
     override val priority: Int = 10
-
-    override fun get(resultSet: ResultSet, id: String): Date? = resultSet.getDate(id)
 
     init {
         TypeHub.add(this)

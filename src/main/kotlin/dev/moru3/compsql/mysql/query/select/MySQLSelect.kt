@@ -23,7 +23,7 @@ class MySQLSelect(table: Table, vararg columns: String): AbstractSelect(table, *
         this.where = where
     }
 
-    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*>>>> {
+    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>> {
         buildString {
             val raw = where.buildAsRaw()
             append("SELECT ${columns.joinToString(", ")} FROM ${table.name}${raw.first}")

@@ -12,10 +12,14 @@ import java.sql.Types
  * Unsigned: USMALLINT, Non-Unsigned: SMALLINT
  * 注意: numeric系のプロパティは"最大数"ではなく"最大桁数"なのでお間違えなく。
  */
-open class USMALLINT(val property: Byte): DataType<Int> {
+open class USMALLINT(property: Byte): USmallIntBase<Int>(property) {
+    override val from: Class<Int> = Int::class.javaObjectType
+    override fun get(resultSet: ResultSet, id: String): Int? = resultSet.getInt(id)
+}
+
+abstract class USmallIntBase<F>(val property: Byte): DataType<F, Int> {
 
     final override val typeName: String = "SMALLINT"
-    override val from: Class<*> = Int::class.javaObjectType
     final override val type: Class<Int> = Int::class.javaObjectType
     final override val sqlType: Int = Types.SMALLINT
     final override val allowPrimaryKey: Boolean = true
@@ -32,8 +36,6 @@ open class USMALLINT(val property: Byte): DataType<Int> {
         check(any is Number?) { "The type of \"${if(any!=null) any::class.java.simpleName else "null"}\" is different from \"Number\"." }
         super.set(ps, index, any?.toInt())
     }
-
-    override fun get(resultSet: ResultSet, id: String): Int? = resultSet.getInt(id)
 
     init { add(this) }
 }

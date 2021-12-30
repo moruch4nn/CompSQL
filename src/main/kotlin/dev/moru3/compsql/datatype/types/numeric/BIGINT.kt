@@ -16,10 +16,14 @@ import java.sql.Types
  * -9223372036854775808 = マイナス922京3372兆368億5477万5808
  * 9223372036854775807 = 922京3372兆368億5477万5807
  */
-open class BIGINT(val property: Byte): DataType<Long> {
+open class BIGINT(property: Byte): BigIntBase<Long>(property) {
+    override val from: Class<Long> = Long::class.javaObjectType
+    override fun get(resultSet: ResultSet, id: String): Long? = resultSet.getLong(id)
+}
+
+abstract class BigIntBase<F>(val property: Byte): DataType<F,Long> {
 
     final override val typeName: String = "BIGINT"
-    override val from: Class<*> = Long::class.javaObjectType
     final override val type: Class<Long> = Long::class.javaObjectType
     final override val sqlType: Int = Types.BIGINT
     final override val allowPrimaryKey: Boolean = true
@@ -36,8 +40,6 @@ open class BIGINT(val property: Byte): DataType<Long> {
         check(any is Number?) { "The type of \"${if(any!=null) any::class.java.simpleName else "null"}\" is different from \"Number\"." }
         super.set(ps, index, any?.toLong())
     }
-
-    override fun get(resultSet: ResultSet, id: String): Long? = resultSet.getLong(id)
 
     init { add(this) }
 }

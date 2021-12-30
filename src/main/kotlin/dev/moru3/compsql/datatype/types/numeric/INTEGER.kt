@@ -15,10 +15,14 @@ import java.sql.Types
  * -2147483648 = マイナス21億4748万3648
  * 2147483647 = 21億4748万3647
  */
-open class INTEGER(val property: Byte): DataType<Int> {
+open class INTEGER(property: Byte): IntegerBase<Int>(property) {
+    override val from: Class<Int> = Int::class.javaObjectType
+    override fun get(resultSet: ResultSet, id: String): Int? = resultSet.getInt(id)
+}
+
+abstract class IntegerBase<F>(val property: Byte): DataType<F,Int> {
 
     final override val typeName: String = "INTEGER"
-    override val from: Class<*> = Int::class.javaObjectType
     final override val type: Class<Int> = Int::class.javaObjectType
     final override val sqlType: Int = Types.INTEGER
     final override val allowPrimaryKey: Boolean = true
@@ -35,8 +39,6 @@ open class INTEGER(val property: Byte): DataType<Int> {
         check(any is Number?) { "The type of \"${if(any!=null) any::class.java.simpleName else "null"}\" is different from \"Number\"." }
         super.set(ps, index, any?.toInt())
     }
-
-    override fun get(resultSet: ResultSet, id: String): Int? = resultSet.getInt(id)
 
     init { add(this) }
 }

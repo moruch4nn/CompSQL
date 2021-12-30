@@ -13,7 +13,7 @@ class MySQLDelete(table: Table): AbstractDelete(table) {
 
     override fun where(key: String): KeyedWhere = MySQLWhere().also { this.where = it }.key(key)
 
-    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*>>>> {
+    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>> {
         buildString {
             val raw = where.buildAsRaw()
             append("DELETE FROM ${table.name}${raw.first}")

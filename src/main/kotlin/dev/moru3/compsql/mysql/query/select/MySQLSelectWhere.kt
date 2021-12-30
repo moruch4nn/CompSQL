@@ -12,7 +12,7 @@ class MySQLSelectWhere: SelectWhere {
 
     var limit: Int? = null
 
-    val list = mutableListOf<Pair<Any?, DataType<*>>>()
+    val list = mutableListOf<Pair<Any?, DataType<*,*>>>()
 
     var string = ""
 
@@ -27,8 +27,8 @@ class MySQLSelectWhere: SelectWhere {
         return this
     }
 
-    override fun key(key: String): SelectKeyedWhere {
-        string += " $key"
+    override fun key(column: String): SelectKeyedWhere {
+        string += " $column"
         return MySQLSelectKeyedWhere(this)
     }
 
@@ -42,7 +42,7 @@ class MySQLSelectWhere: SelectWhere {
         return this
     }
 
-    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*>>>> {
+    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>> {
         if(order.isNotEmpty()) {
             string += " ORDER BY"
             val orders = mutableListOf<String>()
@@ -154,5 +154,5 @@ class MySQLSelectFilteredWhere(private val data: MySQLSelectWhere): SelectFilter
         return this
     }
 
-    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*>>>> = data.buildAsRaw()
+    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>> = data.buildAsRaw()
 }

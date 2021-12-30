@@ -1,13 +1,13 @@
 package dev.moru3.compsql.datatype.types.original
 
 import dev.moru3.compsql.TypeHub.add
-import dev.moru3.compsql.datatype.types.binary.LONGBLOB
+import dev.moru3.compsql.datatype.types.binary.LongBlobBase
 import java.io.*
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 
-class INSTANCE: LONGBLOB(Int.MAX_VALUE) {
-    override val from: Class<*> = Serializable::class.java
+class INSTANCE: LongBlobBase<Serializable>(Int.MAX_VALUE.toLong()) {
+    override val from: Class<Serializable> = Serializable::class.java
     override val allowDefault: Boolean = false
     override val priority: Int = 0
 
@@ -21,9 +21,9 @@ class INSTANCE: LONGBLOB(Int.MAX_VALUE) {
     /**
      * 帰ってきたObjectをcastして使用してください。
      */
-    override fun get(resultSet: ResultSet, id: String): Any? {
+    override fun get(resultSet: ResultSet, id: String): Serializable? {
         val ois = ObjectInputStream(ByteArrayInputStream(resultSet.getBytes(id)?:return null))
-        return ois.readObject() as Serializable?
+        return ois.readObject() as Serializable
     }
 
     init { add(this) }

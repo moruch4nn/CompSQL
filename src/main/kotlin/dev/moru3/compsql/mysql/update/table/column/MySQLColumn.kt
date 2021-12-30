@@ -3,9 +3,9 @@ package dev.moru3.compsql.mysql.update.table.column
 import dev.moru3.compsql.abstracts.AbstractColumn
 import dev.moru3.compsql.datatype.DataType
 
-class MySQLColumn(name: String, type: DataType<*>): AbstractColumn(name, type) {
-    override fun buildAsRaw(): Pair<String, List<Pair<Any, DataType<*>>>> {
-        val types = mutableListOf<Pair<Any, DataType<*>>>()
+class MySQLColumn(name: String, type: DataType<*,*>): AbstractColumn(name, type) {
+    override fun buildAsRaw(): Pair<String, List<Pair<Any, DataType<*,*>>>> {
+        val types = mutableListOf<Pair<Any, DataType<*,*>>>()
         val result = buildString {
             append("`").append(name).append("` ").append(type.typeName)
             property?.also { append("(").append(it.toString()).append(")") }?: type.defaultProperty?.also { append("(").append(it).append(")") }

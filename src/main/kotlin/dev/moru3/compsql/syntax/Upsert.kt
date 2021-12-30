@@ -13,7 +13,7 @@ interface Upsert: NonForceUpdateSendable {
      */
     val table: Table
 
-    fun add(type: DataType<*>, key: String, value: Any): Upsert
+    fun add(type: DataType<*,*>, key: String, value: Any): Upsert
 
     fun add(key: String, value: Any): Upsert
 }

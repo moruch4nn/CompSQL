@@ -6,15 +6,17 @@ import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.Types
 
+class LONGBLOB(property: Long): LongBlobBase<ByteArray>(property) {
+    constructor(int: Int): this(int.toLong())
+    override val from: Class<ByteArray> = ByteArray::class.java
+    override fun get(resultSet: ResultSet, id: String): ByteArray? { return resultSet.getBytes(id) }
+}
+
 /**
  * LONGBLOBとは0から4000000000(40億)までの固定長のバイナリを格納できます。
  */
-open class LONGBLOB(val property: Long): DataType<ByteArray> {
-
-    constructor(int: Int): this(int.toLong())
-
+abstract class LongBlobBase<F>(val property: Long): DataType<F,ByteArray> {
     final override val typeName: String = "LONGBLOB"
-    override val from: Class<*> = ByteArray::class.java
     final override val type: Class<ByteArray> = ByteArray::class.java
     final override val sqlType: Int = Types.BINARY
     final override val allowPrimaryKey: Boolean = true
@@ -30,8 +32,6 @@ open class LONGBLOB(val property: Long): DataType<ByteArray> {
     override fun set(ps: PreparedStatement, index: Int, any: Any?) {
         super.set(ps, index, if(any is String) any.toByteArray() else any)
     }
-
-    override fun get(resultSet: ResultSet, id: String): ByteArray? { return resultSet.getBytes(id) }
 
     init { add(this) }
 }

@@ -11,10 +11,15 @@ import java.sql.Types
  * 文字数ではないためUTF8を使用する場合は一文字に3KB使用します。
  * CharやVarcharとは違い、PrimaryKeyとしては利用できません。
  */
-open class TEXT(val property: Int): DataType<String> {
+class TEXT(property: Int): TextBase<String>(property) {
+    override val from: Class<String> = String::class.java
+
+    override fun get(resultSet: ResultSet, id: String): String? = resultSet.getNString(id)
+}
+
+abstract class TextBase<F>(val property: Int): DataType<F, String> {
 
     final override val typeName: String = "TEXT"
-    override val from: Class<*> = String::class.java
     final override val type: Class<String> = String::class.java
     final override val sqlType: Int = Types.VARCHAR
     final override val allowPrimaryKey: Boolean = false
@@ -26,8 +31,6 @@ open class TEXT(val property: Int): DataType<String> {
     override val allowDefault: Boolean = true
     override val defaultProperty: String = "$property"
     override val priority: Int = 12
-
-    override fun get(resultSet: ResultSet, id: String): String? = resultSet.getNString(id)
 
     init { add(this) }
 }

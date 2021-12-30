@@ -9,12 +9,13 @@ import java.sql.Types
 /**
  * LONGBLOBとは0から4000000000(40億)までの固定長のバイナリを格納できます。
  */
-open class BLOB(val property: Long): DataType<ByteArray> {
-
+open class BLOB(property: Long): BlobBase<ByteArray>(property) {
     constructor(int: Int): this(int.toLong())
-
+    override val from: Class<ByteArray> = ByteArray::class.java
+    override fun get(resultSet: ResultSet, id: String): ByteArray? { return resultSet.getBytes(id) }
+}
+abstract class BlobBase<F>(val property: Long): DataType<F, ByteArray> {
     final override val typeName: String = "BLOB"
-    override val from: Class<*> = ByteArray::class.java
     final override val type: Class<ByteArray> = ByteArray::class.java
     final override val sqlType: Int = Types.BINARY
     final override val allowPrimaryKey: Boolean = true
@@ -30,8 +31,6 @@ open class BLOB(val property: Long): DataType<ByteArray> {
     override fun set(ps: PreparedStatement, index: Int, any: Any?) {
         super.set(ps, index, if(any is String) any.toByteArray() else any)
     }
-
-    override fun get(resultSet: ResultSet, id: String): ByteArray? { return resultSet.getBytes(id) }
 
     init { add(this) }
 }

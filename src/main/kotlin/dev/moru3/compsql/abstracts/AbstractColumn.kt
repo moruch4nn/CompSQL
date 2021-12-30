@@ -3,7 +3,7 @@ package dev.moru3.compsql.abstracts
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.syntax.table.column.Column
 
-abstract class AbstractColumn(override val name: String, final override val type: DataType<*>): Column {
+abstract class AbstractColumn(override val name: String, final override val type: DataType<*,*>): Column {
     override var isPrimaryKey: Boolean = false
         protected set
     override var isNotNull: Boolean = false

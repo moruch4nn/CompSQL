@@ -1,8 +1,7 @@
 package dev.moru3.compsql.datatype.types.text
 
-import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.TypeHub.add
-import java.sql.PreparedStatement
+import dev.moru3.compsql.datatype.DataType
 import java.sql.ResultSet
 import java.sql.Types
 
@@ -11,10 +10,13 @@ import java.sql.Types
  * 65535文字以上を格納する場合はTEXT型を使用してください。
  * TEXTやLONGTEXTと違いPrimaryKeyとして利用可能です。
  */
-open class VARCHAR(val property: Int): DataType<String> {
+open class VARCHAR(property: Int): VarcharBase<String>(property) {
+    override val from: Class<String> = String::class.java
+    override fun get(resultSet: ResultSet, id: String): String? = resultSet.getNString(id)
+}
 
+abstract class VarcharBase<F>(val property: Int): DataType<F, String> {
     final override val typeName: String = "VARCHAR"
-    override val from: Class<*> = String::class.java
     final override val type: Class<String> = String::class.java
     final override val sqlType: Int = Types.VARCHAR
     final override val allowPrimaryKey: Boolean = true
@@ -26,8 +28,6 @@ open class VARCHAR(val property: Int): DataType<String> {
     override val allowDefault: Boolean = true
     override val defaultProperty: String = "$property"
     override val priority: Int = 10
-
-    override fun get(resultSet: ResultSet, id: String): String? = resultSet.getNString(id)
 
     init { add(this) }
 }
