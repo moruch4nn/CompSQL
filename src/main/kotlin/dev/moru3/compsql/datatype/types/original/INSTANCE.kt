@@ -1,6 +1,6 @@
 package dev.moru3.compsql.datatype.types.original
 
-import dev.moru3.compsql.TypeHub.add
+import dev.moru3.compsql.TypeHub
 import dev.moru3.compsql.datatype.types.binary.LongBlobBase
 import java.io.*
 import java.sql.PreparedStatement
@@ -25,6 +25,4 @@ class INSTANCE: LongBlobBase<Serializable>(Int.MAX_VALUE.toLong()) {
         val ois = ObjectInputStream(ByteArrayInputStream(resultSet.getBytes(id)?:return null))
         return ois.readObject() as Serializable
     }
-
-    init { add(this) }
 }

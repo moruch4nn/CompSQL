@@ -13,7 +13,6 @@ import java.sql.Types
  */
 class TEXT(property: Int): TextBase<String>(property) {
     override val from: Class<String> = String::class.javaObjectType
-
     override fun get(resultSet: ResultSet, id: String): String? = resultSet.getNString(id)
 }
 
@@ -33,6 +32,4 @@ abstract class TextBase<F>(val property: Int): DataType<F, String> {
     override val priority: Int = 12
 
     override fun set(ps: PreparedStatement, index: Int, any: Any?) { super.set(ps, index, any.toString()) }
-
-    init { add(this) }
 }

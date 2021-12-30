@@ -26,8 +26,4 @@ abstract class DateBase<F>(val property: DateDefaultProperty?): DataType<F,Date>
     override val allowDefault: Boolean = true
     override val defaultProperty: String? = property?.toString()
     override val priority: Int = 10
-
-    init {
-        TypeHub.add(this)
-    }
 }

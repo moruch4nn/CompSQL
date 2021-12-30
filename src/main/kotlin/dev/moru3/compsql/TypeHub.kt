@@ -9,7 +9,7 @@ object TypeHub: Set<DataType<*,*>> {
 
     private var dataTypeList = mutableSetOf<DataType<*,*>>()
 
-    fun add(dataType: DataType<*,*>) { if(!dataTypeList.map { it::class.javaObjectType }.any { it == dataType::class.javaObjectType }) { dataTypeList.add(dataType) } }
+    fun add(dataType: DataType<*,*>) { dataTypeList.add(dataType) }
 
     operator fun get(type: Class<*>): List<DataType<*,*>> {
         return typeCache[type]?:dataTypeList.filter { it.from == type }.sortedBy { it.priority }.also { typeCache[type]=it }
@@ -26,5 +26,8 @@ object TypeHub: Set<DataType<*,*>> {
 
     override fun iterator(): Iterator<DataType<*,*>> = dataTypeList.iterator()
 
-    init { typeCache[UUID::class.javaObjectType] = listOf(VARCHAR(36)) }
+    init{
+        typeCache[UUID::class.javaObjectType] = listOf(VARCHAR(36))
+        typeCache[Enum::class.javaObjectType] = listOf(DataType.VARCHAR)
+    }
 }

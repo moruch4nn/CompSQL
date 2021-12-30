@@ -31,6 +31,4 @@ abstract class LongTextBase<F>(val property: Int): DataType<F, String> {
     override val priority: Int = 13
 
     override fun set(ps: PreparedStatement, index: Int, any: Any?) { super.set(ps, index, any.toString()) }
-
-    init { add(this) }
 }

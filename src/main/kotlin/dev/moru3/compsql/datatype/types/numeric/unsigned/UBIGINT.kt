@@ -40,8 +40,4 @@ abstract class UBigIntBase<F>(val property: Byte): DataType<F,BigDecimal> {
             super.set(ps, index, BigDecimal(any.toString()))
         }
     }
-
-    init { add(this) }
-
-    companion object { private val max = BigDecimal("18446744073709551615") }
 }

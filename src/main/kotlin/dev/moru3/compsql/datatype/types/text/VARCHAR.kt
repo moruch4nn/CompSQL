@@ -11,7 +11,7 @@ import java.sql.Types
  * 65535文字以上を格納する場合はTEXT型を使用してください。
  * TEXTやLONGTEXTと違いPrimaryKeyとして利用可能です。
  */
-open class VARCHAR(property: Int): VarcharBase<String>(property) {
+class VARCHAR(property: Int): VarcharBase<String>(property) {
     override val from: Class<String> = String::class.javaObjectType
     override fun get(resultSet: ResultSet, id: String): String? = resultSet.getNString(id)
 }
@@ -31,6 +31,4 @@ abstract class VarcharBase<F>(val property: Int): DataType<F, String> {
     override val priority: Int = 10
 
     override fun set(ps: PreparedStatement, index: Int, any: Any?) { super.set(ps, index, any.toString()) }
-
-    init { add(this) }
 }

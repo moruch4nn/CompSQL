@@ -12,7 +12,7 @@ import java.sql.Types
  * Unsigned: UTINYINT, Non-Unsigned: TINYINT
  * 注意: numeric系のプロパティは"最大数"ではなく"最大桁数"なのでお間違えなく。
  */
-open class TINYINT(property: Byte): TinyIntBase<Byte>(property) {
+class TINYINT(property: Byte): TinyIntBase<Byte>(property) {
     override val from: Class<Byte> = Byte::class.javaObjectType
     override fun get(resultSet: ResultSet, id: String): Byte? = resultSet.getByte(id)
 }
@@ -36,6 +36,4 @@ abstract class TinyIntBase<F>(val property: Byte): DataType<F, Byte> {
         check(any is Number?) { "The type of \"${if(any!=null) any::class.javaObjectType.simpleName else "null"}\" is different from \"Number\"." }
         super.set(ps, index, any?.toByte())
     }
-
-    init { add(this) }
 }

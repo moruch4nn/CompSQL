@@ -36,6 +36,4 @@ abstract class SmallIntBase<F>(val property: Byte): DataType<F, Short> {
         check(any is Number?) { "The type of \"${if(any!=null) any::class.javaObjectType.simpleName else "null"}\" is different from \"Number\"." }
         super.set(ps, index, any?.toShort())
     }
-
-    init { add(this) }
 }

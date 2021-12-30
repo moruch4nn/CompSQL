@@ -10,7 +10,7 @@ import java.sql.Types
  * BINARYとは0から255までの固定長のバイナリを格納できます。
  * 256以上のサイズを格納する場合はBLOBを使用します。
  */
-open class BINARY(property: Int): BinaryBase<ByteArray>(property) {
+class BINARY(property: Int): BinaryBase<ByteArray>(property) {
     override val from: Class<ByteArray> = ByteArray::class.javaObjectType
     override fun get(resultSet: ResultSet, id: String): ByteArray? { return resultSet.getBytes(id) }
 }
@@ -33,6 +33,4 @@ abstract class BinaryBase<F>(val property: Int): DataType<F,ByteArray> {
     override fun set(ps: PreparedStatement, index: Int, any: Any?) {
         super.set(ps, index, if(any is String) any.toByteArray() else any)
     }
-
-    init { add(this) }
 }

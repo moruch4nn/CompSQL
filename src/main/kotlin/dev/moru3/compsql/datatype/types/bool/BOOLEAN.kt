@@ -27,6 +27,4 @@ abstract class BooleanBase<F>: DataType<F,Boolean> {
     override val allowDefault: Boolean = true
     override val defaultProperty: String = "1"
     override val priority: Int = 10
-
-    init { add(this) }
 }

@@ -33,6 +33,4 @@ abstract class VarbinaryBase<F>(val property: Int): DataType<F, ByteArray> {
     override fun set(ps: PreparedStatement, index: Int, any: Any?) {
         super.set(ps, index, if(any is String) any.toByteArray() else any)
     }
-
-    init { add(this) }
 }

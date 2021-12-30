@@ -36,6 +36,4 @@ abstract class USmallIntBase<F>(val property: Byte): DataType<F, Int> {
         check(any is Number?) { "The type of \"${if(any!=null) any::class.javaObjectType.simpleName else "null"}\" is different from \"Number\"." }
         super.set(ps, index, any?.toInt())
     }
-
-    init { add(this) }
 }

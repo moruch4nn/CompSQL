@@ -40,6 +40,4 @@ abstract class BigIntBase<F>(val property: Byte): DataType<F,Long> {
         check(any is Number?) { "The type of \"${if(any!=null) any::class.javaObjectType.simpleName else "null"}\" is different from \"Number\"." }
         super.set(ps, index, any?.toLong())
     }
-
-    init { add(this) }
 }
