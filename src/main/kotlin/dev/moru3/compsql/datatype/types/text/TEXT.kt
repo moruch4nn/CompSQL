@@ -12,7 +12,7 @@ import java.sql.Types
  * CharやVarcharとは違い、PrimaryKeyとしては利用できません。
  */
 class TEXT(property: Int): TextBase<String>(property) {
-    override val from: Class<String> = String::class.java
+    override val from: Class<String> = String::class.javaObjectType
 
     override fun get(resultSet: ResultSet, id: String): String? = resultSet.getNString(id)
 }
@@ -20,7 +20,7 @@ class TEXT(property: Int): TextBase<String>(property) {
 abstract class TextBase<F>(val property: Int): DataType<F, String> {
 
     final override val typeName: String = "TEXT"
-    final override val type: Class<String> = String::class.java
+    final override val type: Class<String> = String::class.javaObjectType
     final override val sqlType: Int = Types.VARCHAR
     final override val allowPrimaryKey: Boolean = false
     final override val allowNotNull: Boolean = true

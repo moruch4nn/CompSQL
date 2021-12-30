@@ -12,13 +12,13 @@ import java.sql.Types
  * CharやVarcharとは違い、PrimaryKeyとしては利用できません。
  */
 class LONGTEXT(property: Int): LongTextBase<String>(property) {
-    override val from: Class<String> = String::class.java
+    override val from: Class<String> = String::class.javaObjectType
     override fun get(resultSet: ResultSet, id: String): String? = resultSet.getNString(id)
 }
 abstract class LongTextBase<F>(val property: Int): DataType<F, String> {
 
     final override val typeName: String = "LONGTEXT"
-    final override val type: Class<String> = String::class.java
+    final override val type: Class<String> = String::class.javaObjectType
     final override val sqlType: Int = Types.LONGVARCHAR
     final override val allowPrimaryKey: Boolean = false
     final override val allowNotNull: Boolean = true

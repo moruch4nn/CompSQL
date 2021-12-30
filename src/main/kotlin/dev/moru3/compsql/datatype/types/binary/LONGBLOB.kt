@@ -8,7 +8,7 @@ import java.sql.Types
 
 class LONGBLOB(property: Long): LongBlobBase<ByteArray>(property) {
     constructor(int: Int): this(int.toLong())
-    override val from: Class<ByteArray> = ByteArray::class.java
+    override val from: Class<ByteArray> = ByteArray::class.javaObjectType
     override fun get(resultSet: ResultSet, id: String): ByteArray? { return resultSet.getBytes(id) }
 }
 
@@ -17,7 +17,7 @@ class LONGBLOB(property: Long): LongBlobBase<ByteArray>(property) {
  */
 abstract class LongBlobBase<F>(val property: Long): DataType<F,ByteArray> {
     final override val typeName: String = "LONGBLOB"
-    final override val type: Class<ByteArray> = ByteArray::class.java
+    final override val type: Class<ByteArray> = ByteArray::class.javaObjectType
     final override val sqlType: Int = Types.BINARY
     final override val allowPrimaryKey: Boolean = true
     final override val allowNotNull: Boolean = true

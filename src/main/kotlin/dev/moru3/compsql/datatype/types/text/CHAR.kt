@@ -13,13 +13,13 @@ import java.sql.Types
  * TEXTやLONGTEXTと違いPrimaryKeyとして利用可能です。
  */
 open class CHAR(property: Int): CharBase<String>(property) {
-    override val from: Class<String> = String::class.java
+    override val from: Class<String> = String::class.javaObjectType
     override fun get(resultSet: ResultSet, id: String): String? = resultSet.getNString(id)
 }
 
 abstract class CharBase<F>(val property: Int): DataType<F, String> {
     final override val typeName: String = "CHAR"
-    final override val type: Class<String> = String::class.java
+    final override val type: Class<String> = String::class.javaObjectType
     final override val sqlType: Int = Types.CHAR
     final override val allowPrimaryKey: Boolean = true
     final override val allowNotNull: Boolean = true

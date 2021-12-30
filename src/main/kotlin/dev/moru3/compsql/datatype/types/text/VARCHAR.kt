@@ -11,13 +11,13 @@ import java.sql.Types
  * TEXTやLONGTEXTと違いPrimaryKeyとして利用可能です。
  */
 open class VARCHAR(property: Int): VarcharBase<String>(property) {
-    override val from: Class<String> = String::class.java
+    override val from: Class<String> = String::class.javaObjectType
     override fun get(resultSet: ResultSet, id: String): String? = resultSet.getNString(id)
 }
 
 abstract class VarcharBase<F>(val property: Int): DataType<F, String> {
     final override val typeName: String = "VARCHAR"
-    final override val type: Class<String> = String::class.java
+    final override val type: Class<String> = String::class.javaObjectType
     final override val sqlType: Int = Types.VARCHAR
     final override val allowPrimaryKey: Boolean = true
     final override val allowNotNull: Boolean = true

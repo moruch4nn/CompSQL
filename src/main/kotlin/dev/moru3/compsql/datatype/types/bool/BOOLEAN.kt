@@ -9,14 +9,14 @@ import java.sql.Types
  * BOOLEANとはtrue、falseの1bitを格納できるSQLの型です。
  */
 open class BOOLEAN: BooleanBase<Boolean>() {
-    override val from: Class<Boolean> = Boolean::class.java
+    override val from: Class<Boolean> = Boolean::class.javaObjectType
     override fun get(resultSet: ResultSet, id: String): Boolean? = resultSet.getBoolean(id)
 }
 
 abstract class BooleanBase<F>: DataType<F,Boolean> {
 
     final override val typeName: String = "BIT"
-    final override val type: Class<Boolean> = Boolean::class.java
+    final override val type: Class<Boolean> = Boolean::class.javaObjectType
     final override val sqlType: Int = Types.BOOLEAN
     final override val allowPrimaryKey: Boolean = true
     final override val allowNotNull: Boolean = true

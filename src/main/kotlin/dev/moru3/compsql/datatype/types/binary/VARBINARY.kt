@@ -11,14 +11,14 @@ import java.sql.Types
  * 256以上のサイズを格納する場合あ￥はVARBINARYを使用します。
  */
 open class VARBINARY(property: Int): VarbinaryBase<ByteArray>(property) {
-    override val from: Class<ByteArray> = ByteArray::class.java
+    override val from: Class<ByteArray> = ByteArray::class.javaObjectType
     override fun get(resultSet: ResultSet, id: String): ByteArray? { return resultSet.getBytes(id) }
 }
 
 abstract class VarbinaryBase<F>(val property: Int): DataType<F, ByteArray> {
 
     final override val typeName: String = "VARBINARY"
-    final override val type: Class<ByteArray> = ByteArray::class.java
+    final override val type: Class<ByteArray> = ByteArray::class.javaObjectType
     final override val sqlType: Int = Types.BINARY
     final override val allowPrimaryKey: Boolean = true
     final override val allowNotNull: Boolean = true

@@ -29,7 +29,7 @@ abstract class SQL(final override var url: String, val properties: Properties): 
     override var connection: Connection = DriverManager.getConnection(url, properties)
         protected set
 
-    val logger = Logger.getLogger(this::class.java.name)
+    val logger = Logger.getLogger(this::class.javaObjectType.name)
 
     init {
         // load companion objects.
@@ -87,7 +87,7 @@ abstract class SQL(final override var url: String, val properties: Properties): 
 
     fun p1(instance: Any): Map<String, Any> {
         return mutableMapOf<String, Any>().also { columns ->
-            instance::class.java.declaredFields.forEach { field ->
+            instance::class.javaObjectType.declaredFields.forEach { field ->
                 field.isAccessible = true
                 if(Modifier.isStatic(field.modifiers)) { return@forEach }
                 if(field.annotations.filterIsInstance<IgnoreColumn>().isNotEmpty()) { return@forEach }

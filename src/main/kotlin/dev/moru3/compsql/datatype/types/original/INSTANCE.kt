@@ -7,7 +7,7 @@ import java.sql.PreparedStatement
 import java.sql.ResultSet
 
 class INSTANCE: LongBlobBase<Serializable>(Int.MAX_VALUE.toLong()) {
-    override val from: Class<Serializable> = Serializable::class.java
+    override val from: Class<Serializable> = Serializable::class.javaObjectType
     override val allowDefault: Boolean = false
     override val priority: Int = 0
 
