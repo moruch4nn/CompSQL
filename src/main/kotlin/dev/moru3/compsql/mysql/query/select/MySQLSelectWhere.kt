@@ -18,7 +18,7 @@ class MySQLSelectWhere: SelectWhere {
 
     override fun add(string: String, vararg any: Any): SelectFilteredWhere {
         this.string+=string
-        any.forEach { list += any to checkNotNull(TypeHub[it::class.java].getOrNull(0)) }
+        any.forEach { list += any to checkNotNull(TypeHub[it::class.javaObjectType].getOrNull(0)) }
         return MySQLSelectFilteredWhere(this)
     }
 
@@ -58,7 +58,7 @@ class MySQLSelectKeyedWhere(private val data: MySQLSelectWhere): SelectKeyedWher
 
     fun end(string: String, value: Any): SelectFilteredWhere {
         data.string += " $string ?"
-        data.list.add((value to checkNotNull(TypeHub[value::class.java].getOrNull(0))))
+        data.list.add((value to checkNotNull(TypeHub[value::class.javaObjectType].getOrNull(0))))
         return MySQLSelectFilteredWhere(data)
     }
 
@@ -90,8 +90,8 @@ class MySQLSelectKeyedWhere(private val data: MySQLSelectWhere): SelectKeyedWher
 
     override fun between(from: Any, to: Any): SelectFilteredWhere {
         data.string += " BETWEEN ? AND ?"
-        data.list.add((from to checkNotNull(TypeHub[from::class.java].getOrNull(0))))
-        data.list.add((to to checkNotNull(TypeHub[to::class.java].getOrNull(0))))
+        data.list.add((from to checkNotNull(TypeHub[from::class.javaObjectType].getOrNull(0))))
+        data.list.add((to to checkNotNull(TypeHub[to::class.javaObjectType].getOrNull(0))))
         return MySQLSelectFilteredWhere(data)
     }
 
@@ -102,7 +102,7 @@ class MySQLSelectKeyedWhere(private val data: MySQLSelectWhere): SelectKeyedWher
 
     override fun isIn(vararg values: Any): SelectFilteredWhere {
         data.string += " IN (${MutableList(values.size) { "?" }.joinToString(", ")})"
-        values.forEach { data.list.add((it to checkNotNull(TypeHub[it::class.java].getOrNull(0)))) }
+        values.forEach { data.list.add((it to checkNotNull(TypeHub[it::class.javaObjectType].getOrNull(0)))) }
         return MySQLSelectFilteredWhere(data)
     }
 
@@ -150,7 +150,7 @@ class MySQLSelectFilteredWhere(private val data: MySQLSelectWhere): SelectFilter
 
     override fun add(string: String, vararg any: Any): SelectFilteredWhere {
         data.string+=string
-        any.forEach { data.list += any to checkNotNull(TypeHub[it::class.java].getOrNull(0)) }
+        any.forEach { data.list += any to checkNotNull(TypeHub[it::class.javaObjectType].getOrNull(0)) }
         return this
     }
 

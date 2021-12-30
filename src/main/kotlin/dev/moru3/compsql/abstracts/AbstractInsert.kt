@@ -22,7 +22,7 @@ abstract class AbstractInsert(final override val table: Table): Insert {
      * valueから型を推論します。推論できない場合はIllegalStateExceptionが発生します。
      */
     override fun add(key: String, value: Any): Insert {
-        return add(checkNotNull(TypeHub[value::class.java].getOrNull(0)) { "`${value::class.java.name}`に対応する型が見つかりません。" }, key, value)
+        return add(checkNotNull(TypeHub[value::class.javaObjectType].getOrNull(0)) { "`${value::class.javaObjectType.name}`に対応する型が見つかりません。" }, key, value)
     }
 
     override fun build(force: Boolean): PreparedStatement {

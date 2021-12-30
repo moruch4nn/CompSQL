@@ -23,7 +23,7 @@ abstract class AbstractUpsert(final override val table: Table): Upsert {
      * valueから型を推論します。推論できない場合はVARCHARに変換されます。
      */
     override fun add(key: String, value: Any): Upsert {
-        return add(checkNotNull(TypeHub[value::class.java].getOrNull(0)) { "`${value}`に対応する型が見つかりません。" }, key, value)
+        return add(checkNotNull(TypeHub[value::class.javaObjectType].getOrNull(0)) { "`${value}`に対応する型が見つかりません。" }, key, value)
     }
 
     override fun build(): PreparedStatement {

@@ -16,7 +16,7 @@ open class MySQLWhere: Where {
 
     override fun add(string: String, vararg any: Any): FilteredWhere {
         this.string+=string
-        any.forEach { list += any to checkNotNull(TypeHub[it::class.java].getOrNull(0)) }
+        any.forEach { list += any to checkNotNull(TypeHub[it::class.javaObjectType].getOrNull(0)) }
         return MySQLFilteredWhere(this)
     }
 
@@ -39,37 +39,37 @@ open class MySQLWhere: Where {
 class MySQLKeyedWhere(private val data: MySQLWhere): KeyedWhere {
     override fun equal(value: Any): FilteredWhere {
         data.string += " = ?"
-        data.list.add((value to checkNotNull(TypeHub[value::class.java].getOrNull(0))))
+        data.list.add((value to checkNotNull(TypeHub[value::class.javaObjectType].getOrNull(0))))
         return MySQLFilteredWhere(data)
     }
 
     override fun notEquals(value: Any): FilteredWhere {
         data.string += " != ?"
-        data.list.add((value to checkNotNull(TypeHub[value::class.java].getOrNull(0))))
+        data.list.add((value to checkNotNull(TypeHub[value::class.javaObjectType].getOrNull(0))))
         return MySQLFilteredWhere(data)
     }
 
     override fun greater(value: Any): FilteredWhere {
         data.string += " > ?"
-        data.list.add((value to checkNotNull(TypeHub[value::class.java].getOrNull(0))))
+        data.list.add((value to checkNotNull(TypeHub[value::class.javaObjectType].getOrNull(0))))
         return MySQLFilteredWhere(data)
     }
 
     override fun less(value: Any): FilteredWhere {
         data.string += " < ?"
-        data.list.add((value to checkNotNull(TypeHub[value::class.java].getOrNull(0))))
+        data.list.add((value to checkNotNull(TypeHub[value::class.javaObjectType].getOrNull(0))))
         return MySQLFilteredWhere(data)
     }
 
     override fun greaterOrEquals(value: Any): FilteredWhere {
         data.string += " >= ?"
-        data.list.add((value to checkNotNull(TypeHub[value::class.java].getOrNull(0))))
+        data.list.add((value to checkNotNull(TypeHub[value::class.javaObjectType].getOrNull(0))))
         return MySQLFilteredWhere(data)
     }
 
     override fun lessOrEquals(value: Any): FilteredWhere {
         data.string += " <= ?"
-        data.list.add((value to checkNotNull(TypeHub[value::class.java].getOrNull(0))))
+        data.list.add((value to checkNotNull(TypeHub[value::class.javaObjectType].getOrNull(0))))
         return MySQLFilteredWhere(data)
     }
 }
@@ -92,7 +92,7 @@ class MySQLFilteredWhere(private val data: MySQLWhere): FilteredWhere {
 
     override fun add(string: String, vararg any: Any): FilteredWhere {
         data.string+=string
-        any.forEach { data.list += any to checkNotNull(TypeHub[it::class.java].getOrNull(0)) }
+        any.forEach { data.list += any to checkNotNull(TypeHub[it::class.javaObjectType].getOrNull(0)) }
         return this
     }
 

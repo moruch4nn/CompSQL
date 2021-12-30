@@ -21,6 +21,13 @@ import kotlin.concurrent.thread
 
 abstract class SQL(final override var url: String, val properties: Properties): Database {
 
+    init {
+        /**
+         * DataTypeの読み込み
+         */
+        DataType.VARCHAR
+    }
+
     init { init(url, properties) }
 
     /**
@@ -112,9 +119,9 @@ abstract class SQL(final override var url: String, val properties: Properties): 
     }
 
     override fun remove(instance: Any): Delete {
-        return delete(p0(instance::class.java)) {
+        return delete(p0(instance::class.javaObjectType)) {
             var filteredWhere: FilteredWhere? = null
-            instance::class.java.declaredFields.forEach { field ->
+            instance::class.javaObjectType.declaredFields.forEach { field ->
                 field.isAccessible = true
                 if(field.annotations.filterIsInstance<IgnoreColumn>().isNotEmpty()) { return@forEach }
                 val annotation = field.annotations.filterIsInstance<Column>().getOrNull(0)
@@ -126,7 +133,7 @@ abstract class SQL(final override var url: String, val properties: Properties): 
     /**
      * 渡されたインスタンスに対応するテーブルを作成します。
      */
-    override fun add(instance: Any): Table = add(instance::class.java)
+    override fun add(instance: Any): Table = add(instance::class.javaObjectType)
 
     override fun add(cls: Class<*>): Table {
         return table(p0(cls)) {
@@ -135,7 +142,7 @@ abstract class SQL(final override var url: String, val properties: Properties): 
                 if(Modifier.isStatic(field.modifiers)) { return@forEach }
                 if(field.annotations.filterIsInstance<IgnoreColumn>().isNotEmpty()) { return@forEach }
                 val annotation = field.annotations.filterIsInstance<Column>().getOrNull(0)
-                column(annotation?.name?:field.name, TypeHub[field.type].getOrElse(0) {
+                column(annotation?.name?:field.name, TypeHub[field.type.kotlin.javaObjectType].getOrElse(0) {
                     if(field.type.isEnum) { DataType.VARCHAR } else { throw IllegalArgumentException() }
                 }) {
                     if(annotation==null) { return@column }
@@ -170,10 +177,10 @@ abstract class SQL(final override var url: String, val properties: Properties): 
         while(result.next()) {
             val instance = type.getConstructor().newInstance()?:throw Exception()
             columns.forEach { entry ->
-                val dataType = TypeHub[entry.value.type].getOrElse(0) {
+                val dataType = TypeHub[entry.value.type.kotlin.javaObjectType].getOrElse(0) {
                     if(entry.value.type.isEnum) {
-                        entry.value.set(instance, entry.value.type::class.java.getMethod("valueOf").invoke(null, result.getString(entry.key)))
-                    } else if(entry.value.type==UUID::class.java) {
+                        entry.value.set(instance, entry.value.type::class.javaObjectType.getMethod("valueOf").invoke(null, result.getString(entry.key)))
+                    } else if(entry.value.type==UUID::class.javaObjectType) {
                         entry.value.set(instance, UUID.fromString(result.getString(entry.key)))
                     }
                     throw IllegalArgumentException()
@@ -195,7 +202,7 @@ abstract class SQL(final override var url: String, val properties: Properties): 
 
     override fun upsert(name: String, action: Upsert.() -> Unit): Upsert = upsert(name).apply(action)
 
-    override fun put(instance: Any): Insert = this.insert(p0(instance::class.java)) { p1(instance).forEach { add(it.key, it.value) } }
+    override fun put(instance: Any): Insert = this.insert(p0(instance::class.javaObjectType)) { p1(instance).forEach { add(it.key, it.value) } }
 
-    override fun putOrUpdate(instance: Any): Upsert = this.upsert(p0(instance::class.java)) { p1(instance).forEach { add(it.key, it.value) } }
+    override fun putOrUpdate(instance: Any): Upsert = this.upsert(p0(instance::class.javaObjectType)) { p1(instance).forEach { add(it.key, it.value) } }
 }

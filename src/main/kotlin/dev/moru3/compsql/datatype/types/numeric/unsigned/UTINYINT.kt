@@ -33,7 +33,7 @@ abstract class UTinyIntBase<F>(val property: Byte): DataType<F,Short> {
     override val priority: Int = 10
 
     override fun set(ps: PreparedStatement, index: Int, any: Any?) {
-        check(any is Number?) { "The type of \"${if(any!=null) any::class.java.simpleName else "null"}\" is different from \"Number\"." }
+        check(any is Number?) { "The type of \"${if(any!=null) any::class.javaObjectType.simpleName else "null"}\" is different from \"Number\"." }
         super.set(ps, index, any?.toShort())
     }
 

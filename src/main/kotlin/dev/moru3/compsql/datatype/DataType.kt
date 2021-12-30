@@ -43,7 +43,7 @@ interface DataType<F, T> {
      */
     @Contract("_, _, null -> !null")
     fun set(ps: PreparedStatement, index: Int, any: Any?) {
-        check(from.isInstance(any)) { "The type of \"${if(any!=null) any::class.java.simpleName else "null"}\" is different from \"${type::class.java.simpleName}\"." }
+        check(from.isInstance(any)) { "The type of \"${if(any!=null) any::class.javaObjectType.simpleName else "null"}\" is different from \"${type::class.javaObjectType.simpleName}\"." }
         ps.setObject(index, any, sqlType)
     }
 

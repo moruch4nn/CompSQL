@@ -21,23 +21,23 @@ import dev.moru3.compsql.interfaces.SQLProperties
 object SQLiteProperties: SQLProperties {
 
     private val nameMapping = mapOf<Class<out DataType<*,*>>, String>(
-        BINARY::class.java to "BLOB",
-        LongBlobBase::class.java to "BLOB",
-        VARBINARY::class.java to "BLOB",
-        BOOLEAN::class.java to "INTEGER",
-        DATETIME::class.java to "DATE",
-        UBIGINT::class.java to "INTEGER",
-        UINTEGER::class.java to "INTEGER",
-        USMALLINT::class.java to "INTEGER",
-        UTINYINT::class.java to "INTEGER",
-        BIGINT::class.java to "INTEGER",
-        SMALLINT::class.java to "INTEGER",
-        TINYINT::class.java to "INTEGER",
-        CHAR::class.java to "TEXT",
-        LONGTEXT::class.java to "TEXT",
-        VARCHAR::class.java to "TEXT"
+        BINARY::class.javaObjectType to "BLOB",
+        LongBlobBase::class.javaObjectType to "BLOB",
+        VARBINARY::class.javaObjectType to "BLOB",
+        BOOLEAN::class.javaObjectType to "INTEGER",
+        DATETIME::class.javaObjectType to "DATE",
+        UBIGINT::class.javaObjectType to "INTEGER",
+        UINTEGER::class.javaObjectType to "INTEGER",
+        USMALLINT::class.javaObjectType to "INTEGER",
+        UTINYINT::class.javaObjectType to "INTEGER",
+        BIGINT::class.javaObjectType to "INTEGER",
+        SMALLINT::class.javaObjectType to "INTEGER",
+        TINYINT::class.javaObjectType to "INTEGER",
+        CHAR::class.javaObjectType to "TEXT",
+        LONGTEXT::class.javaObjectType to "TEXT",
+        VARCHAR::class.javaObjectType to "TEXT"
     )
 
 
-    override fun get(type: DataType<*,*>): String = nameMapping[type::class.java]?:type.typeName
+    override fun get(type: DataType<*,*>): String = nameMapping[type::class.javaObjectType]?:type.typeName
 }

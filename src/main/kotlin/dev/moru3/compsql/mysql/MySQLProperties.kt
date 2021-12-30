@@ -10,5 +10,5 @@ object MySQLProperties: SQLProperties {
     )
 
 
-    override fun get(type: DataType<*,*>): String = nameMapping[type::class.java]?:type.typeName
+    override fun get(type: DataType<*,*>): String = nameMapping[type::class.javaObjectType]?:type.typeName
 }
