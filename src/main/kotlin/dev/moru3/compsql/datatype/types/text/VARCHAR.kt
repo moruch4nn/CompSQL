@@ -2,6 +2,7 @@ package dev.moru3.compsql.datatype.types.text
 
 import dev.moru3.compsql.TypeHub.add
 import dev.moru3.compsql.datatype.DataType
+import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.Types
 
@@ -28,6 +29,8 @@ abstract class VarcharBase<F>(val property: Int): DataType<F, String> {
     override val allowDefault: Boolean = true
     override val defaultProperty: String = "$property"
     override val priority: Int = 10
+
+    override fun set(ps: PreparedStatement, index: Int, any: Any?) { super.set(ps, index, any.toString()) }
 
     init { add(this) }
 }

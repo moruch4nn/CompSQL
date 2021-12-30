@@ -1,6 +1,7 @@
 package dev.moru3.compsql
 
 import dev.moru3.compsql.datatype.DataType
+import java.util.*
 
 object TypeHub: Set<DataType<*,*>> {
     private val typeCache = mutableMapOf<Class<*>, List<DataType<*,*>>>()
@@ -21,4 +22,8 @@ object TypeHub: Set<DataType<*,*>> {
     override fun isEmpty(): Boolean = dataTypeList.isEmpty()
 
     override fun iterator(): Iterator<DataType<*,*>> = dataTypeList.iterator()
+
+    init {
+        typeCache[UUID::class.java] = listOf(DataType.VARCHAR)
+    }
 }

@@ -32,5 +32,7 @@ abstract class TextBase<F>(val property: Int): DataType<F, String> {
     override val defaultProperty: String = "$property"
     override val priority: Int = 12
 
+    override fun set(ps: PreparedStatement, index: Int, any: Any?) { super.set(ps, index, any.toString()) }
+
     init { add(this) }
 }
