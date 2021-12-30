@@ -173,6 +173,8 @@ abstract class SQL(final override var url: String, val properties: Properties): 
                 val dataType = TypeHub[entry.value.type].getOrElse(0) {
                     if(entry.value.type.isEnum) {
                         entry.value.set(instance, entry.value.type::class.java.getMethod("valueOf").invoke(null, result.getString(entry.key)))
+                    } else if(entry.value.type==UUID::class.java) {
+                        entry.value.set(instance, UUID.fromString(result.getString(entry.key)))
                     }
                     throw IllegalArgumentException()
                 }

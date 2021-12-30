@@ -1,6 +1,7 @@
 package dev.moru3.compsql
 
 import dev.moru3.compsql.datatype.DataType
+import dev.moru3.compsql.datatype.types.text.VARCHAR
 import java.util.*
 
 object TypeHub: Set<DataType<*,*>> {
@@ -24,6 +25,6 @@ object TypeHub: Set<DataType<*,*>> {
     override fun iterator(): Iterator<DataType<*,*>> = dataTypeList.iterator()
 
     init {
-        typeCache[UUID::class.java] = listOf(DataType.VARCHAR)
+        typeCache[UUID::class.java] = listOf(VARCHAR(36))
     }
 }
