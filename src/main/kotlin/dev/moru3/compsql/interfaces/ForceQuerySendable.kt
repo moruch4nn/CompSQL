@@ -1,7 +1,7 @@
 package dev.moru3.compsql.interfaces
 
 import dev.moru3.compsql.Connection
-import dev.moru3.compsql.ResultSet
+import java.sql.ResultSet
 
 interface ForceUpdateSendable: Syntax {
     val connection: Connection

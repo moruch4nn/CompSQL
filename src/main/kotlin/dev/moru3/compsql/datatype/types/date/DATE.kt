@@ -1,6 +1,5 @@
 package dev.moru3.compsql.datatype.types.date
 
-import dev.moru3.compsql.TypeHub
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.datatype.types.date.property.DateDefaultProperty
 import java.sql.Date

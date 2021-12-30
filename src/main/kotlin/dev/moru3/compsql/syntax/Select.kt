@@ -13,6 +13,4 @@ interface Select: QuerySendable {
     fun orderBy(vararg values: Pair<String, OrderType>): SelectWhere
 
     fun limit(limit: Int): SelectWhere
-
-    fun isExists(): Boolean
 }

@@ -9,12 +9,6 @@ object TypeHub: Set<DataType<*,*>> {
 
     private var dataTypeList = mutableSetOf<DataType<*,*>>()
 
-    fun add(dataType: DataType<*,*>) { dataTypeList.add(dataType) }
-
-    operator fun get(type: Class<*>): List<DataType<*,*>> {
-        return typeCache[type]?:dataTypeList.filter { it.from == type }.sortedBy { it.priority }.also { typeCache[type]=it }
-    }
-
     override val size: Int
         get() = typeCache.size
 
@@ -30,4 +24,23 @@ object TypeHub: Set<DataType<*,*>> {
         typeCache[UUID::class.javaObjectType] = listOf(VARCHAR(36))
         typeCache[Enum::class.javaObjectType] = listOf(DataType.VARCHAR)
     }
+
+    fun add(dataType: DataType<*,*>) { dataTypeList.add(dataType) }
+
+    operator fun get(type: Class<*>): List<DataType<*,*>> {
+        val result = typeCache[type]?:dataTypeList.filter { it.from == type }.sortedBy { it.priority }.also { typeCache[type]=it }
+        if(result.isEmpty()) {
+            if(type.isEnum) { return listOf(DataType.VARCHAR) }
+        } else {
+            return result
+        }
+        return listOf()
+    }
+
+    fun register(dataType: DataType<*,*>): DataType<*,*> {
+        dataTypeList.add(dataType)
+        return dataType
+    }
+
+    fun init() {}
 }

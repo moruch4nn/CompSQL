@@ -20,14 +20,6 @@ import java.util.logging.Logger
 import kotlin.concurrent.thread
 
 abstract class SQL(final override var url: String, val properties: Properties): Database {
-
-    init {
-        /**
-         * DataTypeの読み込み
-         */
-        DataType.VARCHAR
-    }
-
     init { init(url, properties) }
 
     /**
@@ -40,7 +32,7 @@ abstract class SQL(final override var url: String, val properties: Properties): 
 
     init {
         // load companion objects.
-        DataType.VARCHAR
+        TypeHub.init()
         Runtime.getRuntime().addShutdownHook(thread(start=false) { if(!isClosed) { close() } } )
     }
 
@@ -108,7 +100,7 @@ abstract class SQL(final override var url: String, val properties: Properties): 
         safeConnection.prepareStatement(sql).also { ps -> return sendQuery(setParamsToPrepareStatement(ps, params)) }
     }
 
-    override fun sendQuery(preparedStatement: PreparedStatement): ResultSet = ResultSet(preparedStatement.executeQuery())
+    override fun sendQuery(preparedStatement: PreparedStatement): ResultSet = preparedStatement.executeQuery()
 
     override fun sendUpdate(preparedStatement: PreparedStatement) {
         preparedStatement.also { ps -> ps.executeUpdate();ps.close() }
@@ -177,15 +169,15 @@ abstract class SQL(final override var url: String, val properties: Properties): 
         while(result.next()) {
             val instance = type.getConstructor().newInstance()?:throw Exception()
             columns.forEach { entry ->
-                val dataType = TypeHub[entry.value.type.kotlin.javaObjectType].getOrElse(0) {
-                    if(entry.value.type.isEnum) {
-                        entry.value.set(instance, entry.value.type::class.javaObjectType.getMethod("valueOf").invoke(null, result.getString(entry.key)))
-                    } else if(entry.value.type==UUID::class.javaObjectType) {
-                        entry.value.set(instance, UUID.fromString(result.getString(entry.key)))
-                    }
-                    throw IllegalArgumentException()
+                if(entry.value.type.isEnum) {
+                    entry.value.set(instance, entry.value.type.getMethod("valueOf", String::class.java).invoke(null, result.getString(entry.key)))
+                } else if(entry.value.type==UUID::class.javaObjectType) {
+                    entry.value.set(instance, UUID.fromString(result.getString(entry.key)))
+                } else {
+                    val dataType =
+                        TypeHub[entry.value.type.kotlin.javaObjectType].getOrElse(0) { throw IllegalArgumentException() }
+                    entry.value.set(instance, dataType.get(result, entry.key))
                 }
-                entry.value.set(instance, dataType.get(result, entry.key))
             }
             res.add(instance)
         }

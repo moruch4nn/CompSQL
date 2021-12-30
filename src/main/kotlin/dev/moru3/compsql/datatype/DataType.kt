@@ -1,5 +1,6 @@
 package dev.moru3.compsql.datatype
 import dev.moru3.compsql.TypeHub
+import dev.moru3.compsql.TypeHub.register
 import dev.moru3.compsql.datatype.types.binary.*
 import dev.moru3.compsql.datatype.types.bool.*
 import dev.moru3.compsql.datatype.types.date.DATE
@@ -54,12 +55,6 @@ interface DataType<F, T> {
     fun get(resultSet: ResultSet, id: String): F?
 
     companion object {
-
-        fun register(dataType: DataType<*,*>): DataType<*,*> {
-            TypeHub.add(dataType)
-            return dataType
-        }
-
         // binary系
         val BINARY = register(BINARY(255))
         val LONGBLOB = register(LONGBLOB(1023))

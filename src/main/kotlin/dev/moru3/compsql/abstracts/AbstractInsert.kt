@@ -13,7 +13,6 @@ abstract class AbstractInsert(final override val table: Table): Insert {
     override val connection: Connection = table.connection
 
     override fun add(type: DataType<*,*>, key: String, value: Any): Insert {
-        check(type.type.isInstance(value)) { "The type of the specified value does not match the `type` in DataType." }
         values[key] = type to value
         return this
     }
