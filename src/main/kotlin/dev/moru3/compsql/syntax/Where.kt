@@ -50,4 +50,59 @@ interface KeyedWhere {
      * 小なり(<=)
      */
     fun lessOrEquals(value: Any): FilteredWhere
+
+    /**
+     * IS NULL
+     */
+    fun isNull(): FilteredWhere
+
+    /**
+     * IS NOT NULL
+     */
+    fun isNotNull(): FilteredWhere
+
+    /**
+     * IS TRUE
+     */
+    fun isTrue(): FilteredWhere
+
+    /**
+     * IS FALSE
+     */
+    fun isFalse(): FilteredWhere
+
+    /**
+     * IS UNKNOWN
+     */
+    fun isUnknown(): FilteredWhere
+
+    /**
+     * BETWEEN ? AND ?
+     */
+    fun between(from: Any, to: Any): FilteredWhere
+
+    /**
+     * NOT BETWEEN ? AND ?
+     */
+    fun notBetween(from: Any, to: Any): FilteredWhere
+
+    /**
+     * IN (values)
+     */
+    fun isIn(vararg values: Any): FilteredWhere
+
+    /**
+     * NOT IN (values)
+     */
+    fun isNotIn(vararg values: Any): FilteredWhere
+
+    /**
+     * LIKE 'regex'
+     */
+    fun like(regex: String): FilteredWhere
+
+    /**
+     * NOT LIKE 'regex'
+     */
+    fun notLike(regex: String): FilteredWhere
 }
