@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3782d09-d696-42a3-8357-27707278b596" name="変更" comment="add comments and bugfix.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="a3782d09-d696-42a3-8357-27707278b596" name="変更" comment="update build.gradle.kts">
       <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -284,7 +283,7 @@
       <workItem from="1641152910748" duration="612000" />
       <workItem from="1641300753555" duration="1720000" />
       <workItem from="1641435465594" duration="3753000" />
-      <workItem from="1641439234650" duration="3049000" />
+      <workItem from="1641439234650" duration="3261000" />
     </task>
     <task id="LOCAL-00001" summary="変更">
       <created>1628672927225</created>
@@ -454,7 +453,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641441655443</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="update build.gradle.kts">
+      <created>1641442302429</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1641442302429</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -491,6 +497,7 @@
     <MESSAGE value="変更" />
     <MESSAGE value="bug fix." />
     <MESSAGE value="add comments and bugfix." />
-    <option name="LAST_COMMIT_MESSAGE" value="add comments and bugfix." />
+    <MESSAGE value="update build.gradle.kts" />
+    <option name="LAST_COMMIT_MESSAGE" value="update build.gradle.kts" />
   </component>
 </project>

@@ -39,8 +39,8 @@ tasks.getByName("build") {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            this.groupId = project.group.toString()
-            this.artifactId = project.name
+            this.groupId = "dev.moru3"
+            this.artifactId = "compsql"
             this.version = project.version.toString()
 
             from(components["kotlin"])
