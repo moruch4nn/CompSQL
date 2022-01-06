@@ -2,6 +2,7 @@ plugins {
     java
     kotlin("jvm") version "1.6.0"
     id("com.github.johnrengelman.shadow") version "7.0.0"
+    `maven-publish`
 }
 
 buildscript {
@@ -33,4 +34,16 @@ apply(plugin = "com.github.johnrengelman.shadow")
 
 tasks.getByName("build") {
     dependsOn("shadowJar")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            this.groupId = project.group.toString()
+            this.artifactId = project.name
+            this.version = project.version.toString()
+
+            from(components["kotlin"])
+        }
+    }
 }

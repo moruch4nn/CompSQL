@@ -4,34 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3782d09-d696-42a3-8357-27707278b596" name="変更" comment="bug fix.">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/sqlite/update/insert/SQLiteUpsert.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/syntax/OrderType.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="a3782d09-d696-42a3-8357-27707278b596" name="変更" comment="add comments and bugfix.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/Connection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/Connection.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/Database.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/Database.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/ObjectSerializer.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/SQL.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/SQL.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/TypeHub.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/TypeHub.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/abstracts/AbstractDelete.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/abstracts/AbstractDelete.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/abstracts/AbstractSelect.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/abstracts/AbstractSelect.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/connection/MySQLConnection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/connection/MySQLConnection.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/connection/SQLiteConnection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/connection/SQLiteConnection.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/interfaces/ForceQuerySendable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/interfaces/ForceQuerySendable.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/query/select/MySQLSelect.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/query/select/MySQLSelect.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/query/select/MySQLSelectWhere.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/query/select/MySQLWhere.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/query/select/MySQLWhere.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/delete/MySQLDelete.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/mysql/update/delete/MySQLDelete.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/sqlite/update/table/SQLiteTable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/sqlite/update/table/SQLiteTable.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/sqlite/update/table/column/SQLiteColumn.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/sqlite/update/table/column/SQLiteColumn.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/syntax/Delete.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/syntax/Delete.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/syntax/Insert.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/syntax/Insert.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/syntax/Select.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/syntax/Select.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/syntax/SelectWhere.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/syntax/Upsert.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/syntax/Upsert.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/syntax/Where.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dev/moru3/compsql/syntax/FirstWhere.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -309,7 +284,7 @@
       <workItem from="1641152910748" duration="612000" />
       <workItem from="1641300753555" duration="1720000" />
       <workItem from="1641435465594" duration="3753000" />
-      <workItem from="1641439234650" duration="2177000" />
+      <workItem from="1641439234650" duration="3049000" />
     </task>
     <task id="LOCAL-00001" summary="変更">
       <created>1628672927225</created>
@@ -472,7 +447,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640869661295</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="add comments and bugfix.">
+      <created>1641441655443</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1641441655443</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -508,6 +490,7 @@
     <MESSAGE value="update." />
     <MESSAGE value="変更" />
     <MESSAGE value="bug fix." />
-    <option name="LAST_COMMIT_MESSAGE" value="bug fix." />
+    <MESSAGE value="add comments and bugfix." />
+    <option name="LAST_COMMIT_MESSAGE" value="add comments and bugfix." />
   </component>
 </project>
