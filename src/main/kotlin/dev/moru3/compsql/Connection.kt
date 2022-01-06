@@ -11,34 +11,48 @@ interface Connection {
     val connection: Connection
 
     /**
-     * コネクションを返します。既に閉じている場合は再接続します。
+     * コネクションを返します。既に閉じている場合は自動的に再接続します。
      */
     val safeConnection: Connection
 
     /**
-     * リコネクト。
+     * データベースに再接続します。
+     * @param force 強制的に正接続を行うかどうか
      */
     fun reconnect(force: Boolean): Connection
 
     /**
-     * クローズ
+     * コネクションを閉じます。
      */
     fun close()
 
     /**
-     * SQLにQueryを送信します。例: SELECT
+     * 送信後に結果が必要なクエリ文を送信する際に使用します。例: SELECT
+     * @param sql SQLクエリ文。SQLインジェクションを対策するため、値は?に置換することをおすすめします。
+     * @param params sqlで?に置換した値を入れることによってエスケープ処理後に?を置換します。
+     *
+     * @return 結果
      */
     fun sendQuery(sql: String, vararg params: Any): ResultSet
 
+    /**
+     * 送信後に結果が必要なクエリ文を送信する際に使用します。例: SELECT
+     * @param preparedStatement 送信するPreparedStatement
+     *
+     * @return 結果
+     */
     fun sendQuery(preparedStatement: PreparedStatement): ResultSet
 
     /**
-     * SQLにUpdateを送信します。例: TABLE, INSERT, UPSERT
+     * 送信後の結果いらない場合に使用します。。例: INSERT, DELETE, UPDATE, UPSERT
+     * @param sql SQLクエリ文。SQLインジェクションを対策するため、値は?に置換することをおすすめします。
+     * @param params sqlで?に置換した値を入れることによってエスケープ処理後に?を置換します。
      */
     fun sendUpdate(sql: String, vararg params: Any)
 
     /**
-     * SQLにUpdateを送信します。例: TABLE, INSERT, UPSERT
+     * 送信後の結果いらない場合に使用します。。例: INSERT, DELETE, UPDATE, UPSERT
+     * @param preparedStatement 送信するPreparedStatement
      */
     fun sendUpdate(preparedStatement: PreparedStatement)
 }

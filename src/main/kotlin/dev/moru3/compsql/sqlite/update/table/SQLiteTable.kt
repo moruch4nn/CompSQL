@@ -1,7 +1,6 @@
 package dev.moru3.compsql.sqlite.update.table
 
 import dev.moru3.compsql.Connection
-import dev.moru3.compsql.ObjectSerializer
 import dev.moru3.compsql.abstracts.AbstractTable
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.mysql.update.table.MySQLAfterTable

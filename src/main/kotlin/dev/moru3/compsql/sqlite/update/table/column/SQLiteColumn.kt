@@ -1,10 +1,9 @@
 package dev.moru3.compsql.sqlite.update.table.column
 
-import dev.moru3.compsql.ObjectSerializer
 import dev.moru3.compsql.abstracts.AbstractColumn
 import dev.moru3.compsql.datatype.DataType
 
-class SQLiteColumn(name: String, type: DataType<*,*>): AbstractColumn(name, type), ObjectSerializer {
+class SQLiteColumn(name: String, type: DataType<*,*>): AbstractColumn(name, type) {
     override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>> {
         val types = mutableListOf<Pair<Any, DataType<*,*>>>()
         val result = buildString {
@@ -13,7 +12,7 @@ class SQLiteColumn(name: String, type: DataType<*,*>): AbstractColumn(name, type
             if(isZeroFill&&type.allowZeroFill) { append(" ZEROFILL") }
             if(isUnsigned) { append(" UNSIGNED") }
             if(isNotNull&&type.allowNotNull) { append(" NOT NULL") }
-            defaultValue?.takeIf{ type.allowDefault }?.also { append(" DEFAULT ${serializeObject(it)}") }
+            defaultValue?.takeIf{ type.allowDefault }?.also { append(" DEFAULT ?") }?.also { types.add(it to type) }
             // UniqueIndexはSQLiteTableで設定します。
         }
         return result to types

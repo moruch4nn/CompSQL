@@ -4,6 +4,10 @@ import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.datatype.types.text.VARCHAR
 import java.util.*
 
+/**
+ * データ型の管理を行うオブジェクトです。
+ * このクラス内にある関数は目的がない限り使用しないことをおすすめします。
+ */
 object TypeHub: Set<DataType<*,*>> {
     private val typeCache = mutableMapOf<Class<*>, List<DataType<*,*>>>()
 

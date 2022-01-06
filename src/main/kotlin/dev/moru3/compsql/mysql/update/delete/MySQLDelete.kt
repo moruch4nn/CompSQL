@@ -4,12 +4,12 @@ import dev.moru3.compsql.abstracts.AbstractDelete
 import dev.moru3.compsql.datatype.DataType
 import dev.moru3.compsql.mysql.query.select.MySQLWhere
 import dev.moru3.compsql.syntax.KeyedWhere
-import dev.moru3.compsql.syntax.Where
+import dev.moru3.compsql.syntax.FirstWhere
 import dev.moru3.compsql.syntax.table.Table
 
 class MySQLDelete(table: Table): AbstractDelete(table) {
 
-    override var where: Where = MySQLWhere()
+    override var where: FirstWhere = MySQLWhere()
 
     override fun where(key: String): KeyedWhere = MySQLWhere().also { this.where = it }.key(key)
 

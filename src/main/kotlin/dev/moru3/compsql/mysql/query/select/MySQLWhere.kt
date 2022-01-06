@@ -2,12 +2,9 @@ package dev.moru3.compsql.mysql.query.select
 
 import dev.moru3.compsql.*
 import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.syntax.FilteredWhere
-import dev.moru3.compsql.syntax.KeyedWhere
-import dev.moru3.compsql.syntax.SelectFilteredWhere
-import dev.moru3.compsql.syntax.Where
+import dev.moru3.compsql.syntax.*
 
-open class MySQLWhere: Where {
+open class MySQLWhere: FirstWhere {
 
     var limit: Int? = null
 
@@ -15,14 +12,18 @@ open class MySQLWhere: Where {
 
     var string = ""
 
-    override fun add(string: String, vararg any: Any): FilteredWhere {
+    override fun add(string: String): FilteredWhere {
         this.string+=string
-        any.forEach { list += any to checkNotNull(TypeHub[it::class.javaObjectType].getOrNull(0)) }
         return MySQLFilteredWhere(this)
     }
 
-    override fun limit(limit: Int): Where {
+    override fun limit(limit: Int): FirstWhere {
         this.limit = limit
+        return this
+    }
+
+    override fun orderBy(key: String, orderType: OrderType): FirstWhere {
+        string+=" ORDER BY $key $orderType"
         return this
     }
 
@@ -104,8 +105,13 @@ class MySQLKeyedWhere(private val data: MySQLWhere): KeyedWhere {
 }
 
 class MySQLFilteredWhere(private val data: MySQLWhere): FilteredWhere {
-    override fun limit(limit: Int): FilteredWhere {
+    override fun limit(limit: Int): Where {
         data.limit = limit
+        return this
+    }
+
+    override fun orderBy(key: String, orderType: OrderType): Where {
+        data.string+=" ORDER BY $key $orderType"
         return this
     }
 
@@ -119,9 +125,8 @@ class MySQLFilteredWhere(private val data: MySQLWhere): FilteredWhere {
         return MySQLKeyedWhere(data)
     }
 
-    override fun add(string: String, vararg any: Any): FilteredWhere {
+    override fun add(string: String): FilteredWhere {
         data.string+=string
-        any.forEach { data.list += any to checkNotNull(TypeHub[it::class.javaObjectType].getOrNull(0)) }
         return this
     }
 

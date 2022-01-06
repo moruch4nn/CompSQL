@@ -35,7 +35,7 @@ class SQLiteConnection(path: String, properties: Properties, val action: SQLiteC
 
     override fun upsert(name: String): Upsert = TODO()
 
-    override fun where(key: String): SelectKeyedWhere = TODO()
+    override fun where(key: String): KeyedWhere = TODO()
 
     init {  this.apply(action) }
 }

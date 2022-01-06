@@ -2,7 +2,7 @@ package dev.moru3.compsql.connection
 
 import dev.moru3.compsql.SQL
 import dev.moru3.compsql.mysql.query.select.MySQLSelect
-import dev.moru3.compsql.mysql.query.select.MySQLSelectWhere
+import dev.moru3.compsql.mysql.query.select.MySQLWhere
 import dev.moru3.compsql.mysql.update.delete.MySQLDelete
 import dev.moru3.compsql.mysql.update.insert.MySQLInsert
 import dev.moru3.compsql.mysql.update.insert.MySQLUpsert
@@ -90,7 +90,7 @@ open class MySQLConnection(url: String, properties: Properties, protected val ac
     /**
      * interfaceを参照。
      */
-    override fun where(key: String): SelectKeyedWhere = MySQLSelectWhere().key(key)
+    override fun where(key: String): KeyedWhere = MySQLWhere().key(key)
 
     init {
         // action(高階関数)を実行

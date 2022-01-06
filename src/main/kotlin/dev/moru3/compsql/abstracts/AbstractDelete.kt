@@ -2,8 +2,6 @@ package dev.moru3.compsql.abstracts
 
 import dev.moru3.compsql.Connection
 import dev.moru3.compsql.syntax.Delete
-import dev.moru3.compsql.syntax.KeyedWhere
-import dev.moru3.compsql.syntax.Where
 import dev.moru3.compsql.syntax.table.Table
 import java.sql.PreparedStatement
 

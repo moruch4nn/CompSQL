@@ -6,7 +6,7 @@ import java.sql.ResultSet
 interface ForceUpdateSendable: Syntax {
     val connection: Connection
     /**
-     * SQLと同期します。
+     * 変更内容をSQLと同期します。
      */
     fun send(force: Boolean)
 }
@@ -14,7 +14,7 @@ interface ForceUpdateSendable: Syntax {
 interface NonForceUpdateSendable: Syntax {
     val connection: Connection
     /**
-     * SQLと同期します。
+     * 変更内容をSQLと同期します。
      */
     fun send()
 }
@@ -22,7 +22,7 @@ interface NonForceUpdateSendable: Syntax {
 interface QuerySendable: Syntax {
     val connection: Connection
     /**
-     * SQLと同期します。
+     * 変更内容をSQLと同期します。
      */
     fun send(): ResultSet
 }

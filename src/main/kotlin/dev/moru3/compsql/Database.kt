@@ -72,6 +72,7 @@ interface Database: Closeable, Connection {
     fun delete(table: String, action: Delete.()->Unit): Delete
 
     /**
+     * :スマートクエリ。
      * データベースにインスタンス内に定義された情報をinsertします。
      * @TableName や @Column アノテーションをクラス内に定義することでテーブル名やカラム名を先に定義できます。
      * @param instance データベースにinsertする情報を含んだインスタンス。
@@ -79,6 +80,7 @@ interface Database: Closeable, Connection {
     fun put(instance: Any): Insert
 
     /**
+     * :スマートクエリ。
      * データベースにインスタンス内に定義された情報をinsertします。
      * put(..)とは違い、PrimaryKeyが重複する場合はinsertせず、情報をアップデートします。
      * @TableName や @Column アノテーションをクラス内に定義することでテーブル名やカラム名を先に定義できます。
@@ -102,6 +104,7 @@ interface Database: Closeable, Connection {
     fun add(cls: Class<*>): Table
 
     /**
+     * :スマートクエリ。
      * データベースにインスタンス内に定義された情報のテーブルを作成します。
      * @TableName や @Column アノテーションをクラス内に定義することでテーブル名やカラム名を先に定義できます。
      * @param cls データベースにinsertする情報を含んだクラス。
@@ -109,18 +112,37 @@ interface Database: Closeable, Connection {
     fun remove(instance: Any): Delete
 
     /**
-     * Whereを元にデータベースからデータを取得します。
+     * :スマートクエリ。
+     * Select文でデータを取得し、自動的にtype型のインスタンスを作成してリストで返します。
+     * @param type 変換する型
+     * @return 取得した値の一覧
      */
     fun <T> get(type: Class<T>): List<T>
 
-    fun <T> get(type: Class<T>, selectWhere: SelectWhere): List<T>
+    /**
+     * :スマートクエリ。
+     * Select文でデータを取得し、自動的にtype型のインスタンスを作成してリストで返します。
+     * @param type 変換する型
+     * @param where where文
+     * @return 取得した値の一覧
+     */
+    fun <T> get(type: Class<T>, where: FirstWhere): List<T>
 
     /**
-     * データベースからデータを取得します。
+     * :スマートクエリ。
+     * Select文でデータを取得し、自動的にtype型のインスタンスを作成してリストで返します。
+     * @param type 変換する型
+     * @param action Kotlinの高階関数のための値。
+     * @return 取得した値の一覧
      */
     fun <T> get(type: Class<T>, action: Select.() -> Unit): List<T>
 
-    fun where(key: String): SelectKeyedWhere
+    /**
+     * select文を使用する際に使用するwhere文を作成します。
+     * 例: where("name").equal("moru")
+     * @param key where文の最初のカラムの名前
+     */
+    fun where(key: String): KeyedWhere
 
     /**
      * 接続が既に閉じているかを返します。
