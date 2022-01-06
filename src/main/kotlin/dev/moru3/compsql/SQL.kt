@@ -147,7 +147,7 @@ abstract class SQL(final override var url: String, val properties: Properties): 
 
     override fun <T> get(type: Class<T>): List<T> = get(type) { }
 
-    override fun <T> get(type: Class<T>, where: FirstWhere): List<T> = get(type) { this@get.where = where }
+    override fun <T> get(type: Class<T>, where: FirstWhere): List<T> = get(type) { this.where = where }
 
     override fun <T> get(type: Class<T>, action: Select.() -> Unit): List<T> {
         val columns = mutableMapOf<String, Field>().also { columns ->

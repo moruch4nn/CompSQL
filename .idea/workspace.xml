@@ -147,7 +147,7 @@
       <command value="ls" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.CompSQL [build]">
+  <component name="RunManager" selected="Gradle.CompSQL [publishToMavenLocal]">
     <configuration name="CompSQL [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -190,6 +190,48 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="CompSQL [publishToMavenLocal]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="publishToMavenLocal" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="CompSQL [publish]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="publish" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="CompSQL" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -209,22 +251,8 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="MariaDBConnectionKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="dev.moru3.compsql.connection.MariaDBConnectionKt" />
-      <module name="CompSQL.main" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="SQLiteConnectionKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dev.moru3.compsql.connection.SQLiteConnectionKt" />
-      <module name="CompSQL.main" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="dev.moru3.compsql.TestKt" />
       <module name="CompSQL.main" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -234,17 +262,17 @@
       <item itemvalue="Gradle.CompSQL" />
       <item itemvalue="Gradle.CompSQL [clean]" />
       <item itemvalue="Gradle.CompSQL [build]" />
-      <item itemvalue="Kotlin.MariaDBConnectionKt" />
-      <item itemvalue="Kotlin.TestKt" />
       <item itemvalue="Kotlin.SQLiteConnectionKt" />
+      <item itemvalue="Gradle.CompSQL [publish]" />
+      <item itemvalue="Gradle.CompSQL [publishToMavenLocal]" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.CompSQL [publishToMavenLocal]" />
+        <item itemvalue="Gradle.CompSQL [publish]" />
         <item itemvalue="Gradle.CompSQL [build]" />
         <item itemvalue="Gradle.CompSQL [clean]" />
         <item itemvalue="Kotlin.SQLiteConnectionKt" />
-        <item itemvalue="Kotlin.MariaDBConnectionKt" />
-        <item itemvalue="Kotlin.TestKt" />
       </list>
     </recent_temporary>
   </component>
