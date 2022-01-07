@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3782d09-d696-42a3-8357-27707278b596" name="変更" comment="update build.gradle.kts">
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-    </list>
+    <list default="true" id="a3782d09-d696-42a3-8357-27707278b596" name="変更" comment="bug fix." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,7 +23,23 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="CompSQL" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="CompSQL" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="CompSQL" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="publishing" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -262,9 +276,9 @@
       <item itemvalue="Gradle.CompSQL" />
       <item itemvalue="Gradle.CompSQL [clean]" />
       <item itemvalue="Gradle.CompSQL [build]" />
-      <item itemvalue="Kotlin.SQLiteConnectionKt" />
       <item itemvalue="Gradle.CompSQL [publish]" />
       <item itemvalue="Gradle.CompSQL [publishToMavenLocal]" />
+      <item itemvalue="Kotlin.SQLiteConnectionKt" />
     </list>
     <recent_temporary>
       <list>
@@ -311,7 +325,7 @@
       <workItem from="1641152910748" duration="612000" />
       <workItem from="1641300753555" duration="1720000" />
       <workItem from="1641435465594" duration="3753000" />
-      <workItem from="1641439234650" duration="3261000" />
+      <workItem from="1641439234650" duration="3497000" />
     </task>
     <task id="LOCAL-00001" summary="変更">
       <created>1628672927225</created>
@@ -488,7 +502,21 @@
       <option name="project" value="LOCAL" />
       <updated>1641442302429</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="update.">
+      <created>1641442503698</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1641442503698</updated>
+    </task>
+    <task id="LOCAL-00027" summary="bug fix.">
+      <created>1641442569448</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1641442569448</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -521,11 +549,11 @@
     <MESSAGE value="Deleteの追加" />
     <MESSAGE value="修正" />
     <MESSAGE value="fix bugs." />
-    <MESSAGE value="update." />
     <MESSAGE value="変更" />
-    <MESSAGE value="bug fix." />
     <MESSAGE value="add comments and bugfix." />
     <MESSAGE value="update build.gradle.kts" />
-    <option name="LAST_COMMIT_MESSAGE" value="update build.gradle.kts" />
+    <MESSAGE value="update." />
+    <MESSAGE value="bug fix." />
+    <option name="LAST_COMMIT_MESSAGE" value="bug fix." />
   </component>
 </project>
