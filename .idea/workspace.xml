@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3782d09-d696-42a3-8357-27707278b596" name="変更" comment="bug fix." />
+    <list default="true" id="a3782d09-d696-42a3-8357-27707278b596" name="変更" comment="bug fix.">
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -161,7 +163,7 @@
       <command value="ls" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.CompSQL [publishToMavenLocal]">
+  <component name="RunManager" selected="Gradle.CompSQL [build]">
     <configuration name="CompSQL [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -282,9 +284,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.CompSQL [build]" />
         <item itemvalue="Gradle.CompSQL [publishToMavenLocal]" />
         <item itemvalue="Gradle.CompSQL [publish]" />
-        <item itemvalue="Gradle.CompSQL [build]" />
         <item itemvalue="Gradle.CompSQL [clean]" />
         <item itemvalue="Kotlin.SQLiteConnectionKt" />
       </list>
@@ -326,6 +328,7 @@
       <workItem from="1641300753555" duration="1720000" />
       <workItem from="1641435465594" duration="3753000" />
       <workItem from="1641439234650" duration="3497000" />
+      <workItem from="1641604841249" duration="28000" />
     </task>
     <task id="LOCAL-00001" summary="変更">
       <created>1628672927225</created>
