@@ -8,7 +8,7 @@ _※Currently, only MySQL and MariaDB are supported. Not all SQL syntax is suppo
 ## SmartQuery
 SmartQuery is a Beautiful and Useful CompSQL feature that takes full advantage of object orientation.<br>
 ※Constructor is not called.<br>
-**This exmaple is use SmartQuery. [Here](#SmartQuery "Example") code is not use SmartQuery**<br>
+**This exmaple is use SmartQuery. [Here](#simple-example "Example") code is not use SmartQuery**<br>
 [Click here for the version of the code with detailed notes commented.](README_COMMENT.md)
 ### For Kotlin<br>
 ```kotlin
@@ -29,10 +29,10 @@ fun main() {
     val database = MariaDBConnection("loaclhost:3306", "cars", "moru", "password") {
         add(Car::class.java).send(false) //CREATE TABLE
     }
+   
+    val morucar = Car(1,"もるかー","もるもるもるもる")
     
-    // 注意事項:INSERT時のAUTO_INCREMENT属性が付与された変数は無視されます。
-    val morucar = Car(-1,"もるかー","もるもるもるもる")
-    
+    // 注意事項:INSERT時のAUTO_INCREMENT属性が付与された変数は無視されます。(今回の場合idがisAutoIncrement = true)
     database.put(morucar).send(false) //INSERT
 
     database.putOrUpdate(morucar).send() //UPSERT
