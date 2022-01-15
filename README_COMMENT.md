@@ -36,6 +36,7 @@ fun main() {
 
     // 格納したいデータのインスタンスを作成します。
     val morucar = Car(-1,"もるかー","もるもるもるもる")
+    
     // (INSERT)作成したインスタンスをデータベースに格納します。
     database.put(morucar).send(false)
 
