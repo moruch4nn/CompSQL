@@ -1,5 +1,5 @@
 # CompSQL
-###With CompSQL, you can operate MySQL, MariaDB, SQLite, etc. easily and safely like Kotlin and Java.<br>
+### With CompSQL, you can operate MySQL, MariaDB, SQLite, etc. easily and safely like Kotlin and Java.<br>
 _※Currently, only MySQL and MariaDB are supported. Not all SQL syntax is supported._<br>
 ## Features<br>
 + Safe and intuitive SQL query operations.<br>
@@ -8,7 +8,8 @@ _※Currently, only MySQL and MariaDB are supported. Not all SQL syntax is suppo
 ## SmartQuery
 SmartQuery is a Beautiful and Useful CompSQL feature that takes full advantage of object orientation.<br>
 ※Constructor is not called.<br>
-**This exmaple is use SmartQuery. [Here](https://github.com/moru348/CompSQL#SmartQuery "Example") code is not use SmartQuery**
+**This exmaple is use SmartQuery. [Here](https://github.com/moru348/CompSQL#SmartQuery "Example") code is not use SmartQuery**<br>
+[Click here for an easy-to-read version of the code with minimal comments.](README.md)
 ### For Kotlin<br>
 ```kotlin
 @TableName("cars")
@@ -60,7 +61,8 @@ fun main() {
 
 
 ## Simple example
-**Thise xample is not use [SmartQuery](https://github.com/moru348/CompSQL#SmartQuery "SmartQuery")**<br>
+**Thise xample is not use [SmartQuery](https://github.com/moru348/CompSQL#SmartQuery "SmartQuery")**<br><br>
+[Click here for an easy-to-read version of the code with minimal comments.](README.md)
 ### For Kotlin<br>
 ```kotlin
 fun main() {
@@ -108,7 +110,8 @@ fun main() {
     }.send()
 }
 ```
-### For Java<br>
+### For Java<br><br>
+[Click here for an easy-to-read version of the code with minimal comments.](README.md)
 ```java
 class Main {
     public static void main(String[] args) {
