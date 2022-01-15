@@ -1,6 +1,6 @@
 package dev.moru3.compsql.datatype.types.date
 
-import dev.moru3.compsql.datatype.DataType
+import dev.moru3.compsql.datatype.BaseDataType
 import dev.moru3.compsql.datatype.types.date.property.DateDefaultProperty
 import java.sql.Date
 import java.sql.ResultSet
@@ -11,7 +11,7 @@ class DATE(property: DateDefaultProperty?): DateBase<Date>(property) {
     override fun get(resultSet: ResultSet, id: String): Date? = resultSet.getDate(id)
 }
 
-abstract class DateBase<F>(val property: DateDefaultProperty?): DataType<F,Date> {
+abstract class DateBase<F>(val property: DateDefaultProperty?): BaseDataType<F,Date> {
 
     final override val typeName: String = "DATE"
     final override val type: Class<Date> = Date::class.javaObjectType

@@ -1,6 +1,6 @@
 package dev.moru3.compsql.interfaces
 
-import dev.moru3.compsql.datatype.DataType
+import dev.moru3.compsql.datatype.BaseDataType
 import java.sql.PreparedStatement
 
 interface Syntax: NonCompleteSyntax {
@@ -14,5 +14,5 @@ interface NonCompleteSyntax {
      * Any1: ?を置換するオブジェクトです。
      * DataType: Any1のデータタイプです。
      */
-    fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>>
+    fun buildAsRaw(): Pair<String, List<Pair<Any?, BaseDataType<*,*>>>>
 }

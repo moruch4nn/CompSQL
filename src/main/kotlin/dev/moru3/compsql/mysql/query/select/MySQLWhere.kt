@@ -1,14 +1,14 @@
 package dev.moru3.compsql.mysql.query.select
 
 import dev.moru3.compsql.*
-import dev.moru3.compsql.datatype.DataType
+import dev.moru3.compsql.datatype.BaseDataType
 import dev.moru3.compsql.syntax.*
 
 open class MySQLWhere: FirstWhere {
 
     var limit: Int? = null
 
-    val list = mutableListOf<Pair<Any?, DataType<*,*>>>()
+    val list = mutableListOf<Pair<Any?, BaseDataType<*,*>>>()
 
     var string = ""
 
@@ -32,7 +32,7 @@ open class MySQLWhere: FirstWhere {
         return MySQLKeyedWhere(this)
     }
 
-    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>> {
+    override fun buildAsRaw(): Pair<String, List<Pair<Any?, BaseDataType<*,*>>>> {
         if(limit!=null) { string+=" LIMIT $limit" }
         return (if(string.isEmpty()) "" else " WHERE $string") to list
     }
@@ -130,5 +130,5 @@ class MySQLFilteredWhere(private val data: MySQLWhere): FilteredWhere {
         return this
     }
 
-    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>> = data.buildAsRaw()
+    override fun buildAsRaw(): Pair<String, List<Pair<Any?, BaseDataType<*,*>>>> = data.buildAsRaw()
 }

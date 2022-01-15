@@ -1,6 +1,6 @@
 package dev.moru3.compsql.sqlite
 
-import dev.moru3.compsql.datatype.DataType
+import dev.moru3.compsql.datatype.BaseDataType
 import dev.moru3.compsql.datatype.types.binary.BINARY
 import dev.moru3.compsql.datatype.types.binary.LongBlobBase
 import dev.moru3.compsql.datatype.types.binary.VARBINARY
@@ -20,7 +20,7 @@ import dev.moru3.compsql.interfaces.SQLProperties
 
 object SQLiteProperties: SQLProperties {
 
-    private val nameMapping = mapOf<Class<out DataType<*,*>>, String>(
+    private val nameMapping = mapOf<Class<out BaseDataType<*,*>>, String>(
         BINARY::class.javaObjectType to "BLOB",
         LongBlobBase::class.javaObjectType to "BLOB",
         VARBINARY::class.javaObjectType to "BLOB",
@@ -39,5 +39,5 @@ object SQLiteProperties: SQLProperties {
     )
 
 
-    override fun get(type: DataType<*,*>): String = nameMapping[type::class.javaObjectType]?:type.typeName
+    override fun get(type: BaseDataType<*,*>): String = nameMapping[type::class.javaObjectType]?:type.typeName
 }

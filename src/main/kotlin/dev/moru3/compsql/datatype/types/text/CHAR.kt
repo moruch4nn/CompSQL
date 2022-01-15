@@ -1,10 +1,8 @@
 package dev.moru3.compsql.datatype.types.text
 
-import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.TypeHub.add
+import dev.moru3.compsql.datatype.BaseDataType
 import java.sql.PreparedStatement
 import java.sql.ResultSet
-import java.sql.SQLType
 import java.sql.Types
 
 /**
@@ -17,7 +15,7 @@ class CHAR(property: Int): CharBase<String>(property) {
     override fun get(resultSet: ResultSet, id: String): String? = resultSet.getNString(id)
 }
 
-abstract class CharBase<F>(val property: Int): DataType<F, String> {
+abstract class CharBase<F>(val property: Int): BaseDataType<F, String> {
     final override val typeName: String = "CHAR"
     final override val type: Class<String> = String::class.javaObjectType
     final override val sqlType: Int = Types.CHAR

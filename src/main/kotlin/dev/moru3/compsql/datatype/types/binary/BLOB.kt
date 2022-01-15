@@ -1,7 +1,6 @@
 package dev.moru3.compsql.datatype.types.binary
 
-import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.TypeHub.add
+import dev.moru3.compsql.datatype.BaseDataType
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.Types
@@ -14,7 +13,7 @@ open class BLOB(property: Long): BlobBase<ByteArray>(property) {
     override val from: Class<ByteArray> = ByteArray::class.javaObjectType
     override fun get(resultSet: ResultSet, id: String): ByteArray? { return resultSet.getBytes(id) }
 }
-abstract class BlobBase<F>(val property: Long): DataType<F, ByteArray> {
+abstract class BlobBase<F>(val property: Long): BaseDataType<F, ByteArray> {
     final override val typeName: String = "BLOB"
     final override val type: Class<ByteArray> = ByteArray::class.javaObjectType
     final override val sqlType: Int = Types.BINARY

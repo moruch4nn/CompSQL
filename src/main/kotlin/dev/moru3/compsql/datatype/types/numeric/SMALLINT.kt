@@ -1,7 +1,6 @@
 package dev.moru3.compsql.datatype.types.numeric
 
-import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.TypeHub.add
+import dev.moru3.compsql.datatype.BaseDataType
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.Types
@@ -17,7 +16,7 @@ open class SMALLINT(property: Byte): SmallIntBase<Short>(property) {
     override fun get(resultSet: ResultSet, id: String): Short? = resultSet.getShort(id)
 }
 
-abstract class SmallIntBase<F>(val property: Byte): DataType<F, Short> {
+abstract class SmallIntBase<F>(val property: Byte): BaseDataType<F, Short> {
 
     final override val typeName: String = "SMALLINT"
     final override val type: Class<Short> = Short::class.javaObjectType

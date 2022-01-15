@@ -1,7 +1,7 @@
 package dev.moru3.compsql.mysql.query.select
 
 import dev.moru3.compsql.abstracts.AbstractSelect
-import dev.moru3.compsql.datatype.DataType
+import dev.moru3.compsql.datatype.BaseDataType
 import dev.moru3.compsql.syntax.KeyedWhere
 import dev.moru3.compsql.syntax.FirstWhere
 import dev.moru3.compsql.syntax.table.Table
@@ -19,7 +19,7 @@ class MySQLSelect(table: Table, vararg columns: String): AbstractSelect(table, *
         this.where = where
     }
 
-    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>> {
+    override fun buildAsRaw(): Pair<String, List<Pair<Any?, BaseDataType<*,*>>>> {
         buildString {
             val raw = where.buildAsRaw()
             append("SELECT ${columns.joinToString(", ")} FROM ${table.name}")

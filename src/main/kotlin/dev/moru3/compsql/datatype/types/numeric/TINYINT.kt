@@ -1,7 +1,6 @@
 package dev.moru3.compsql.datatype.types.numeric
 
-import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.TypeHub.add
+import dev.moru3.compsql.datatype.BaseDataType
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.Types
@@ -14,10 +13,10 @@ import java.sql.Types
  */
 class TINYINT(property: Byte): TinyIntBase<Byte>(property) {
     override val from: Class<Byte> = Byte::class.javaObjectType
-    override fun get(resultSet: ResultSet, id: String): Byte? = resultSet.getByte(id)
+    override fun get(resultSet: ResultSet, id: String): Byte = resultSet.getByte(id)
 }
 
-abstract class TinyIntBase<F>(val property: Byte): DataType<F, Byte> {
+abstract class TinyIntBase<F>(val property: Byte): BaseDataType<F, Byte> {
 
     final override val typeName: String = "TINYINT"
     final override val type: Class<Byte> = Byte::class.javaObjectType

@@ -1,7 +1,6 @@
 package dev.moru3.compsql.datatype.types.binary
 
-import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.TypeHub.add
+import dev.moru3.compsql.datatype.BaseDataType
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.Types
@@ -15,7 +14,7 @@ class LONGBLOB(property: Long): LongBlobBase<ByteArray>(property) {
 /**
  * LONGBLOBとは0から4000000000(40億)までの固定長のバイナリを格納できます。
  */
-abstract class LongBlobBase<F>(val property: Long): DataType<F,ByteArray> {
+abstract class LongBlobBase<F>(val property: Long): BaseDataType<F,ByteArray> {
     final override val typeName: String = "LONGBLOB"
     final override val type: Class<ByteArray> = ByteArray::class.javaObjectType
     final override val sqlType: Int = Types.BINARY

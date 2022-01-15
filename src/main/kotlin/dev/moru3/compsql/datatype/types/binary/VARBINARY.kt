@@ -1,7 +1,6 @@
 package dev.moru3.compsql.datatype.types.binary
 
-import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.TypeHub.add
+import dev.moru3.compsql.datatype.BaseDataType
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.Types
@@ -15,7 +14,7 @@ open class VARBINARY(property: Int): VarbinaryBase<ByteArray>(property) {
     override fun get(resultSet: ResultSet, id: String): ByteArray? { return resultSet.getBytes(id) }
 }
 
-abstract class VarbinaryBase<F>(val property: Int): DataType<F, ByteArray> {
+abstract class VarbinaryBase<F>(val property: Int): BaseDataType<F, ByteArray> {
 
     final override val typeName: String = "VARBINARY"
     final override val type: Class<ByteArray> = ByteArray::class.javaObjectType

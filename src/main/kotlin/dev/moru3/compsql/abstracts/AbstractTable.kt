@@ -1,8 +1,7 @@
 package dev.moru3.compsql.abstracts
 
 import dev.moru3.compsql.Connection
-import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.syntax.table.AfterTable
+import dev.moru3.compsql.datatype.BaseDataType
 import dev.moru3.compsql.syntax.table.Table
 import dev.moru3.compsql.syntax.table.column.Column
 import java.sql.PreparedStatement
@@ -17,11 +16,11 @@ abstract class AbstractTable(override val connection: Connection, n: String): Ta
 
     protected val columns: MutableList<Column> = mutableListOf()
 
-    override fun column(name: String, type: DataType<*,*>, action: (Column) -> Unit): Column {
+    override fun column(name: String, type: BaseDataType<*,*>, action: (Column) -> Unit): Column {
         return column(name, type).apply(action)
     }
 
-    override fun buildAsRaw(): Pair<String, List<Pair<Any?, DataType<*,*>>>>  = buildAsRaw(false)
+    override fun buildAsRaw(): Pair<String, List<Pair<Any?, BaseDataType<*,*>>>>  = buildAsRaw(false)
 
     override fun build(): PreparedStatement = build(false)
 

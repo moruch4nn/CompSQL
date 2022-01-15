@@ -1,7 +1,6 @@
 package dev.moru3.compsql.datatype.types.numeric.unsigned
 
-import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.TypeHub.add
+import dev.moru3.compsql.datatype.BaseDataType
 import java.math.BigDecimal
 import java.sql.PreparedStatement
 import java.sql.ResultSet
@@ -20,7 +19,7 @@ open class UBIGINT(property: Byte): UBigIntBase<BigDecimal>(property) {
     override fun get(resultSet: ResultSet, id: String): BigDecimal? = resultSet.getBigDecimal(id)
 }
 
-abstract class UBigIntBase<F>(val property: Byte): DataType<F,BigDecimal> {
+abstract class UBigIntBase<F>(val property: Byte): BaseDataType<F,BigDecimal> {
 
     final override val typeName: String = "BIGINT"
     final override val type: Class<BigDecimal> = BigDecimal::class.javaObjectType

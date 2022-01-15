@@ -1,13 +1,13 @@
 package dev.moru3.compsql.syntax.table.column
 
-import dev.moru3.compsql.datatype.DataType
+import dev.moru3.compsql.datatype.BaseDataType
 import dev.moru3.compsql.interfaces.NonCompleteSyntax
 
 interface Column: NonCompleteSyntax {
     /**
      *
      */
-    val type: DataType<*,*>
+    val type: BaseDataType<*,*>
 
     val name: String
 

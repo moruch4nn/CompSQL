@@ -1,7 +1,6 @@
 package dev.moru3.compsql.datatype.types.numeric
 
-import dev.moru3.compsql.datatype.DataType
-import dev.moru3.compsql.TypeHub.add
+import dev.moru3.compsql.datatype.BaseDataType
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.Types
@@ -21,7 +20,7 @@ open class BIGINT(property: Byte): BigIntBase<Long>(property) {
     override fun get(resultSet: ResultSet, id: String): Long? = resultSet.getLong(id)
 }
 
-abstract class BigIntBase<F>(val property: Byte): DataType<F,Long> {
+abstract class BigIntBase<F>(val property: Byte): BaseDataType<F,Long> {
 
     final override val typeName: String = "BIGINT"
     final override val type: Class<Long> = Long::class.javaObjectType

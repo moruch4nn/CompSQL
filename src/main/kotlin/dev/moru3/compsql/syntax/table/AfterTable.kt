@@ -1,9 +1,8 @@
 package dev.moru3.compsql.syntax.table
 
 import dev.moru3.compsql.Connection
-import dev.moru3.compsql.datatype.DataType
+import dev.moru3.compsql.datatype.BaseDataType
 import dev.moru3.compsql.interfaces.NonForceUpdateSendable
-import dev.moru3.compsql.interfaces.QuerySendable
 import dev.moru3.compsql.syntax.table.column.Column
 
 interface AfterTable {
@@ -15,7 +14,7 @@ interface AfterTable {
     /**
      * テーブルにColumnを追加します。
      */
-    fun add(name: String, type: DataType<*,*>, action: (Column)->Unit): NonForceUpdateSendable
+    fun add(name: String, type: BaseDataType<*,*>, action: (Column)->Unit): NonForceUpdateSendable
 
     /**
      * テーブルにColumnを追加します。

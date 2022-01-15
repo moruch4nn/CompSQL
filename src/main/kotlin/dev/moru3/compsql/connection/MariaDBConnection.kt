@@ -11,6 +11,7 @@ import java.util.*
  */
 class MariaDBConnection(url: String, properties: Properties, action: MySQLConnection.()->Unit = {}): MySQLConnection(url, properties, action) {
     /**
+     * For Kotlin
      * MariaDBのコネクションを作成する。
      * このコネクションを作成することにより、データベースに対してSQL文を実行できるようになります。
      * パスワード認証場合、プロパティにユーザー名、パスワードを含める必要があります。
@@ -23,6 +24,20 @@ class MariaDBConnection(url: String, properties: Properties, action: MySQLConnec
     constructor(host: String, database: String, properties: Properties? = null, action: MySQLConnection.()->Unit = {}): this("jdbc:mariadb://${host}/${database}", properties?: Properties(), action)
 
     /**
+     * For Java
+     * MariaDBのコネクションを作成する。
+     * このコネクションを作成することにより、データベースに対してSQL文を実行できるようになります。
+     * パスワード認証場合、プロパティにユーザー名、パスワードを含める必要があります。
+     *
+     * @param host データベースのホスト。ポート情報も含める必要があります。 例: 127.0.0.1:3306
+     * @param database 使用するデータベースの名前。存在しない場合は自動で作成します。
+     * @param properties 接続する際に使用するプロパティ。使用しない場合はnull(kotlinの場合は何もなし)を指定してください。
+     */
+    constructor(host: String, database: String, properties: Properties? = null): this("jdbc:mariadb://${host}/${database}", properties?: Properties(), {})
+
+
+    /**
+     * For Kotlin
      * MariaDBのコネクションを作成する。
      * このコネクションを作成することにより、データベースに対してSQL文を実行できるようになります。
      *
@@ -34,6 +49,19 @@ class MariaDBConnection(url: String, properties: Properties, action: MySQLConnec
      * @param action Kotlin向けの高階関数。使用しない場合はnullを指定してください。
      */
     constructor(host: String, database: String, username: String, password: String, properties: Properties? = null, action: MySQLConnection.()->Unit = {}): this(host, database, (properties?:Properties()).also { it["user"] = username;it["password"] = password }, action)
+
+    /**
+     * For Java
+     * MariaDBのコネクションを作成する。
+     * このコネクションを作成することにより、データベースに対してSQL文を実行できるようになります。
+     *
+     * @param host データベースのホスト。ポート情報も含める必要があります。 例: 127.0.0.1:3306
+     * @param database 使用するデータベースの名前。存在しない場合は自動で作成します。
+     * @param username 接続するユーザーのユーザー名。
+     * @param password 接続するユーザーのパスワード。
+     * @param properties 接続する際に使用するプロパティ。使用しない場合はnull(kotlinの場合は何もなし)を指定してください。
+     */
+    constructor(host: String, database: String, username: String, password: String, properties: Properties? = null): this(host, database, (properties?:Properties()).also { it["user"] = username;it["password"] = password }, {})
 
     /**
      * この関数はconnectionが初期化される前に呼び出され、主にドライバーの初期化、データベースの作成、databaseの初期化に使用します。

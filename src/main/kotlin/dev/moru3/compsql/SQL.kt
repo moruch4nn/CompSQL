@@ -8,10 +8,13 @@ import dev.moru3.compsql.mysql.query.select.MySQLSelect
 import dev.moru3.compsql.mysql.update.table.MySQLTable
 import dev.moru3.compsql.syntax.*
 import dev.moru3.compsql.syntax.table.Table
+import sun.reflect.ReflectionFactory
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
-import java.sql.*
 import java.sql.Connection
+import java.sql.DriverManager
+import java.sql.PreparedStatement
+import java.sql.ResultSet
 import java.util.*
 import java.util.logging.Logger
 import kotlin.concurrent.thread
@@ -24,6 +27,7 @@ abstract class SQL(final override var url: String, val properties: Properties): 
      */
     override var connection: Connection = DriverManager.getConnection(url, properties)
         protected set
+    private val reflectionFactory = ReflectionFactory.getReflectionFactory()
 
     val logger = Logger.getLogger(this::class.javaObjectType.name)
 
@@ -145,51 +149,55 @@ abstract class SQL(final override var url: String, val properties: Properties): 
         }
     }
 
-    override fun <T> get(type: Class<T>): List<T> = get(type) { }
+    override fun <T> get(type: Class<T>): Database.GetQuery<T> = get(type) { }
 
-    override fun <T> get(type: Class<T>, where: FirstWhere): List<T> = get(type) { this.where = where }
+    override fun <T> get(type: Class<T>, where: FirstWhere): Database.GetQuery<T> = get(type) { this.where = where }
 
-    override fun <T> get(type: Class<T>, action: Select.() -> Unit): List<T> {
-        val columns = mutableMapOf<String, Field>().also { columns ->
-            type.declaredFields.forEach { field ->
-                field.isAccessible = true
-                if(Modifier.isStatic(field.modifiers)) { return@forEach }
-                val annotations = field.annotations.filterIsInstance<IgnoreColumn>()
-                if(annotations.isNotEmpty()&&annotations[0].ignoreGet) { return@forEach }
-                val name = field.annotations.filterIsInstance<Column>().getOrNull(0)?.name?:field.name
-                check(!columns.containsKey(name)) { "The column name is duplicated." }
-                columns[name] = field
-            }
-        }
-        val result = MySQLSelect(MySQLTable(this, p0(type)), *columns.keys.toTypedArray()).apply(action).send()
-        val res = mutableListOf<T>()
-        while(result.next()) {
-            val instance = type.getConstructor().newInstance()?:throw Exception()
-            columns.forEach { entry ->
-                if(entry.value.type.isEnum) {
-                    entry.value.set(instance, entry.value.type.getMethod("valueOf", String::class.java).invoke(null, result.getString(entry.key)))
-                } else if(entry.value.type==UUID::class.javaObjectType) {
-                    entry.value.set(instance, UUID.fromString(result.getString(entry.key)))
-                } else {
-                    val dataType =
-                        TypeHub[entry.value.type.kotlin.javaObjectType].getOrElse(0) { throw IllegalArgumentException() }
-                    entry.value.set(instance, dataType.get(result, entry.key))
+    override fun <T> get(type: Class<T>, action: Select.() -> Unit): Database.GetQuery<T> {
+        return object: Database.GetQuery<T> {
+            override fun send(): List<T> {
+                val columns = mutableMapOf<String, Field>().also { columns ->
+                    type.declaredFields.forEach { field ->
+                        field.isAccessible = true
+                        if(Modifier.isStatic(field.modifiers)) { return@forEach }
+                        val annotations = field.annotations.filterIsInstance<IgnoreColumn>()
+                        if(annotations.isNotEmpty()&&annotations[0].ignoreGet) { return@forEach }
+                        val name = field.annotations.filterIsInstance<Column>().getOrNull(0)?.name?:field.name
+                        check(!columns.containsKey(name)) { "The column name is duplicated." }
+                        columns[name] = field
+                    }
                 }
+                val result = MySQLSelect(MySQLTable(this@SQL, p0(type)), *columns.keys.toTypedArray()).apply(action).send()
+                val res = mutableListOf<T>()
+                while(result.next()) {
+                    val instance = type.cast(reflectionFactory.newConstructorForSerialization(type,Any::class.java.getDeclaredConstructor()).newInstance())
+                    columns.forEach { entry ->
+                        if(entry.value.type.isEnum) {
+                            entry.value.set(instance, entry.value.type.getMethod("valueOf", String::class.java).invoke(null, result.getString(entry.key)))
+                        } else if(entry.value.type==UUID::class.javaObjectType) {
+                            entry.value.set(instance, UUID.fromString(result.getString(entry.key)))
+                        } else {
+                            val dataType =
+                                TypeHub[entry.value.type.kotlin.javaObjectType].getOrElse(0) { throw IllegalArgumentException() }
+                            entry.value.set(instance, dataType.get(result, entry.key))
+                        }
+                    }
+                    res.add(instance)
+                }
+                return res
             }
-            res.add(instance)
         }
-        return res
     }
 
-    override fun select(table: String, vararg columns: String, action: Select.() -> Unit): Select = select(table, *columns).apply(action)
+    override fun select(table_name: String, vararg columns: String, action: Select.() -> Unit): Select = select(table_name, *columns).apply(action)
 
-    override fun delete(table: String, action: Delete.() -> Unit): Delete = delete(table).apply(action)
+    override fun delete(table_name: String, action: Delete.() -> Unit): Delete = delete(table_name).apply(action)
 
-    override fun insert(name: String, action: Insert.() -> Unit) = insert(name).apply(action)
+    override fun insert(table_name: String, action: Insert.() -> Unit) = insert(table_name).apply(action)
 
-    override fun table(name: String, action: Table.() -> Unit): Table = table(name).apply(action)
+    override fun table(table_name: String, action: Table.() -> Unit): Table = table(table_name).apply(action)
 
-    override fun upsert(name: String, action: Upsert.() -> Unit): Upsert = upsert(name).apply(action)
+    override fun upsert(table_name: String, action: Upsert.() -> Unit): Upsert = upsert(table_name).apply(action)
 
     override fun put(instance: Any): Insert = this.insert(p0(instance::class.javaObjectType)) { p1(instance).forEach { add(it.key, it.value) } }
 

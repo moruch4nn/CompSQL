@@ -1,7 +1,7 @@
 package dev.moru3.compsql.interfaces
 
-import dev.moru3.compsql.datatype.DataType
+import dev.moru3.compsql.datatype.BaseDataType
 
 interface SQLProperties {
-    operator fun get(type: DataType<*,*>): String?
+    operator fun get(type: BaseDataType<*,*>): String?
 }

@@ -38,6 +38,7 @@ open class MySQLConnection(url: String, properties: Properties, protected val ac
     }
 
     /**
+     * For Kotlin
      * MySQLのコネクションを作成する。
      * このコネクションを作成することにより、データベースに対してSQL文を実行できるようになります。
      * パスワード認証場合、プロパティにユーザー名、パスワードを含める必要があります。
@@ -50,6 +51,19 @@ open class MySQLConnection(url: String, properties: Properties, protected val ac
     constructor(host: String, database: String, properties: Properties? = null, action: (MySQLConnection.()->Unit)? = {}): this("jdbc:mysql://${host}/${database}", properties?: Properties(), action)
 
     /**
+     * For Java
+     * MySQLのコネクションを作成する。
+     * このコネクションを作成することにより、データベースに対してSQL文を実行できるようになります。
+     * パスワード認証場合、プロパティにユーザー名、パスワードを含める必要があります。
+     *
+     * @param host データベースのホスト。ポート情報も含める必要があります。 例: 127.0.0.1:3306
+     * @param database 使用するデータベースの名前。存在しない場合は自動で作成します。
+     * @param properties 接続する際に使用するプロパティ。使用しない場合はnull(kotlinの場合は何もなし)を指定してください。
+     */
+    constructor(host: String, database: String, properties: Properties? = null): this("jdbc:mysql://${host}/${database}", properties?: Properties(), {})
+
+    /**
+     * For Kotlin
      * MySQLのコネクションを作成する。
      * このコネクションを作成することにより、データベースに対してSQL文を実行できるようになります。
      *
@@ -63,29 +77,42 @@ open class MySQLConnection(url: String, properties: Properties, protected val ac
     constructor(host: String, database: String, username: String, password: String, properties: Properties? = null, action: (MySQLConnection.()->Unit)? = {}): this(host, database, (properties?:Properties()).also { it["user"] = username;it["password"] = password }, action)
 
     /**
-     * interfaceを参照。
+     * For Java
+     * MySQLのコネクションを作成する。
+     * このコネクションを作成することにより、データベースに対してSQL文を実行できるようになります。
+     *
+     * @param host データベースのホスト。ポート情報も含める必要があります。 例: 127.0.0.1:3306
+     * @param database 使用するデータベースの名前。存在しない場合は自動で作成します。
+     * @param username 接続するユーザーのユーザー名。
+     * @param password 接続するユーザーのパスワード。
+     * @param properties 接続する際に使用するプロパティ。使用しない場合はnull(kotlinの場合は何もなし)を指定してください。
      */
-    override fun select(table: String, vararg columns: String): Select = MySQLSelect(MySQLTable(this, table), *columns)
+    constructor(host: String, database: String, username: String, password: String, properties: Properties? = null): this(host, database, (properties?:Properties()).also { it["user"] = username;it["password"] = password }, {})
 
     /**
      * interfaceを参照。
      */
-    override fun delete(table: String): Delete = MySQLDelete(MySQLTable(this, table))
+    override fun select(table_name: String, vararg columns: String): Select = MySQLSelect(MySQLTable(this, table_name), *columns)
 
     /**
      * interfaceを参照。
      */
-    override fun insert(name: String): Insert = MySQLInsert(MySQLTable(this, name))
+    override fun delete(table_name: String): Delete = MySQLDelete(MySQLTable(this, table_name))
 
     /**
      * interfaceを参照。
      */
-    override fun table(name: String): Table = MySQLTable(this, name)
+    override fun insert(table_name: String): Insert = MySQLInsert(MySQLTable(this, table_name))
 
     /**
      * interfaceを参照。
      */
-    override fun upsert(name: String): Upsert = MySQLUpsert(MySQLTable(this, name))
+    override fun table(table_name: String): Table = MySQLTable(this, table_name)
+
+    /**
+     * interfaceを参照。
+     */
+    override fun upsert(table_name: String): Upsert = MySQLUpsert(MySQLTable(this, table_name))
 
     /**
      * interfaceを参照。

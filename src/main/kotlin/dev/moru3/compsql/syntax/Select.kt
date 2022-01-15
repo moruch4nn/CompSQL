@@ -2,7 +2,10 @@ package dev.moru3.compsql.syntax
 
 import dev.moru3.compsql.interfaces.QuerySendable
 
-// TODO.
+/**
+ * 条件式に合ったデータを取得するために使用するSQL構文です。
+ * スマートクエリを使用するにはConnection.get(..): List<T>を使用します。
+ */
 interface Select: QuerySendable {
     /**
      * where文。別で作成したwhere文に置き換える必要がある場合はsetWhereを行います。
@@ -25,6 +28,7 @@ interface Select: QuerySendable {
 
     /**
      * selectの最大取得数。
+     * @param limit select文の最大取得数。
      */
     fun limit(limit: Int): FirstWhere
 }

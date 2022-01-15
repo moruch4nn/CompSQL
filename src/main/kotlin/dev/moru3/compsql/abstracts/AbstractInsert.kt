@@ -2,17 +2,17 @@ package dev.moru3.compsql.abstracts
 
 import dev.moru3.compsql.Connection
 import dev.moru3.compsql.TypeHub
-import dev.moru3.compsql.datatype.DataType
+import dev.moru3.compsql.datatype.BaseDataType
 import dev.moru3.compsql.syntax.Insert
 import dev.moru3.compsql.syntax.table.Table
 import java.sql.PreparedStatement
 
 abstract class AbstractInsert(final override val table: Table): Insert {
-    val values = mutableMapOf<String, Pair<DataType<*,*>, Any>>()
+    val values = mutableMapOf<String, Pair<BaseDataType<*,*>, Any>>()
 
     override val connection: Connection = table.connection
 
-    override fun add(type: DataType<*,*>, key: String, value: Any): Insert {
+    override fun add(type: BaseDataType<*,*>, key: String, value: Any): Insert {
         values[key] = type to value
         return this
     }
@@ -38,5 +38,5 @@ abstract class AbstractInsert(final override val table: Table): Insert {
         connection.sendUpdate(build(force))
     }
 
-    override fun buildAsRaw(): Pair<String, List<Pair<Any, DataType<*,*>>>> = buildAsRaw(false)
+    override fun buildAsRaw(): Pair<String, List<Pair<Any, BaseDataType<*,*>>>> = buildAsRaw(false)
 }

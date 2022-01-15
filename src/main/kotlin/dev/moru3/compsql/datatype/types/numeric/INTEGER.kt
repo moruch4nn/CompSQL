@@ -1,7 +1,6 @@
 package dev.moru3.compsql.datatype.types.numeric
 
-import dev.moru3.compsql.TypeHub.add
-import dev.moru3.compsql.datatype.DataType
+import dev.moru3.compsql.datatype.BaseDataType
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.Types
@@ -20,7 +19,7 @@ open class INTEGER(property: Byte): IntegerBase<Int>(property) {
     override fun get(resultSet: ResultSet, id: String): Int? = resultSet.getInt(id)
 }
 
-abstract class IntegerBase<F>(val property: Byte): DataType<F,Int> {
+abstract class IntegerBase<F>(val property: Byte): BaseDataType<F,Int> {
 
     final override val typeName: String = "INTEGER"
     final override val type: Class<Int> = Int::class.javaObjectType

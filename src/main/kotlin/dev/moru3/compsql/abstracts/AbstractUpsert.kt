@@ -2,7 +2,7 @@ package dev.moru3.compsql.abstracts
 
 import dev.moru3.compsql.Connection
 import dev.moru3.compsql.TypeHub
-import dev.moru3.compsql.datatype.DataType
+import dev.moru3.compsql.datatype.BaseDataType
 import dev.moru3.compsql.syntax.Upsert
 import dev.moru3.compsql.syntax.table.Table
 import java.sql.PreparedStatement
@@ -11,9 +11,9 @@ abstract class AbstractUpsert(final override val table: Table): Upsert {
 
     override val connection: Connection = table.connection
 
-    val values = mutableMapOf<String, Pair<DataType<*,*>, Any>>()
+    val values = mutableMapOf<String, Pair<BaseDataType<*,*>, Any>>()
 
-    override fun add(type: DataType<*,*>, key: String, value: Any): Upsert {
+    override fun add(type: BaseDataType<*,*>, key: String, value: Any): Upsert {
         check(type.type.isInstance(value)) { "The type of the specified value does not match the `type` in DataType." }
         values[key] = type to value
         return this
