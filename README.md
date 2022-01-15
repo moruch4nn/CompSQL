@@ -13,7 +13,6 @@ _※Currently, only MySQL and MariaDB are supported. Not all SQL syntax is suppo
 SmartQuery is a Beautiful and Useful CompSQL feature that takes full advantage of object orientation.<br>
 ※Constructor is not called.<br>
 **This exmaple is use SmartQuery. [Here](#simple-example "Example") code is not use SmartQuery**<br>
-[Click here for the version of the code with detailed notes commented.](README_COMMENT.md)
 ### For Kotlin<br>
 ```kotlin
 @TableName("cars")
@@ -60,7 +59,6 @@ fun main() {
 
 ## Simple example
 **Thise xample is not use [SmartQuery](#SmartQuery "SmartQuery")**<br><br>
-[Click here for the version of the code with detailed notes commented.](README_COMMENT.md)
 ### For Kotlin<br>
 ```kotlin
 fun main() {
@@ -95,7 +93,6 @@ fun main() {
 }
 ```
 ### For Java<br>
-[Click here for the version of the code with detailed notes commented.](README_COMMENT.md)
 ```java
 class Main {
     public static void main(String[] args) {
