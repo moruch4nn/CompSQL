@@ -35,9 +35,9 @@ fun main() {
     }
 
     // 格納したいデータのインスタンスを作成します。
-    val morucar = Car(-1,"もるかー","もるもるもるもる")
+    val morucar = Car(1,"もるかー","もるもるもるもる")
     
-    // (INSERT)作成したインスタンスをデータベースに格納します。
+    // (INSERT)インスタンをデータベースに格納。 注意事項:INSERT時のAUTO_INCREMENT属性が付与された変数は無視されます。(今回の場合idがisAutoIncrement = true)
     database.put(morucar).send(false)
 
     // (UPSERT)作成したインスタンスをデータベースに格納します。PrimaryKeyが重複する場合はデータをアップデートします。
