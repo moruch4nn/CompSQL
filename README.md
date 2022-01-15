@@ -32,6 +32,7 @@ fun main() {
     
     // 注意事項:INSERT時のAUTO_INCREMENT属性が付与された変数は無視されます。
     val morucar = Car(-1,"もるかー","もるもるもるもる")
+    
     database.put(morucar).send(false) //INSERT
 
     database.putOrUpdate(morucar).send() //UPSERT
