@@ -23,26 +23,26 @@ class Car(
     @Column("name", isNotNull = true)
     val name: String,
     @Column("long_nameeeee", isNotNull = true)
-    val longNameeeeee: String = "moru",
+    val longNameeeeee: String = "default value.",
     @Column("datetime")
     val date: Date = Date(java.util.Date().time),
 )
 
 fun main() {
-    //コネクションの作成、格納
+    //Create connection and store
     val database = MariaDBConnection("loaclhost:3306", "cars", "moru", "password") {
         add(Car::class.java).send(false) //CREATE TABLE
     }
    
-    val morucar = Car(1,"もるかー","もるもるもるもる")
+    val morucar = Car(1,"F1","Very cool and fast car.")
     
-    // 注意事項:INSERT時のAUTO_INCREMENT属性が付与された変数は無視されます。(今回の場合idがisAutoIncrement = true)
+    // Note: Variables with AUTO_INCREMENT attribute during INSERT will be ignored. (In this case, id isAutoIncrement = true)
     database.put(morucar).send(false) //INSERT
 
     database.putOrUpdate(morucar).send() //UPSERT
 
     val result: List<Car> =database.get(Car::class.java) {
-        where("name").equal("もる").and("long_nameeee").like("%もるる%").and("id").greaterOrEquals(3)
+        where("name").equal("F1").and("long_nameeee").like("%fast%").and("id").greaterOrEquals(3)
     }.send() //SELCT
 
     println("NAME=${result[0].name},ID=${result[0].id}")
@@ -64,7 +64,7 @@ fun main() {
 ### For Kotlin<br>
 ```kotlin
 fun main() {
-    //コネクションの作成、格納。
+    //Create connection and store
     val database = MariaDBConnection("loaclhost:3306", "cars", "moru", "password") {
         //CREATE TABLE
         table("cars") {
@@ -77,20 +77,20 @@ fun main() {
 
     //INSERT
     database.insert("cars") {
-        add("name", "もる")ttps://github.com/moru348/CompSQL/R
-        add("long_nameeee", "もるもるもるもるもるもるもる")
+        add("name", "F1")
+        add("long_nameeee", "Very cool and fast car.")
     }.send(false)
 
     //UPSERT
     database.upsert("cars") {
         add("id", 1)
-        add("name", "もる")
-        add("long_nameeee", "もるもるもるもるもるもるもる")
+        add("name", "F2")
+        add("long_nameeee", "Very cool and fast fast fast fast car.")
     }.send(false)
 
     //SELECT
     val result: ResultSet = database.select("cars") {
-        where("name").equal("もる").and("long_nameeee").like("%もるる%").and("id").greaterOrEquals(3)
+        where("name").equal("F1").and("long_nameeee").like("%fast fast fast%").and("id").greaterOrEquals(3)
     }.send()
 }
 ```
@@ -99,7 +99,7 @@ fun main() {
 ```java
 class Main {
     public static void main(String[] args) {
-        // コネクションの作成
+        // Create connection
         Database database = new MariaDBConnection("localhost:3306", "cars", "moru", "password", null);
 
         Table table = database.table("cars");//CREATE TABLE __START__
@@ -110,18 +110,18 @@ class Main {
         table.send(false); //CREATE TABLE __END__
 
         Insert insert = database.insert("cars");//INSERT __START__
-        insert.add("name", "もる");
-        insert.add("long_nameeee", "もるもるもるもるもるもるもる");
+        insert.add("name", "F1");
+        insert.add("long_nameeee", "Very cool and fast car.");
         insert.send(false);//INSERT __END__
 
         Upsert upsert = database.upsert("cars");//UPSERT __START__
         upsert.add("id", 1);
-        upsert.add("name", "もる");
-        upsert.add("long_nameeee", "もるもるもるもるもるもるもる");
+        upsert.add("name", "F2");
+        upsert.add("long_nameeee", "Very cool and fast fast fast fast car.");
         upsert.send(false);//UPESRT __END__
 
         Select select = database.select("cars"); //SELECT __START__
-        select.where("name").equal("もる").and("long_nameeee").like("%もるる%").and("id").greaterOrEquals(3);
+        select.where("name").equal("F1").and("long_nameeee").like("%fast fast fast%").and("id").greaterOrEquals(3);
         ResultSet result = select.send(); //SELECT __END__
     }
 }
