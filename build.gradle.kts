@@ -38,8 +38,18 @@ publishing {
             this.groupId = "dev.moru3"
             this.artifactId = "compsql"
             this.version = project.version.toString()
-
             from(components["kotlin"])
+        }
+    }
+
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/moru348/CompSQL")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
         }
     }
 }
