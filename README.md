@@ -29,10 +29,10 @@ fun main() {
     val database = MariaDBConnection("loaclhost:3306", "cars", "moru", "password") {
         add(Car::class.java).send(false) //CREATE TABLE
     }
+   
+    val morucar = Car(1,"もるかー","もるもるもるもる")
     
-    // 注意事項:INSERT時のAUTO_INCREMENT属性が付与された変数は無視されます。
-    val morucar = Car(-1,"もるかー","もるもるもるもる")
-    
+    // 注意事項:INSERT時のAUTO_INCREMENT属性が付与された変数は無視されます。(今回の場合idがisAutoIncrement = true)
     database.put(morucar).send(false) //INSERT
 
     database.putOrUpdate(morucar).send() //UPSERT
