@@ -1,15 +1,15 @@
 # CompSQL
-###With CompSQL, you can operate MySQL, MariaDB, SQLite, etc. easily and safely like Kotlin and Java.<br>
+### With CompSQL, you can operate MySQL, MariaDB, SQLite, etc. easily and safely like Kotlin and Java.<br>
 _※Currently, only MySQL and MariaDB are supported. Not all SQL syntax is supported._<br>
 ## Features<br>
 + Safe and intuitive SQL query operations.<br>
-+ Clever queries that take advantage of object orientation.([SmartQuery](https://github.com/moru348/CompSQL#SmartQuery "SmartQuery"))<br>
++ Clever queries that take advantage of object orientation.([SmartQuery](#SmartQuery "SmartQuery"))<br>
 
 ## SmartQuery
 SmartQuery is a Beautiful and Useful CompSQL feature that takes full advantage of object orientation.<br>
 ※Constructor is not called.<br>
-**This exmaple is use SmartQuery. [Here](https://github.com/moru348/CompSQL#SmartQuery "Example") code is not use SmartQuery**<br>
-[Click here for the version of the code with detailed notes commented.](https://github.com/moru348/CompSQL/README_COMMENT.md)
+**This exmaple is use SmartQuery. [Here](#SmartQuery "Example") code is not use SmartQuery**<br>
+[Click here for the version of the code with detailed notes commented.](README_COMMENT.md)
 ### For Kotlin<br>
 ```kotlin
 @TableName("cars")
@@ -54,8 +54,8 @@ fun main() {
 <br>
 
 ## Simple example
-**Thise xample is not use [SmartQuery](https://github.com/moru348/CompSQL#SmartQuery "SmartQuery")**<br><br>
-[Click here for the version of the code with detailed notes commented.](https://github.com/moru348/CompSQL/README_COMMENT.md)
+**Thise xample is not use [SmartQuery](#SmartQuery "SmartQuery")**<br><br>
+[Click here for the version of the code with detailed notes commented.](README_COMMENT.md)
 ### For Kotlin<br>
 ```kotlin
 fun main() {
@@ -72,7 +72,7 @@ fun main() {
 
     //INSERT
     database.insert("cars") {
-        add("name", "もる")
+        add("name", "もる")ttps://github.com/moru348/CompSQL/R
         add("long_nameeee", "もるもるもるもるもるもるもる")
     }.send(false)
 
@@ -90,7 +90,7 @@ fun main() {
 }
 ```
 ### For Java<br>
-[Click here for the version of the code with detailed notes commented.](https://github.com/moru348/CompSQL/README_COMMENT.md)
+[Click here for the version of the code with detailed notes commented.](README_COMMENT.md)
 ```java
 class Main {
     public static void main(String[] args) {
