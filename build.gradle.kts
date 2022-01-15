@@ -15,7 +15,7 @@ buildscript {
 }
 
 group = "dev.moru3"
-version = "1.0-SNAPSHOT"
+version = "NIGHTLY-1.2"
 
 repositories {
     mavenCentral()
