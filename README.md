@@ -1,5 +1,6 @@
 ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/moru348/CompSQL/Publish%20package/main)
 ![GitHub](https://img.shields.io/github/license/moru348/CompSQL)
+![GitHub Repo stars](https://img.shields.io/github/stars/moru348/CompSQL?style=social)
 # CompSQL - CURRENTLY ONLY NIGHTLY BUILDS
 ### With CompSQL, you can operate MySQL, MariaDB, SQLite, etc. easily and safely like Kotlin and Java.<br>
 _※Currently, only MySQL and MariaDB are supported. Not all SQL syntax is supported._<br>
