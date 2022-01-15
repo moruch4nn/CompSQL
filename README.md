@@ -1,4 +1,4 @@
-# CompSQL
+# CompSQL - CURRENTLY ONLY NIGHTLY BUILDS
 ### With CompSQL, you can operate MySQL, MariaDB, SQLite, etc. easily and safely like Kotlin and Java.<br>
 _※Currently, only MySQL and MariaDB are supported. Not all SQL syntax is supported._<br>
 ## Features<br>
