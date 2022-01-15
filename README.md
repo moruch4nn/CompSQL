@@ -8,7 +8,7 @@ _※Currently, only MySQL and MariaDB are supported. Not all SQL syntax is suppo
 ## SmartQuery
 SmartQuery is a Beautiful and Useful CompSQL feature that takes full advantage of object orientation.<br>
 ※Constructor is not called.<br>
-**This exmaple is use SmartQuery. [Here](#SmartQuery "Example") code is not use SmartQuery**<br>
+**This exmaple is use SmartQuery. [Here](#Simple example "Example") code is not use SmartQuery**<br>
 [Click here for the version of the code with detailed notes commented.](README_COMMENT.md)
 ### For Kotlin<br>
 ```kotlin
