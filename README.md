@@ -1,3 +1,4 @@
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/moru348/CompSQL)
 ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/moru348/CompSQL/Publish%20package/main)
 ![GitHub](https://img.shields.io/github/license/moru348/CompSQL)
 ![GitHub Repo stars](https://img.shields.io/github/stars/moru348/CompSQL?style=social)
