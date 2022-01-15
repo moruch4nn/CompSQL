@@ -17,7 +17,7 @@ interface Connection {
 
     /**
      * データベースに再接続します。
-     * @param force 強制的に正接続を行うかどうか
+     * @param force 強制的に再接続を行うかどうか
      */
     fun reconnect(force: Boolean): Connection
 
