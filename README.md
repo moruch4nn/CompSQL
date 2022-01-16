@@ -89,6 +89,7 @@ fun main() {
 
     //SELECT
     val result: ResultSet = database.select("cars") {
+        // WHERE name = 'F1' AND long_nameeee LIKE "%fast%" AND id >= 3
         where("name").equal("F1").and("long_nameeee").like("%fast fast fast%").and("id").greaterOrEquals(3)
     }.send()
 }
@@ -119,6 +120,7 @@ class Main {
         upsert.send(false);//UPESRT __END__
 
         Select select = database.select("cars"); //SELECT __START__
+        // WHERE name = 'F1' AND long_nameeee LIKE "%fast%" AND id >= 3
         select.where("name").equal("F1").and("long_nameeee").like("%fast fast fast%").and("id").greaterOrEquals(3);
         ResultSet result = select.send(); //SELECT __END__
     }
