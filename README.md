@@ -41,6 +41,7 @@ fun main() {
     database.putOrUpdate(morucar).send() //UPSERT
 
     val result: List<Car> =database.get(Car::class.java) {
+        // WHERE name = 'F1' AND long_nameeee LIKE "%fast%" AND id >= 3
         where("name").equal("F1").and("long_nameeee").like("%fast%").and("id").greaterOrEquals(3)
     }.send() //SELCT
 
