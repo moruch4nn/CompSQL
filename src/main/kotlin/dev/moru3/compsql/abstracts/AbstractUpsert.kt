@@ -14,7 +14,7 @@ abstract class AbstractUpsert(final override val table: Table): Upsert {
     val values = mutableMapOf<String, Pair<BaseDataType<*,*>, Any>>()
 
     override fun add(type: BaseDataType<*,*>, key: String, value: Any): Upsert {
-        check(type.type.isInstance(value)) { "The type of the specified value does not match the `type` in DataType." }
+        check(type.type.isInstance(value)) { "The type of the specified value does not match the `${value::class.java.toString()}` in DataType.(key: ${key})" }
         values[key] = type to value
         return this
     }
