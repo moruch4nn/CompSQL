@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3782d09-d696-42a3-8357-27707278b596" name="変更" comment="Java向けのコード修正、READMEの更新、コメントの追加、コードの一貫性の修正" />
+    <list default="true" id="a3782d09-d696-42a3-8357-27707278b596" name="変更" comment="update.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -529,7 +531,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642253137279</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="update.">
+      <created>1648660865413</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1648660865413</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -566,9 +575,9 @@
     <MESSAGE value="add comments and bugfix." />
     <MESSAGE value="update build.gradle.kts" />
     <MESSAGE value="bug fix." />
-    <MESSAGE value="update." />
     <MESSAGE value="誤字の修正。" />
     <MESSAGE value="Java向けのコード修正、READMEの更新、コメントの追加、コードの一貫性の修正" />
-    <option name="LAST_COMMIT_MESSAGE" value="Java向けのコード修正、READMEの更新、コメントの追加、コードの一貫性の修正" />
+    <MESSAGE value="update." />
+    <option name="LAST_COMMIT_MESSAGE" value="update." />
   </component>
 </project>

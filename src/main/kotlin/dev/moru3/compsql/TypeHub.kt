@@ -2,6 +2,7 @@ package dev.moru3.compsql
 
 import dev.moru3.compsql.datatype.BaseDataType
 import dev.moru3.compsql.datatype.DataType
+import dev.moru3.compsql.datatype.types.date.DATETIME
 import dev.moru3.compsql.datatype.types.text.VARCHAR
 import java.util.*
 
@@ -26,6 +27,7 @@ object TypeHub: Set<BaseDataType<*,*>> {
     override fun iterator(): Iterator<BaseDataType<*,*>> = dataTypeList.iterator()
 
     init{
+        DataType.DATETIME.type
         typeCache[UUID::class.javaObjectType] = listOf(VARCHAR(36))
         typeCache[Enum::class.javaObjectType] = listOf(DataType.VARCHAR)
     }
