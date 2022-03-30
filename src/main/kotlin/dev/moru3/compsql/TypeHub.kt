@@ -26,12 +26,6 @@ object TypeHub: Set<BaseDataType<*,*>> {
 
     override fun iterator(): Iterator<BaseDataType<*,*>> = dataTypeList.iterator()
 
-    init{
-        DataType.DATETIME.type
-        typeCache[UUID::class.javaObjectType] = listOf(VARCHAR(36))
-        typeCache[Enum::class.javaObjectType] = listOf(DataType.VARCHAR)
-    }
-
     fun add(dataType: BaseDataType<*,*>) { dataTypeList.add(dataType) }
 
     operator fun get(type: Class<*>): List<BaseDataType<*,*>> {
@@ -47,6 +41,11 @@ object TypeHub: Set<BaseDataType<*,*>> {
     fun <T: BaseDataType<*,*>> register(dataType: T): T {
         dataTypeList.add(dataType)
         return dataType
+    }
+
+    init{
+        typeCache[UUID::class.javaObjectType] = listOf(VARCHAR(36))
+        typeCache[Enum::class.javaObjectType] = listOf(DataType.VARCHAR)
     }
 
     fun init() {}
