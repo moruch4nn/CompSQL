@@ -44,6 +44,7 @@ object TypeHub: Set<BaseDataType<*,*>> {
     }
 
     init{
+        Class.forName("dev.moru3.compsql.datatype.DataType").fields
         typeCache[UUID::class.javaObjectType] = listOf(VARCHAR(36))
         typeCache[Enum::class.javaObjectType] = listOf(DataType.VARCHAR)
     }
