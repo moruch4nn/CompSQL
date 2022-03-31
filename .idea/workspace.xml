@@ -158,7 +158,7 @@
       <command value="ls" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.CompSQL [build]">
+  <component name="RunManager" selected="Kotlin.AbstractUpsertKt">
     <configuration name="CompSQL [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -262,8 +262,8 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="SQLiteConnectionKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="dev.moru3.compsql.connection.SQLiteConnectionKt" />
+    <configuration name="AbstractUpsertKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dev.moru3.compsql.abstracts.AbstractUpsertKt" />
       <module name="CompSQL.main" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -275,15 +275,15 @@
       <item itemvalue="Gradle.CompSQL [build]" />
       <item itemvalue="Gradle.CompSQL [publish]" />
       <item itemvalue="Gradle.CompSQL [publishToMavenLocal]" />
-      <item itemvalue="Kotlin.SQLiteConnectionKt" />
+      <item itemvalue="Kotlin.AbstractUpsertKt" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Kotlin.AbstractUpsertKt" />
         <item itemvalue="Gradle.CompSQL [build]" />
         <item itemvalue="Gradle.CompSQL [publishToMavenLocal]" />
         <item itemvalue="Gradle.CompSQL [publish]" />
         <item itemvalue="Gradle.CompSQL [clean]" />
-        <item itemvalue="Kotlin.SQLiteConnectionKt" />
       </list>
     </recent_temporary>
   </component>
@@ -570,7 +570,14 @@
       <option name="project" value="LOCAL" />
       <updated>1648696031821</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="update.">
+      <created>1648704081129</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1648704081129</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
