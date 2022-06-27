@@ -42,7 +42,7 @@ abstract class SQL(final override var url: String, val properties: Properties): 
      */
     override fun reconnect(force: Boolean): Connection {
         if(!this.isClosed) if(force) connection.close() else return connection
-        connection = DriverManager.getConnection(url)
+        connection = DriverManager.getConnection(url, properties)
         return connection
     }
 
